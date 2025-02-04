@@ -18,9 +18,9 @@ public:
 	void init();
 	void start();
 private:
-	//void checkCollisions();
+	/*void checkCollisions();
 
-	/*GameManager* _gm;
+	GameManager* _gm;
 	Container *_leftPaddle;
 	Container *_rightPaddle;
 	Container *_ball;*/
