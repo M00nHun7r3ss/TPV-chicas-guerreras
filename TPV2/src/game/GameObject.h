@@ -41,6 +41,10 @@ public:
 		return _pos;
 	}
 
+	inline void setVel(Vector2D& vel) {
+		_vel = vel;
+	}
+
 	inline Vector2D& getVel() {
 		return _vel;
 	}

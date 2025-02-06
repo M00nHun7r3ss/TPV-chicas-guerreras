@@ -84,6 +84,7 @@ void Game::init() {
 	// add components
 	_fighter->addComponent(new ImageRenderer(&sdlutils().images().at("fighter"))); //ImageRenderer
 	_fighter->addComponent(new FighterCtrl()); //FighterCtrl
+	_fighter->addComponent(new SimpleMove()); //SimpleMove
 
 
 	// add to objects vector list of the game.
