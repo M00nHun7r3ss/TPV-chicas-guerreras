@@ -21,6 +21,7 @@
 #include "SimpleMove.h"
 #include "StopOnBorder.h"
 #include "FighterCtrl.h"
+#include "DeAcceleration.h"
 
 Game::Game() : 
 	//_gm(nullptr), 
@@ -85,6 +86,7 @@ void Game::init() {
 	_fighter->addComponent(new ImageRenderer(&sdlutils().images().at("fighter"))); //ImageRenderer
 	_fighter->addComponent(new FighterCtrl()); //FighterCtrl
 	_fighter->addComponent(new SimpleMove()); //SimpleMove
+	_fighter->addComponent(new DeAcceleration()); //DeAcceleration
 
 
 	// add to objects vector list of the game.
