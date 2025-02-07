@@ -29,7 +29,9 @@ void FighterCtrl::handleInput(Container* o)
 		o->setRotation(o->getRotation() + _rot);
 	}
 	*/
+
 	float thrust = 0.2f;
+	float speedLimit = 3.0f;
 
 	// ihdlr.isKeyDown(...). Da más fluidez
 	if (ihdlr.isKeyDown(_left)) {
@@ -39,7 +41,11 @@ void FighterCtrl::handleInput(Container* o)
 		o->setRotation(o->getRotation() + _rot);
 	}
 	else if (ihdlr.isKeyDown(_up)) {
-		Vector2D newVel = o->getVel() + Vector2D(0, -1).rotate(_rot) * thrust;
+		Vector2D newVel = o->getVel() + Vector2D(0, -1).rotate(o->getRotation()) * thrust;
+		if (newVel.magnitude() > speedLimit) {
+			newVel = newVel.normalize() * speedLimit;
+		}
 		o->setVel(newVel);
 	}
+
 }
