@@ -3,7 +3,7 @@
 
 class DeAcceleration : public PhysicsComponent {
 private:
-	float _lessFactor = 0.995f;
+	float _lessFactor;
 
 public:
 	DeAcceleration();

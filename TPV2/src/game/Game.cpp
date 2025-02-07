@@ -22,6 +22,7 @@
 #include "StopOnBorder.h"
 #include "FighterCtrl.h"
 #include "DeAcceleration.h"
+#include "ShowAtOppositeSide.h"
 
 Game::Game() : 
 	//_gm(nullptr), 
@@ -87,6 +88,7 @@ void Game::init() {
 	_fighter->addComponent(new FighterCtrl()); //FighterCtrl
 	_fighter->addComponent(new SimpleMove()); //SimpleMove
 	_fighter->addComponent(new DeAcceleration()); //DeAcceleration
+	_fighter->addComponent(new ShowAtOppositeSide()); //ShowAtOppositeSide
 
 
 	// add to objects vector list of the game.

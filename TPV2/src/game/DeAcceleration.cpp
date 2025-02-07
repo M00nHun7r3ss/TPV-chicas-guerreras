@@ -3,7 +3,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "Container.h"
 
-DeAcceleration::DeAcceleration(){
+DeAcceleration::DeAcceleration(): _lessFactor(0.995f) {
 }
 
 DeAcceleration::~DeAcceleration(){
