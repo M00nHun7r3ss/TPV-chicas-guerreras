@@ -295,6 +295,8 @@ void test0() {
 	/// Lo que cuesta redimensionar la memoria.
 
 	std::vector < A > v;
+	v.reserve(20);
+
 	for (int i = 0; i < 10; i++) {
 		std::cout << "# adding " << i << " using emplace_back" << std::endl;
 		if (v.capacity() == v.size()) {
@@ -403,7 +405,160 @@ void test0() {
 		assig_c: 0
 		assig_m: 0
 		--------------
+
+		//Duda: No entendemos por qué resizea en el 3, 6 y 9. ¿No debería resizear solo en el 0 (a 1), 1 (a 2), 2 (a 4), 4 (a 8) y 8 (a 16)?
+		//Explicación: Pendiente de resolver duda
 	*/	
+
+	// SIN:
+
+	/*
+	# adding 0 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=0
+	# adding 1 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=1
+	Copy. const. *p=0, copied 0000028DA0CC6CD0 to 0000028DA0CC6D20
+	Destructor.
+	# adding 2 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=2
+	Copy. const. *p=0, copied 0000028DA0CC6D20 to 0000028DA0CC5430
+	Copy. const. *p=1, copied 0000028DA0CC6D28 to 0000028DA0CC5438
+	Destructor.
+	Destructor.
+	# adding 3 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=3
+	Copy. const. *p=0, copied 0000028DA0CC5430 to 0000028DA0CC5610
+	Copy. const. *p=1, copied 0000028DA0CC5438 to 0000028DA0CC5618
+	Copy. const. *p=2, copied 0000028DA0CC5440 to 0000028DA0CC5620
+	Destructor.
+	Destructor.
+	Destructor.
+	# adding 4 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=4
+	Copy. const. *p=0, copied 0000028DA0CC5610 to 0000028DA0CC2C90
+	Copy. const. *p=1, copied 0000028DA0CC5618 to 0000028DA0CC2C98
+	Copy. const. *p=2, copied 0000028DA0CC5620 to 0000028DA0CC2CA0
+	Copy. const. *p=3, copied 0000028DA0CC5628 to 0000028DA0CC2CA8
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	# adding 5 using emplace_back
+	Define. const. *p=5
+	# adding 6 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=6
+	Copy. const. *p=0, copied 0000028DA0CC2C90 to 0000028DA0CBA280
+	Copy. const. *p=1, copied 0000028DA0CC2C98 to 0000028DA0CBA288
+	Copy. const. *p=2, copied 0000028DA0CC2CA0 to 0000028DA0CBA290
+	Copy. const. *p=3, copied 0000028DA0CC2CA8 to 0000028DA0CBA298
+	Copy. const. *p=4, copied 0000028DA0CC2CB0 to 0000028DA0CBA2A0
+	Copy. const. *p=5, copied 0000028DA0CC2CB8 to 0000028DA0CBA2A8
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	# adding 7 using emplace_back
+	Define. const. *p=7
+	# adding 8 using emplace_back
+	Define. const. *p=8
+	# adding 9 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=9
+	Copy. const. *p=0, copied 0000028DA0CBA280 to 0000028DA0CBE080
+	Copy. const. *p=1, copied 0000028DA0CBA288 to 0000028DA0CBE088
+	Copy. const. *p=2, copied 0000028DA0CBA290 to 0000028DA0CBE090
+	Copy. const. *p=3, copied 0000028DA0CBA298 to 0000028DA0CBE098
+	Copy. const. *p=4, copied 0000028DA0CBA2A0 to 0000028DA0CBE0A0
+	Copy. const. *p=5, copied 0000028DA0CBA2A8 to 0000028DA0CBE0A8
+	Copy. const. *p=6, copied 0000028DA0CBA2B0 to 0000028DA0CBE0B0
+	Copy. const. *p=7, copied 0000028DA0CBA2B8 to 0000028DA0CBE0B8
+	Copy. const. *p=8, copied 0000028DA0CBA2C0 to 0000028DA0CBE0C0
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	--------------
+	new int: 35
+	del int: 35
+	const_d: 10
+	const_c: 25
+	const_m: 0
+	assig_c: 0
+	assig_m: 0
+	--------------
+
+	Explicación: por copia es menor óptimo, porque requiere de muchos más recursos (35 variables en vez de 10) 
+	*/
+
+	//2. Añadir v.reserve(20) antes del bucle y ejecutalo (con la constructora de movimiento).
+
+	/*
+	# adding 0 using emplace_back
+	Define. const. *p=0
+	# adding 1 using emplace_back
+	Define. const. *p=1
+	# adding 2 using emplace_back
+	Define. const. *p=2
+	# adding 3 using emplace_back
+	Define. const. *p=3
+	# adding 4 using emplace_back
+	Define. const. *p=4
+	# adding 5 using emplace_back
+	Define. const. *p=5
+	# adding 6 using emplace_back
+	Define. const. *p=6
+	# adding 7 using emplace_back
+	Define. const. *p=7
+	# adding 8 using emplace_back
+	Define. const. *p=8
+	# adding 9 using emplace_back
+	Define. const. *p=9
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	--------------
+	new int: 10
+	del int: 10
+	const_d: 10
+	const_c: 0
+	const_m: 0
+	assig_c: 0
+	assig_m: 0
+	--------------
+
+	Explicación: dado que no tiene que usar memoria para resizear, porque ya se ha reservado con anterioridad, todo es mucho más rápido y directo, y más óptimo.
+	//Menos pasos, más eficiencia
+	*/
 
 
 }
