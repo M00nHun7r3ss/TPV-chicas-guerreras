@@ -294,6 +294,117 @@ void test0() {
 
 	/// Lo que cuesta redimensionar la memoria.
 
+	std::vector < A > v;
+	for (int i = 0; i < 10; i++) {
+		std::cout << "# adding " << i << " using emplace_back" << std::endl;
+		if (v.capacity() == v.size()) {
+			std::cout << "# The vector is about to be resized!" << std::endl;
+		}
+		v.emplace_back(i);
+	}
+
+	// 1. Ejecutar el código como está arriba sin/con la constructora de movimiento
+	// CON:
+
+	/*
+		# adding 0 using emplace_back
+		# The vector is about to be resized!
+		Define. const. *p=0
+		# adding 1 using emplace_back
+		# The vector is about to be resized!
+		Define. const. *p=1
+		Move. const. *p=0, moved 000001BE7E6E2780 to 000001BE7E6E2280
+		Destructor.
+		# adding 2 using emplace_back
+		# The vector is about to be resized!
+		Define. const. *p=2
+		Move. const. *p=0, moved 000001BE7E6E2280 to 000001BE7E6E0ED0
+		Move. const. *p=1, moved 000001BE7E6E2288 to 000001BE7E6E0ED8
+		Destructor.
+		Destructor.
+		# adding 3 using emplace_back
+		# The vector is about to be resized!
+		Define. const. *p=3
+		Move. const. *p=0, moved 000001BE7E6E0ED0 to 000001BE7E6E0510
+		Move. const. *p=1, moved 000001BE7E6E0ED8 to 000001BE7E6E0518
+		Move. const. *p=2, moved 000001BE7E6E0EE0 to 000001BE7E6E0520
+		Destructor.
+		Destructor.
+		Destructor.
+		# adding 4 using emplace_back
+		# The vector is about to be resized!
+		Define. const. *p=4
+		Move. const. *p=0, moved 000001BE7E6E0510 to 000001BE7E6E10B0
+		Move. const. *p=1, moved 000001BE7E6E0518 to 000001BE7E6E10B8
+		Move. const. *p=2, moved 000001BE7E6E0520 to 000001BE7E6E10C0
+		Move. const. *p=3, moved 000001BE7E6E0528 to 000001BE7E6E10C8
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		# adding 5 using emplace_back
+		Define. const. *p=5
+		# adding 6 using emplace_back
+		# The vector is about to be resized!
+		Define. const. *p=6
+		Move. const. *p=0, moved 000001BE7E6E10B0 to 000001BE7E6D3C90
+		Move. const. *p=1, moved 000001BE7E6E10B8 to 000001BE7E6D3C98
+		Move. const. *p=2, moved 000001BE7E6E10C0 to 000001BE7E6D3CA0
+		Move. const. *p=3, moved 000001BE7E6E10C8 to 000001BE7E6D3CA8
+		Move. const. *p=4, moved 000001BE7E6E10D0 to 000001BE7E6D3CB0
+		Move. const. *p=5, moved 000001BE7E6E10D8 to 000001BE7E6D3CB8
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		# adding 7 using emplace_back
+		Define. const. *p=7
+		# adding 8 using emplace_back
+		Define. const. *p=8
+		# adding 9 using emplace_back
+		# The vector is about to be resized!
+		Define. const. *p=9
+		Move. const. *p=0, moved 000001BE7E6D3C90 to 000001BE7E6DF1A0
+		Move. const. *p=1, moved 000001BE7E6D3C98 to 000001BE7E6DF1A8
+		Move. const. *p=2, moved 000001BE7E6D3CA0 to 000001BE7E6DF1B0
+		Move. const. *p=3, moved 000001BE7E6D3CA8 to 000001BE7E6DF1B8
+		Move. const. *p=4, moved 000001BE7E6D3CB0 to 000001BE7E6DF1C0
+		Move. const. *p=5, moved 000001BE7E6D3CB8 to 000001BE7E6DF1C8
+		Move. const. *p=6, moved 000001BE7E6D3CC0 to 000001BE7E6DF1D0
+		Move. const. *p=7, moved 000001BE7E6D3CC8 to 000001BE7E6DF1D8
+		Move. const. *p=8, moved 000001BE7E6D3CD0 to 000001BE7E6DF1E0
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		Destructor.
+		--------------
+		new int: 10
+		del int: 10
+		const_d: 10
+		const_c: 0
+		const_m: 25
+		assig_c: 0
+		assig_m: 0
+		--------------
+	*/	
+
 
 }
 
