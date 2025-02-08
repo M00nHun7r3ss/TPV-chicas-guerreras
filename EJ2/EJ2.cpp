@@ -61,13 +61,13 @@ public:
 			<< this << std::endl;
 	}
 
-	A(A&& o) /*noexcept*/ {
+	/*A(A&& o) noexcept {
 		p = o.p;
 		o.p = nullptr;
 		num_of_const_m++;
 		std::cout << "Move. const. *p=" << *p << ", moved " << &o << " to "
 			<< this << std::endl;
-	}
+	}*/
 
 	A& operator=(const A& o) {
 		if (p != nullptr) { // we have something in p, we should release it first
@@ -87,7 +87,7 @@ public:
 		return *this;
 	}
 
-	A& operator=(A&& o) /*noexcept*/ {
+	/*A& operator=(A&& o) noexcept {
 		if (p != nullptr) { // we have something in p, we should release it first
 			delete p;
 			num_of_delete++;
@@ -98,7 +98,7 @@ public:
 		std::cout << "Move. assign. *p=" << *p << ", moved " << &o << " to "
 			<< this << std::endl;
 		return *this;
-	}
+	}*/
 
 	~A() {
 		std::cout << "Destructor." << std::endl;
@@ -122,6 +122,31 @@ void print_vector(const std::vector<T>& v) {
 	}
 	std::cout << std::endl;
 }
+
+/*template <class _ForwardIterator, class _Predicate>
+_LIBCPP_NODISCARD_EXT _LIBCPP_CONSTEXPR_AFTER_CXX17 _ForwardIterator
+remove_if(_ForwardIterator __first, _ForwardIterator __last, _Predicate __pred)
+{
+	__first = _VSTD::find_if<_ForwardIterator, typename add_lvalue_reference<_Predicate>::type>
+		(__first, __last, __pred);
+	if (__first != __last)
+	{
+		_ForwardIterator __i = __first;
+		while (++__i != __last)
+		{
+			if (!__pred(*__i))
+			{
+				*__first = _VSTD::move(*__i);
+				++__first;
+			}
+		}
+	}
+	return __first;
+}
+*/
+
+//Explicación: Va buscando que se cumpla el predicatos y lo va moviendo internamente, hasta que no quede ningún elemento (__first == __last)
+
 
 void test0() {
 	
@@ -294,7 +319,7 @@ void test0() {
 
 	/// Lo que cuesta redimensionar la memoria.
 
-	std::vector < A > v;
+	/*std::vector < A > v;
 	//v.reserve(20);
 
 	for (int i = 0; i < 10; i++) {
@@ -303,7 +328,7 @@ void test0() {
 			std::cout << "# The vector is about to be resized!" << std::endl;
 		}
 		v.emplace_back(i);
-	}
+	}*/
 
 	// 1. Ejecutar el código como está arriba sin/con la constructora de movimiento
 	// CON:
@@ -663,6 +688,191 @@ void test0() {
 	Explicación: Ocurre lo mismo que si no hubiera constructora de movimiento, para evitar excepciones indeseadas
 	*/
 
+	///Borrar usando std::find_if y std::remove_if.
+
+	/*
+	Define. const. *p=0
+	Define. const. *p=1
+	Define. const. *p=2
+	Define. const. *p=3
+	Define. const. *p=4
+	Define. const. *p=5
+	Define. const. *p=6
+	Define. const. *p=7
+	Define. const. *p=8
+	Define. const. *p=9
+	# erasing 0
+	Move. assign. *p=1, moved 000001D697EB6868 to 000001D697EB6860
+	Move. assign. *p=2, moved 000001D697EB6870 to 000001D697EB6868
+	Move. assign. *p=3, moved 000001D697EB6878 to 000001D697EB6870
+	Move. assign. *p=4, moved 000001D697EB6880 to 000001D697EB6878
+	Move. assign. *p=5, moved 000001D697EB6888 to 000001D697EB6880
+	Move. assign. *p=6, moved 000001D697EB6890 to 000001D697EB6888
+	Move. assign. *p=7, moved 000001D697EB6898 to 000001D697EB6890
+	Move. assign. *p=8, moved 000001D697EB68A0 to 000001D697EB6898
+	Move. assign. *p=9, moved 000001D697EB68A8 to 000001D697EB68A0
+	Destructor.
+	# erasing 2
+	Move. assign. *p=3, moved 000001D697EB6870 to 000001D697EB6868
+	Move. assign. *p=4, moved 000001D697EB6878 to 000001D697EB6870
+	Move. assign. *p=5, moved 000001D697EB6880 to 000001D697EB6878
+	Move. assign. *p=6, moved 000001D697EB6888 to 000001D697EB6880
+	Move. assign. *p=7, moved 000001D697EB6890 to 000001D697EB6888
+	Move. assign. *p=8, moved 000001D697EB6898 to 000001D697EB6890
+	Move. assign. *p=9, moved 000001D697EB68A0 to 000001D697EB6898
+	Destructor.
+	# erasing 4
+	Move. assign. *p=5, moved 000001D697EB6878 to 000001D697EB6870
+	Move. assign. *p=6, moved 000001D697EB6880 to 000001D697EB6878
+	Move. assign. *p=7, moved 000001D697EB6888 to 000001D697EB6880
+	Move. assign. *p=8, moved 000001D697EB6890 to 000001D697EB6888
+	Move. assign. *p=9, moved 000001D697EB6898 to 000001D697EB6890
+	Destructor.
+	# erasing 6
+	Move. assign. *p=7, moved 000001D697EB6880 to 000001D697EB6878
+	Move. assign. *p=8, moved 000001D697EB6888 to 000001D697EB6880
+	Move. assign. *p=9, moved 000001D697EB6890 to 000001D697EB6888
+	Destructor.
+	# erasing 8
+	Move. assign. *p=9, moved 000001D697EB6888 to 000001D697EB6880
+	Destructor.
+	array after deletion
+	1 3 5 7 9
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	--------------
+	new int: 10
+	del int: 10
+	const_d: 10
+	const_c: 0
+	const_m: 0
+	assig_c: 0
+	assig_m: 25
+	--------------
+
+	std::vector<A> v;
+	v.reserve(20);
+	for (int i = 0; i < 10; i++) v.emplace_back(i);
+	auto pred = [](A& x) { return x % 2 == 0; };
+	std::vector<A>::iterator it;
+	while ((it = std::find_if(v.begin(), v.end(), pred)) != v.end()) {
+		std::cout << "# erasing " << *it << std::endl;
+		v.erase(it);
+	}
+	std::cout << "array after deletion " << std::endl;
+	print_vector(v);
+
+	Explicación: tras reservar las posiciones del array, mete todos los elementos. Va buscando los valores pares y al encontrar uno, lo elimina y desplaza 
+	todo a partir de la derecha de dicho elemento hacia la izquierda. Al acabar, libera todo de memoria. Crea, define y destruye 10 ints, y hay 25 movimientos
+	*/
+
+	/*
+	Define. const. *p=0
+	Define. const. *p=1
+	Define. const. *p=2
+	Define. const. *p=3
+	Define. const. *p=4
+	Define. const. *p=5
+	Define. const. *p=6
+	Define. const. *p=7
+	Define. const. *p=8
+	Define. const. *p=9
+	Move. assign. *p=1, moved 000001E67CF96868 to 000001E67CF96860
+	Move. assign. *p=3, moved 000001E67CF96878 to 000001E67CF96868
+	Move. assign. *p=5, moved 000001E67CF96888 to 000001E67CF96870
+	Move. assign. *p=7, moved 000001E67CF96898 to 000001E67CF96878
+	Move. assign. *p=9, moved 000001E67CF968A8 to 000001E67CF96880
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	array after deletion
+	1 3 5 7 9
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	--------------
+	new int: 10
+	del int: 10
+	const_d: 10
+	const_c: 0
+	const_m: 0
+	assig_c: 0
+	assig_m: 5
+	--------------
+
+	std::vector<A> v;
+	v.reserve(20);
+	for (int i = 0; i < 10; i++) v.emplace_back(i);
+	auto pred = [](A& x) { return x % 2 == 0; };
+	std::vector<A>::iterator it = std::remove_if(v.begin(), v.end(), pred);
+	v.erase(it, v.end());
+	std::cout << "array after deletion " << std::endl;
+	print_vector(v);
+
+	
+	CON OPERADOR= :
+	Explicación: tras reservar las posiciones del array, mete todos los elementos. Va buscando los valores pares y al encontrar uno, lo desplaza al final del array
+	y los elimina, dejando el array solo con los impares. Al acabar, libera todo de memoria. Crea, define y destruye 10 ints, y hay 5 movimientos
+
+	*/
+
+	/*
+	Define. const. *p=0
+	Define. const. *p=1
+	Define. const. *p=2
+	Define. const. *p=3
+	Define. const. *p=4
+	Define. const. *p=5
+	Define. const. *p=6
+	Define. const. *p=7
+	Define. const. *p=8
+	Define. const. *p=9
+	Copy. assign. *p=1, copied 000001C5A9886868 to 000001C5A9886860
+	Copy. assign. *p=3, copied 000001C5A9886878 to 000001C5A9886868
+	Copy. assign. *p=5, copied 000001C5A9886888 to 000001C5A9886870
+	Copy. assign. *p=7, copied 000001C5A9886898 to 000001C5A9886878
+	Copy. assign. *p=9, copied 000001C5A98868A8 to 000001C5A9886880
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	array after deletion
+	1 3 5 7 9
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	--------------
+	new int: 15
+	del int: 15
+	const_d: 10
+	const_c: 0
+	const_m: 0
+	assig_c: 5
+	assig_m: 0
+	-------------- 
+
+	std::vector<A> v;
+	v.reserve(20);
+	for (int i = 0; i < 10; i++) v.emplace_back(i);
+	auto pred = [](A& x) { return x % 2 == 0; };
+	std::vector<A>::iterator it = std::remove_if(v.begin(), v.end(), pred);
+	v.erase(it, v.end());
+	std::cout << "array after deletion " << std::endl;
+	print_vector(v);
+
+	SIN OPERADOR= :
+	Explicación: Dado que no tiene movimiento, copiará los valores y por tanto, usará más recursos (15 ints en vez de 10).
+	*/
 
 }
 
