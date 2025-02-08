@@ -61,7 +61,7 @@ public:
 			<< this << std::endl;
 	}
 
-	A(A&& o) noexcept {
+	A(A&& o) /*noexcept*/ {
 		p = o.p;
 		o.p = nullptr;
 		num_of_const_m++;
@@ -87,7 +87,7 @@ public:
 		return *this;
 	}
 
-	A& operator=(A&& o) noexcept {
+	A& operator=(A&& o) /*noexcept*/ {
 		if (p != nullptr) { // we have something in p, we should release it first
 			delete p;
 			num_of_delete++;
@@ -295,7 +295,7 @@ void test0() {
 	/// Lo que cuesta redimensionar la memoria.
 
 	std::vector < A > v;
-	v.reserve(20);
+	//v.reserve(20);
 
 	for (int i = 0; i < 10; i++) {
 		std::cout << "# adding " << i << " using emplace_back" << std::endl;
@@ -558,6 +558,109 @@ void test0() {
 
 	Explicación: dado que no tiene que usar memoria para resizear, porque ya se ha reservado con anterioridad, todo es mucho más rápido y directo, y más óptimo.
 	//Menos pasos, más eficiencia
+	*/
+
+	//3. En lugar de quitar la constructora de movimiento, intenta solo quitar la keyword noexcept de dicha constructora.
+	
+	/*
+	# adding 0 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=0
+	# adding 1 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=1
+	Copy. const. *p=0, copied 0000018FA7E13CB0 to 0000018FA7E13990
+	Destructor.
+	# adding 2 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=2
+	Copy. const. *p=0, copied 0000018FA7E13990 to 0000018FA7E10EC0
+	Copy. const. *p=1, copied 0000018FA7E13998 to 0000018FA7E10EC8
+	Destructor.
+	Destructor.
+	# adding 3 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=3
+	Copy. const. *p=0, copied 0000018FA7E10EC0 to 0000018FA7E11160
+	Copy. const. *p=1, copied 0000018FA7E10EC8 to 0000018FA7E11168
+	Copy. const. *p=2, copied 0000018FA7E10ED0 to 0000018FA7E11170
+	Destructor.
+	Destructor.
+	Destructor.
+	# adding 4 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=4
+	Copy. const. *p=0, copied 0000018FA7E11160 to 0000018FA7E11950
+	Copy. const. *p=1, copied 0000018FA7E11168 to 0000018FA7E11958
+	Copy. const. *p=2, copied 0000018FA7E11170 to 0000018FA7E11960
+	Copy. const. *p=3, copied 0000018FA7E11178 to 0000018FA7E11968
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	# adding 5 using emplace_back
+	Define. const. *p=5
+	# adding 6 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=6
+	Copy. const. *p=0, copied 0000018FA7E11950 to 0000018FA7E0E330
+	Copy. const. *p=1, copied 0000018FA7E11958 to 0000018FA7E0E338
+	Copy. const. *p=2, copied 0000018FA7E11960 to 0000018FA7E0E340
+	Copy. const. *p=3, copied 0000018FA7E11968 to 0000018FA7E0E348
+	Copy. const. *p=4, copied 0000018FA7E11970 to 0000018FA7E0E350
+	Copy. const. *p=5, copied 0000018FA7E11978 to 0000018FA7E0E358
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	# adding 7 using emplace_back
+	Define. const. *p=7
+	# adding 8 using emplace_back
+	Define. const. *p=8
+	# adding 9 using emplace_back
+	# The vector is about to be resized!
+	Define. const. *p=9
+	Copy. const. *p=0, copied 0000018FA7E0E330 to 0000018FA7E06680
+	Copy. const. *p=1, copied 0000018FA7E0E338 to 0000018FA7E06688
+	Copy. const. *p=2, copied 0000018FA7E0E340 to 0000018FA7E06690
+	Copy. const. *p=3, copied 0000018FA7E0E348 to 0000018FA7E06698
+	Copy. const. *p=4, copied 0000018FA7E0E350 to 0000018FA7E066A0
+	Copy. const. *p=5, copied 0000018FA7E0E358 to 0000018FA7E066A8
+	Copy. const. *p=6, copied 0000018FA7E0E360 to 0000018FA7E066B0
+	Copy. const. *p=7, copied 0000018FA7E0E368 to 0000018FA7E066B8
+	Copy. const. *p=8, copied 0000018FA7E0E370 to 0000018FA7E066C0
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	Destructor.
+	--------------
+	new int: 35
+	del int: 35
+	const_d: 10
+	const_c: 25
+	const_m: 0
+	assig_c: 0
+	assig_m: 0
+	--------------
+
+	Explicación: Ocurre lo mismo que si no hubiera constructora de movimiento, para evitar excepciones indeseadas
 	*/
 
 
