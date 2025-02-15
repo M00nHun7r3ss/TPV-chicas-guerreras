@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\components\DeAcceleration.cpp" />
+    <ClCompile Include="..\src\components\FighterCtrl.cpp" />
     <ClCompile Include="..\src\components\GameCtrl.cpp" />
     <ClCompile Include="..\src\components\Image.cpp" />
     <ClCompile Include="..\src\components\PacManCtrl.cpp" />
@@ -42,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\components\DeAcceleration.h" />
+    <ClInclude Include="..\src\components\FighterCtrl.h" />
     <ClInclude Include="..\src\components\GameCtrl.h" />
     <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\PacManCtrl.h" />
