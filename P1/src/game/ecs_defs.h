@@ -8,12 +8,12 @@
 #define _CMPS_LIST_ \
 	TRANSFORM, \
 	IMAGE, \
-	PACMANCTRL, \
 	FIGHTERCTRL, \
 	STARMOTION, \
 	GAMECTRL, \
-	STOPONBORDER, \
-	DEACCELERATION
+	DEACCELERATION, \
+	SHOWATOPPOSITESIDE, \
+	HEALTH
 
 
 // Groups list - must have at least one element

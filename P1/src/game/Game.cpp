@@ -13,7 +13,8 @@
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 #include "../components/DeAcceleration.h"
-//#include "../components/FighterCtrl.h"
+#include "../components/FighterCtrl.h"
+#include "../components/ShowAtOppositeSide.h"
 
 using ecs::Manager;
 
@@ -67,8 +68,8 @@ void Game::init() {
 
 	_mngr->addComponent<Image>(fighter, &sdlutils().images().at("fighter"));
 	_mngr->addComponent<DeAcceleration>(fighter);
-	//_mngr->addComponent<FighterCtrl>(fighter);
-	//_mngr->addComponent<StopOnBorders>(pacman);
+	_mngr->addComponent<FighterCtrl>(fighter);
+	_mngr->addComponent<ShowAtOppositeSide>(fighter);
 
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();
