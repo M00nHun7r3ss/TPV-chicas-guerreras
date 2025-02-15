@@ -1,0 +1,100 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TPV2", "TPV2\TPV2.vcxproj", "{1382E633-E980-46AE-9FF9-D44E253761C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{80EEBC40-E90D-4E69-B236-1EE4539CFB99}"
+	ProjectSection(SolutionItems) = preProject
+		src\components\BounceOnBorders.cpp = src\components\BounceOnBorders.cpp
+		src\components\BounceOnBorders.h = src\components\BounceOnBorders.h
+		src\utils\Collisions.cpp = src\utils\Collisions.cpp
+		src\utils\Collisions.h = src\utils\Collisions.h
+		src\ecs\Component.h = src\ecs\Component.h
+		src\utils\DynamicBitSet.h = src\utils\DynamicBitSet.h
+		src\ecs\ecs.h = src\ecs\ecs.h
+		src\game\ecs_defs.h = src\game\ecs_defs.h
+		src\ecs\ecs_defs_example.h = src\ecs\ecs_defs_example.h
+		src\ecs\Entity.h = src\ecs\Entity.h
+		src\sdlutils\Font.h = src\sdlutils\Font.h
+		src\game\Game.cpp = src\game\Game.cpp
+		src\game\Game.h = src\game\Game.h
+		src\components\GameInfoMsgs.cpp = src\components\GameInfoMsgs.cpp
+		src\components\GameInfoMsgs.h = src\components\GameInfoMsgs.h
+		src\components\GameState.cpp = src\components\GameState.cpp
+		src\components\GameState.h = src\components\GameState.h
+		src\utils\GenID.h = src\utils\GenID.h
+		src\components\Image.cpp = src\components\Image.cpp
+		src\components\Image.h = src\components\Image.h
+		src\sdlutils\InputHandler.h = src\sdlutils\InputHandler.h
+		src\json\JSON.cpp = src\json\JSON.cpp
+		src\json\JSON.h = src\json\JSON.h
+		src\json\JSONValue.cpp = src\json\JSONValue.cpp
+		src\json\JSONValue.h = src\json\JSONValue.h
+		src\json\json_demo.cpp = src\json\json_demo.cpp
+		src\json\json_demo.h = src\json\json_demo.h
+		src\sdlutils\macros.h = src\sdlutils\macros.h
+		src\main.cpp = src\main.cpp
+		src\ecs\Manager.cpp = src\ecs\Manager.cpp
+		src\ecs\Manager.h = src\ecs\Manager.h
+		src\utils\mpl.h = src\utils\mpl.h
+		src\sdlutils\Music.h = src\sdlutils\Music.h
+		src\components\PaddleAICtrl.cpp = src\components\PaddleAICtrl.cpp
+		src\components\PaddleAICtrl.h = src\components\PaddleAICtrl.h
+		src\components\PaddleKBCtrl.cpp = src\components\PaddleKBCtrl.cpp
+		src\components\PaddleKBCtrl.h = src\components\PaddleKBCtrl.h
+		src\components\PaddleMouseCtrl.cpp = src\components\PaddleMouseCtrl.cpp
+		src\components\PaddleMouseCtrl.h = src\components\PaddleMouseCtrl.h
+		src\utils\ptr_iterator.h = src\utils\ptr_iterator.h
+		src\ecs\RAEDME.md = src\ecs\RAEDME.md
+		src\json\RAEDME.md = src\json\RAEDME.md
+		src\sdlutils\RAEDME.md = src\sdlutils\RAEDME.md
+		src\sdlutils\RandomNumberGenerator.h = src\sdlutils\RandomNumberGenerator.h
+		src\components\RectangleViewer.cpp = src\components\RectangleViewer.cpp
+		src\components\RectangleViewer.h = src\components\RectangleViewer.h
+		src\sdlutils\SDLNetUtils.cpp = src\sdlutils\SDLNetUtils.cpp
+		src\sdlutils\SDLNetUtils.h = src\sdlutils\SDLNetUtils.h
+		src\sdlutils\SDLUtils.cpp = src\sdlutils\SDLUtils.cpp
+		src\sdlutils\SDLUtils.h = src\sdlutils\SDLUtils.h
+		src\sdlutils\SDLUtilsError.cpp = src\sdlutils\SDLUtilsError.cpp
+		src\sdlutils\SDLUtilsError.h = src\sdlutils\SDLUtilsError.h
+		src\sdlutils\sdlutils_demo.cpp = src\sdlutils\sdlutils_demo.cpp
+		src\sdlutils\sdlutils_demo.h = src\sdlutils\sdlutils_demo.h
+		src\utils\Singleton.h = src\utils\Singleton.h
+		src\sdlutils\SoundEffect.cpp = src\sdlutils\SoundEffect.cpp
+		src\sdlutils\SoundEffect.h = src\sdlutils\SoundEffect.h
+		src\components\StopOnBorders.cpp = src\components\StopOnBorders.cpp
+		src\components\StopOnBorders.h = src\components\StopOnBorders.h
+		src\sdlutils\Texture.cpp = src\sdlutils\Texture.cpp
+		src\sdlutils\Texture.h = src\sdlutils\Texture.h
+		src\components\Transform.h = src\components\Transform.h
+		src\utils\Vector2D.cpp = src\utils\Vector2D.cpp
+		src\utils\Vector2D.h = src\utils\Vector2D.h
+		src\sdlutils\VirtualTimer.h = src\sdlutils\VirtualTimer.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1382E633-E980-46AE-9FF9-D44E253761C3}.Debug|x64.ActiveCfg = Debug|x64
+		{1382E633-E980-46AE-9FF9-D44E253761C3}.Debug|x64.Build.0 = Debug|x64
+		{1382E633-E980-46AE-9FF9-D44E253761C3}.Debug|x86.ActiveCfg = Debug|Win32
+		{1382E633-E980-46AE-9FF9-D44E253761C3}.Debug|x86.Build.0 = Debug|Win32
+		{1382E633-E980-46AE-9FF9-D44E253761C3}.Release|x64.ActiveCfg = Release|x64
+		{1382E633-E980-46AE-9FF9-D44E253761C3}.Release|x64.Build.0 = Release|x64
+		{1382E633-E980-46AE-9FF9-D44E253761C3}.Release|x86.ActiveCfg = Release|Win32
+		{1382E633-E980-46AE-9FF9-D44E253761C3}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D3698FE-F33F-4AC1-87F8-FBACAB0B1DB9}
+	EndGlobalSection
+EndGlobal
