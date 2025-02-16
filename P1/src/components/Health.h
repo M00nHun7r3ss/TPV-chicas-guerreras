@@ -1,6 +1,8 @@
 #pragma once
 #include "../ecs/Component.h"
 
+class Transform;
+
 class Health : public ecs::Component
 {
 public:
@@ -19,5 +21,6 @@ public:
 private:
 	int _currentHealth;
 	int _maxHealth;
+	Transform* _tr;
 };
 

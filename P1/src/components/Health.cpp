@@ -3,29 +3,39 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/InputHandler.h"
-//#include "GameState.h"
 
-Health::Health() : _currentHealth(3), _maxHealth(3) {
+Health::Health() : _currentHealth(3), _maxHealth(3), _tr() {
 }
 
 Health::~Health(){
 }
 
 void Health::initComponent(){
-	/*auto mngr = _ent->getMngr();
-	_gameState = mngr->getComponent<GameState>(_ent);
-	assert(_gameState != nullptr);*/
+	/*auto* mngr = _ent->getMngr();
+	_tr = mngr->getComponent<Transform>(_ent);
+	assert(_tr != nullptr);*/
 }
 
 void Health::render(){
+	/*auto& sdl = *SDLUtils::Instance();
+	std::vector<Texture&> hearts;
+	auto& heart = sdl.images().at("heart"); // corazón.
+	for (int i = 0; i < _maxHealth; i++){
+		hearts.emplace_back(heart);
+	}
+
+	sdl.clearRenderer();
+	for (int i = 0; i < _currentHealth; i++)
+	{
+		hearts[i].render(10 * i, 10);
+	}*/
 }
 
 void Health::update()
 {
 	auto& ihldr = ih();
 
-	if (ihldr.keyDownEvent())
-	{
+	if (ihldr.keyDownEvent()){
 		if (ihldr.isKeyDown(SDLK_e)) // Damage - E
 		{
 			damage();
