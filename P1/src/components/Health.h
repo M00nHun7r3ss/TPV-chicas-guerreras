@@ -11,6 +11,13 @@ public:
 	virtual ~Health();
 	void initComponent() override;
 	void render() override;
+	void update();
+	void damage();
+	void heal();
+	int getHealth() { return _currentHealth; }
+
 private:
+	int _currentHealth;
+	int _maxHealth;
 };
 
