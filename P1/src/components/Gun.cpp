@@ -65,6 +65,23 @@ void Gun::update()
 	if (ihldr.isKeyDown(SDL_SCANCODE_S) /*&& (float)(timer / 100) % 0.25f == 0 */ ) {
 		shoot(&bp, &bv, bw, bh, br);
 	}
+
+	// SAMIR CLASE.
+	/*
+	if (_pos.getX() + _width < 0 || _pos.getX()> sdlutils().width() || _pos.getY() + _height < 0 || _pos.getX()> sdlutils().height()) {
+		used = false
+	}*/
+
+	/*int i = (__lastUsed + 1) % _bullets.size();
+	while (_bullest[i].used && i != _lastUsed) {
+		i = (i + 1) % _bullets.size();
+	}
+
+	if (!_bullets[i].used) {
+		_bullets[i].used = true;
+		_bullets[i].pos = p;
+		_bullets[i].vel = v;
+	}*/
 	
 }
 
