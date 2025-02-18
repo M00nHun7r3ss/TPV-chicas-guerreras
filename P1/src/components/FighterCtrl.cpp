@@ -52,5 +52,10 @@ void FighterCtrl::update()
 		// it will be cancelled
 		sdlutils().soundEffects().at("thrust").play(0, 1);*/
 	}
+	else if (ihldr.isKeyDown(SDL_SCANCODE_S)) { // shoot
+
+		;
+		Vector2D v = Vector2D(1, 0);
+	}
 }
 

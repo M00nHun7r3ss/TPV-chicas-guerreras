@@ -24,7 +24,6 @@ public:
 
 	Gun(Transform* t);
 	virtual ~Gun();
-	void initComponent() override;
 	void reset();
 	void render();
 	void update();

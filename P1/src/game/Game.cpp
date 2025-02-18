@@ -118,6 +118,12 @@ void Game::start() {
 			SDL_Delay(10 - frameTime);
 	}
 
+	refresh();
+
+}
+
+void Game::refresh()
+{
 }
 
 void Game::checkCollisions() {

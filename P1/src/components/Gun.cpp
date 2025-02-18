@@ -18,15 +18,6 @@ Gun::~Gun()
 {
 }
 
-void Gun::initComponent()
-{
-//	auto* mngr = _ent->getMngr();
-//	//Recorremos el array de balas
-//	for (Gun::Bullet& b : _bullets) {
-//		
-//	}
-}
-
 void Gun::reset()
 {
 	//Recorremos el array de balas
@@ -38,6 +29,14 @@ void Gun::reset()
 
 void Gun::render()
 {
+	/*//Recorremos el array de balas
+	for (Gun::Bullet& b : _bullets) {
+		if (b.used) {
+			SDL_SetRenderDrawColor(sdlutils().renderer(), COLOREXP(build_sdlcolor(0xffffffff)));
+			SDL_Rect rect = { b.pos->getX(), b.pos->getY(), 5.0f, 5.0f };
+
+		}
+	}*/
 }
 
 void Gun::update()
@@ -57,6 +56,7 @@ void Gun::update()
 			//Avanza pos + vel (en línea recta con la rotacion del shoot)
 			b.pos->setX(b.pos->getX() + b.vel->getX());
 			b.pos->setY(b.pos->getY() + b.vel->getY());
+			b.used = false;
 		}
 	}
 

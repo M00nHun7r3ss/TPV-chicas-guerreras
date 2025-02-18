@@ -12,6 +12,7 @@ public:
 	virtual ~Game();
 	void init();
 	void start();
+	void refresh();
 private:
 	void checkCollisions();
 	ecs::Manager *_mngr;
