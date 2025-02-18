@@ -18,14 +18,14 @@ Gun::~Gun()
 {
 }
 
-//void Gun::initComponent()
-//{
+void Gun::initComponent()
+{
 //	auto* mngr = _ent->getMngr();
 //	//Recorremos el array de balas
 //	for (Gun::Bullet& b : _bullets) {
 //		
 //	}
-//}
+}
 
 void Gun::reset()
 {

@@ -16,7 +16,14 @@ void Health::initComponent(){
 	assert(_tr != nullptr);*/
 }
 
-void Health::render(){
+void Health::render() {
+	
+	SDL_Rect heart = { 5, 5, 20, 20 };
+	for (int i = 0; i < _currentHealth; i++)
+	{
+		heart.x = (i * 20) + 5;
+	}
+		
 	/*auto& sdl = *SDLUtils::Instance();
 	std::vector<Texture&> hearts;
 	auto& heart = sdl.images().at("heart"); // corazón.
