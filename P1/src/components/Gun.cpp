@@ -61,11 +61,24 @@ void Gun::update()
 	}
 
 	//Si se pulsa S, dispara
-	float timer = sdlutils().virtualTimer().currRealTime() / 100;
-	if (ihldr.isKeyDown(SDL_SCANCODE_S) /*&& (float)(timer / 100) % 0.25f == 0 */ ) {
-		shoot(&bp, &bv, bw, bh, br);
-	}
+	//float timer = sdlutils().virtualTimer().currRealTime() / 100;
+	
+	// Inicialmente empieza en 0.25 segundos.
+	float _timeBetweenEachSpawn = 250.0f;
 
+	// Puede disparar en caso de apretar la tecla S.
+	if (ihldr.isKeyDown(SDL_SCANCODE_S) && _timeBetweenEachSpawn == 250.0f) {
+		shoot(&bp, &bv, bw, bh, br);
+
+		// Va bajando el contador a 0.
+		_timeBetweenEachSpawn--;
+
+		// Si el tiempo entre un spawn y otro ha llegado a cero.
+		if (_timeBetweenEachSpawn <= 0){
+			_timeBetweenEachSpawn = 250.0f; // reinicia el contador.
+		}
+	}
+	
 	// SAMIR CLASE.
 	/*
 	if (_pos.getX() + _width < 0 || _pos.getX()> sdlutils().width() || _pos.getY() + _height < 0 || _pos.getX()> sdlutils().height()) {
