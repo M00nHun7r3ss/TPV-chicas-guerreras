@@ -10,32 +10,31 @@ Health::Health() : _currentHealth(3), _maxHealth(3), _tr() {
 Health::~Health(){
 }
 
-void Health::initComponent(){
-	/*auto* mngr = _ent->getMngr();
-	_tr = mngr->getComponent<Transform>(_ent);
-	assert(_tr != nullptr);*/
-}
-
 void Health::render() {
+	// ---- ¡¡¡¡ PASOS PARA RENDERIZAR !!!! ----.
 	
-	SDL_Rect heart = { 5, 5, 20, 20 };
-	for (int i = 0; i < _currentHealth; i++)
-	{
-		heart.x = (i * 20) + 5;
-	}
-		
-	/*auto& sdl = *SDLUtils::Instance();
-	std::vector<Texture&> hearts;
-	auto& heart = sdl.images().at("heart"); // corazón.
-	for (int i = 0; i < _maxHealth; i++){
-		hearts.emplace_back(heart);
-	}
+	// reference to the SDLUtils Singleton.
+	auto& sdl = *SDLUtils::Instance();
 
-	sdl.clearRenderer();
-	for (int i = 0; i < _currentHealth; i++)
-	{
-		hearts[i].render(10 * i, 10);
-	}*/
+	// store the 'renderer' in a local variable, just for convenience
+	SDL_Renderer* renderer = sdl.renderer();
+	
+	// heart image.
+	auto& heart = sdl.images().at("heart"); 
+
+	// Creamos el rectángulo con el tamaño y la posicion inicial.
+	SDL_Rect heartRect;
+	heartRect.x = 5;
+	heartRect.y = 10;
+	// por darle un tamaño....
+	heartRect.w = 40;
+	heartRect.h = 40;
+
+	// vamos modificando la x y renderizando para que vayan en fila.
+	for (int i = 0; i < _currentHealth; i++){
+		heart.render(heartRect);
+		heartRect.x = heartRect.x + 45;
+	}
 }
 
 void Health::update()

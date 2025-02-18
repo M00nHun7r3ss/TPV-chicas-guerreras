@@ -11,7 +11,6 @@ public:
 
 	Health();
 	virtual ~Health();
-	void initComponent() override;
 	void render() override;
 	void update();
 	void damage();

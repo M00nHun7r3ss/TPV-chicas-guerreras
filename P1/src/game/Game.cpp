@@ -69,7 +69,7 @@ void Game::init() {
 	_mngr->addComponent<DeAcceleration>(fighter);
 	_mngr->addComponent<FighterCtrl>(fighter);
 	_mngr->addComponent<ShowAtOppositeSide>(fighter);
-	//_mngr->addComponent<Health>(fighter);
+	_mngr->addComponent<Health>(fighter);
 
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();
