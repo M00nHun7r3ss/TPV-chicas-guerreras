@@ -29,14 +29,14 @@ void Gun::reset()
 
 void Gun::render()
 {
-	/*//Recorremos el array de balas
+	//Recorremos el array de balas
 	for (Gun::Bullet& b : _bullets) {
 		if (b.used) {
 			SDL_SetRenderDrawColor(sdlutils().renderer(), COLOREXP(build_sdlcolor(0xffffffff)));
 			SDL_Rect rect = { b.pos->getX(), b.pos->getY(), 5.0f, 5.0f };
 
 		}
-	}*/
+	}
 }
 
 void Gun::update()
@@ -56,55 +56,47 @@ void Gun::update()
 			//Avanza pos + vel (en línea recta con la rotacion del shoot)
 			b.pos->setX(b.pos->getX() + b.vel->getX());
 			b.pos->setY(b.pos->getY() + b.vel->getY());
-			b.used = false;
+
+			//Si sale de pantalla, se desactiva
+			if (b.pos->getX() + b.width < 0 || b.pos->getX()> sdlutils().width() ||
+				b.pos->getY() + b.height < 0 || b.pos->getX()> sdlutils().height()) {
+				b.used = false;
+			}
 		}
 	}
 
-	//Si se pulsa S, dispara
-	//float timer = sdlutils().virtualTimer().currRealTime() / 100;
-	
 	// Inicialmente empieza en 0.25 segundos.
-	float _timeBetweenEachSpawn = 250.0f;
+	Uint32 _timeBetweenEachSpawn = 250;
 
 	// Puede disparar en caso de apretar la tecla S.
-	if (ihldr.isKeyDown(SDL_SCANCODE_S) && _timeBetweenEachSpawn == 250.0f) {
+	if (ihldr.isKeyDown(SDL_SCANCODE_S) && sdlutils().virtualTimer().currTime() - _timeBetweenEachSpawn > 250) {
+		//Dispara
 		shoot(&bp, &bv, bw, bh, br);
 
-		// Va bajando el contador a 0.
-		_timeBetweenEachSpawn--;
-
-		// Si el tiempo entre un spawn y otro ha llegado a cero.
-		if (_timeBetweenEachSpawn <= 0){
-			_timeBetweenEachSpawn = 250.0f; // reinicia el contador.
-		}
-	}
-	
-	// SAMIR CLASE.
-	/*
-	if (_pos.getX() + _width < 0 || _pos.getX()> sdlutils().width() || _pos.getY() + _height < 0 || _pos.getX()> sdlutils().height()) {
-		used = false
-	}*/
-
-	/*int i = (__lastUsed + 1) % _bullets.size();
-	while (_bullest[i].used && i != _lastUsed) {
-		i = (i + 1) % _bullets.size();
+		// Reinicia el contador
+		_timeBetweenEachSpawn = sdlutils().virtualTimer().currTime();
 	}
 
-	if (!_bullets[i].used) {
-		_bullets[i].used = true;
-		_bullets[i].pos = p;
-		_bullets[i].vel = v;
-	}*/
-	
 }
 
 void Gun::shoot(Vector2D* p, Vector2D* v, int width, int height, float r)
 {
-	int i = 0;
-	while (i < _max_bullets && !_bullets[i].used)
-	{
-		i++;
+
+	//indice para la busqueda circular
+	int _lastUsed = 0;
+	//i no es 0 hasta que no llegue _lastUsed + 1 no llegue a 20. En otros casos, i = _lastUsed + 1
+	int i = (_lastUsed + 1) % _bullets.size();
+	//Si la bala está usada (ya se ha disparado), y no es la que acabamos de comprobar
+	while (_bullets[i].used && i != _lastUsed) {
+		//Avanza la busqueda, porque esa bala ya se ha disparado
+		i = (i + 1) % _bullets.size();
 	}
 
-
+	//Si no se ha disparado ya
+	if (!_bullets[i].used) {
+		//La dispara en la posición y con la velocidad determinada
+		_bullets[i].used = true;
+		_bullets[i].pos = p;
+		_bullets[i].vel = v;
+	}
 }

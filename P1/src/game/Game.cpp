@@ -87,13 +87,13 @@ void Game::start() {
 	// reset the time before starting - so we calculate correct
 	// delta-time in the first iteration
 	//
-	sdlutils().resetTime();
+	sdlutils().virtualTimer().resetTime();
 
 	while (!exit) {
 		// store the current time -- all game objects should use this time when
 		// then need to the current time. They also have accessed to the time elapsed
 		// between the last two calls to regCurrTime().
-		Uint32 startTime = sdlutils().regCurrTime();
+		Uint32 startTime = sdlutils().virtualTimer().regCurrTime();
 
 		// refresh the input handler
 		ihdlr.refresh();
@@ -112,7 +112,7 @@ void Game::start() {
 		_mngr->render();
 		sdlutils().presentRenderer();
 
-		Uint32 frameTime = sdlutils().currRealTime() - startTime;
+		Uint32 frameTime = sdlutils().virtualTimer().currRealTime() - startTime;
 
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
