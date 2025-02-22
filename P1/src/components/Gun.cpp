@@ -10,7 +10,7 @@
 
 class Vector2D;
 
-Gun::Gun(Transform* t) : _trPlayer(t)
+Gun::Gun() : _trPlayer()
 {
 }
 
@@ -29,12 +29,30 @@ void Gun::reset()
 
 void Gun::render()
 {
+	// ---- ¡¡¡¡ PASOS PARA RENDERIZAR !!!! ----.
+
+	// reference to the SDLUtils Singleton.
+	auto& sdl = *SDLUtils::Instance();
+
+	// store the 'renderer' in a local variable, just for convenience
+	SDL_Renderer* renderer = sdl.renderer();
+
+	// fire image.
+	auto& fire = sdl.images().at("fire");
+
 	//Recorremos el array de balas
 	for (Gun::Bullet& b : _bullets) {
 		if (b.used) {
-			SDL_SetRenderDrawColor(sdlutils().renderer(), COLOREXP(build_sdlcolor(0xffffffff)));
-			SDL_Rect rect = { b.pos->getX(), b.pos->getY(), 5.0f, 5.0f };
+			// Creamos el rectángulo con el tamaño y la posicion inicial.
+			SDL_Rect fireRect;
+			fireRect.x = b.pos->getX();
+			fireRect.y = b.pos->getY();
+			// por darle un tamaño....
+			fireRect.w = 5.0f;
+			fireRect.h = 7.0f;
 
+			//Renderiza
+			fire.render(fireRect);
 		}
 	}
 }

@@ -14,6 +14,7 @@
 #include "../components/FighterCtrl.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Health.h"
+#include "../components/Gun.h"
 
 using ecs::Manager;
 
@@ -70,6 +71,7 @@ void Game::init() {
 	_mngr->addComponent<FighterCtrl>(fighter);
 	_mngr->addComponent<ShowAtOppositeSide>(fighter);
 	_mngr->addComponent<Health>(fighter);
+	_mngr->addComponent<Gun>(fighter);
 
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();

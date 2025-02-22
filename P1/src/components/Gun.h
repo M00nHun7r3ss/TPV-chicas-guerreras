@@ -8,7 +8,8 @@ class Transform;
 
 class Gun : public ecs::Component {
 public:
-	
+	__CMPID_DECL__(ecs::cmp::GUN)
+
 	struct Bullet {
 		bool used = false;
 		Vector2D* pos;
@@ -22,7 +23,7 @@ public:
 	typedef std::array<Bullet, _max_bullets> bullets_array_t;
 	typedef bullets_array_t::iterator iterator;
 
-	Gun(Transform* t);
+	Gun();
 	virtual ~Gun();
 	void reset();
 	void render();

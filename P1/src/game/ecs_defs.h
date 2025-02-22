@@ -13,7 +13,8 @@
 	GAMECTRL, \
 	DEACCELERATION, \
 	SHOWATOPPOSITESIDE, \
-	HEALTH
+	HEALTH, \
+	GUN
 
 
 // Groups list - must have at least one element
