@@ -46,8 +46,8 @@ void Gun::render()
 			fireRect.x = b.pos->getX();
 			fireRect.y = b.pos->getY();
 			// por darle un tamaño....
-			fireRect.w = 5.0f;
-			fireRect.h = 7.0f;
+			fireRect.w = 20.0f;
+			fireRect.h = 30.0f;
 
 			//Renderiza
 			fire.render(fireRect);
