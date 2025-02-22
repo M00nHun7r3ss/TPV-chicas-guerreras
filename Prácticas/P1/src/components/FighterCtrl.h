@@ -14,7 +14,7 @@ public:
 	void update() override;
 	
 private:
-	//void createStart();
+	//void createAsteroid();
 	Transform* _tr;
 };
 

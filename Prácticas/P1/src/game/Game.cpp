@@ -57,13 +57,13 @@ void Game::init() {
 	_mngr = new Manager();
 
 	// Create the fighter entity.
-	auto fighter = _mngr->addEntity();
+	ecs::entity_t fighter = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
 
-	auto tf = _mngr->addComponent<Transform>(fighter);
-	auto s = 50.0f;
-	auto x = (sdlutils().width() - s) / 2.0f;
-	auto y = (sdlutils().height() - s) / 2.0f;
+	Transform* tf = _mngr->addComponent<Transform>(fighter);
+	float s = 50.0f;
+	float x = (sdlutils().width() - s) / 2.0f;
+	float y = (sdlutils().height() - s) / 2.0f;
 	tf->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
 
 	_mngr->addComponent<Image>(fighter, &sdlutils().images().at("fighter"));
@@ -71,7 +71,7 @@ void Game::init() {
 	_mngr->addComponent<FighterCtrl>(fighter);
 	_mngr->addComponent<ShowAtOppositeSide>(fighter);
 	_mngr->addComponent<Health>(fighter);
-	_mngr->addComponent<Gun>(fighter, fighter->getMngr()->getComponent<Transform>(fighter));
+	_mngr->addComponent<Gun>(fighter, tf);
 
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();
@@ -143,10 +143,10 @@ void Game::checkCollisions() {
 	// particular case we could use a for-each loop since the list stars is not
 	// modified.
 	//
-	auto &stars = _mngr->getEntities(ecs::grp::STARS);
-	auto n = stars.size();
+	auto &asteroids = _mngr->getEntities(ecs::grp::ASTEROIDS);
+	auto n = asteroids.size();
 	for (auto i = 0u; i < n; i++) {
-		auto e = stars[i];
+		auto e = asteroids[i];
 		if (_mngr->isAlive(e)) { // if the star is active (it might have died in this frame)
 
 			// the Star's Transform
@@ -158,11 +158,11 @@ void Game::checkCollisions() {
 				playerTF->getHeight(), //
 					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
 				_mngr->setAlive(e, false);
-				gctrl->onStarEaten();
+				gctrl->onAsteroidDestroyed();
 
 				// play sound on channel 1 (if there is something playing there
 				// it will be cancelled
-				sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+				//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 			}
 		}
 	}

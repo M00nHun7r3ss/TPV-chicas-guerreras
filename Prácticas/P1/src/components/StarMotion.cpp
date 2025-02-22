@@ -39,7 +39,7 @@ void StarMotion::update() {
 		auto *mngr = _ent->getMngr();
 		mngr->setAlive(_ent, false);
 		auto ginfo = mngr->getHandler(ecs::hdlr::GAMEINFO);
-		mngr->getComponent<GameCtrl>(ginfo)->onStarDeath();
+		mngr->getComponent<GameCtrl>(ginfo)->onAsteroidDissappeared();
 	} else {
 		_tr->setRot(_tr->getRot() + 5.0f);
 	}

@@ -12,12 +12,12 @@ public:
 	GameCtrl();
 	virtual ~GameCtrl();
 
-	inline void onStarDeath() {
-		_currNumOfStars--;
+	inline void onAsteroidDissappeared() {
+		_currNumOfAsteroids--;
 	}
 
-	inline void onStarEaten() {
-		_currNumOfStars--;
+	inline void onAsteroidDestroyed() {
+		_currNumOfAsteroids--;
 		_score++;
 	}
 
@@ -26,10 +26,10 @@ public:
 	void render() override;
 
 private:
-	void createStart(unsigned int n);
+	void createAsteroid(unsigned int n);
 
-	unsigned int _currNumOfStars;
+	unsigned int _currNumOfAsteroids;
 	unsigned int _score;
-	unsigned int _starsLimit;
+	unsigned int _asteroidsLimit;
 };
 

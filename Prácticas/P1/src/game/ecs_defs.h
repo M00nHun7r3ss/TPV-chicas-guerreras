@@ -20,6 +20,7 @@
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
+	ASTEROIDS, \
 	STARS
 
 // Handlers list - must have at least one element
