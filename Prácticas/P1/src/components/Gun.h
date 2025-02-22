@@ -17,6 +17,10 @@ public:
 		int width;
 		int height;
 		float rot;
+
+		// getters bala.
+		inline int bulletWidth() const { return width; }
+		inline int bulletHeight() const { return height; }
 	};
 
 	constexpr static uint8_t _max_bullets = 20;
@@ -24,6 +28,7 @@ public:
 	typedef bullets_array_t::iterator iterator;
 
 	Gun();
+	Gun(Transform* t);
 	virtual ~Gun();
 	void reset();
 	void render();

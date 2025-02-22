@@ -1,21 +1,19 @@
 #include "Gun.h"
 
-#include <cassert>
-
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
-#include "Image.h"
 #include "Transform.h"
 
 class Vector2D;
 
-Gun::Gun() : _trPlayer()
-{
+Gun::Gun() : _trPlayer(){
 }
 
-Gun::~Gun()
-{
+Gun::Gun(Transform* t) : _trPlayer(t) {
+}
+
+Gun::~Gun(){
 }
 
 void Gun::reset()
@@ -76,8 +74,8 @@ void Gun::update()
 			b.pos->setY(b.pos->getY() + b.vel->getY());
 
 			//Si sale de pantalla, se desactiva
-			if (b.pos->getX() + b.width < 0 || b.pos->getX()> sdlutils().width() ||
-				b.pos->getY() + b.height < 0 || b.pos->getX()> sdlutils().height()) {
+			if (b.pos->getX() + b.bulletWidth() < 0 || b.pos->getX()> sdlutils().width() ||
+				b.pos->getY() + b.bulletHeight() < 0 || b.pos->getX()> sdlutils().height()) {
 				b.used = false;
 			}
 		}
