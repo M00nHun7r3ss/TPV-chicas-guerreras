@@ -41,6 +41,7 @@ void Gun::render()
 	//Recorremos el array de balas
 	for (Gun::Bullet& b : _bullets) {
 		if (b.used) {
+
 			// Creamos el rectángulo con el tamaño y la posicion inicial.
 			SDL_Rect fireRect;
 			fireRect.x = b.pos.getX();
@@ -48,7 +49,6 @@ void Gun::render()
 			// por darle un tamaño....
 			fireRect.w = 20.0f;
 			fireRect.h = 30.0f;
-
 
 			//Renderiza
 			fire.render(fireRect);

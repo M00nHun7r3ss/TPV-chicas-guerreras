@@ -27,6 +27,7 @@ public:
 		// setters bala.
 		inline void setBulletPos(Vector2D position) { pos = position; }
 		inline void setBulletVel(Vector2D velocity) { vel = velocity; }
+		inline void setBulletRot(float rotation) { rot = rotation; }
 	};
 
 	constexpr static uint8_t _max_bullets = 20;
