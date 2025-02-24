@@ -10,7 +10,7 @@ class Vector2D;
 Gun::Gun() : _trPlayer(){
 }
 
-Gun::Gun(Transform* t) : _trPlayer(t) {
+Gun::Gun(Transform* t) : _trPlayer(t), _lastShoot(0) {
 }
 
 Gun::~Gun(){
@@ -43,11 +43,12 @@ void Gun::render()
 		if (b.used) {
 			// Creamos el rectángulo con el tamaño y la posicion inicial.
 			SDL_Rect fireRect;
-			fireRect.x = b.pos->getX();
-			fireRect.y = b.pos->getY();
+			fireRect.x = b.pos.getX();
+			fireRect.y = b.pos.getY();
 			// por darle un tamaño....
 			fireRect.w = 20.0f;
 			fireRect.h = 30.0f;
+
 
 			//Renderiza
 			fire.render(fireRect);
@@ -70,12 +71,12 @@ void Gun::update()
 		//Si se ha usado
 		if (b.used) { 
 			//Avanza pos + vel (en línea recta con la rotacion del shoot)
-			b.pos->setX(b.pos->getX() + b.vel->getX());
-			b.pos->setY(b.pos->getY() + b.vel->getY());
+			b.pos.setX(b.pos.getX() + b.vel.getX());
+			b.pos.setY(b.pos.getY() + b.vel.getY());
 
 			//Si sale de pantalla, se desactiva
-			if (b.pos->getX() + b.bulletWidth() < 0 || b.pos->getX()> sdlutils().width() ||
-				b.pos->getY() + b.bulletHeight() < 0 || b.pos->getX()> sdlutils().height()) {
+			if (b.pos.getX() + b.bulletWidth() < 0 || b.pos.getX()> sdlutils().width() ||
+				b.pos.getY() + b.bulletHeight() < 0 || b.pos.getX()> sdlutils().height()) {
 				b.used = false;
 			}
 		}
@@ -84,18 +85,21 @@ void Gun::update()
 	// Inicialmente empieza en 0.25 segundos.
 	Uint32 _timeBetweenEachSpawn = 250;
 
-	// Puede disparar en caso de apretar la tecla S.
-	if (ihldr.isKeyDown(SDL_SCANCODE_S) && sdlutils().virtualTimer().currTime() - _timeBetweenEachSpawn > 250) {
-		//Dispara
-		shoot(&bp, &bv, bw, bh, br);
+	auto& vt = sdlutils().virtualTimer();
 
-		// Reinicia el contador
-		_timeBetweenEachSpawn = sdlutils().virtualTimer().currTime();
+	// Puede disparar en caso de apretar la tecla S (meter comprobación de keyDownEvent para evitar que suelte todo el rato).
+	if (ihldr.keyDownEvent()) {
+		if (ihldr.isKeyDown(SDL_SCANCODE_S) && vt.currTime() > _timeBetweenEachSpawn + _lastShoot){
+			//Dispara
+			shoot(bp, bv, bw, bh, br);
+
+			// Reinicia el contador
+			_lastShoot = vt.currTime();
+		}
 	}
-
 }
 
-void Gun::shoot(Vector2D* p, Vector2D* v, int width, int height, float r)
+void Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r)
 {
 
 	//indice para la busqueda circular
@@ -112,7 +116,9 @@ void Gun::shoot(Vector2D* p, Vector2D* v, int width, int height, float r)
 	if (!_bullets[i].used) {
 		//La dispara en la posición y con la velocidad determinada
 		_bullets[i].used = true;
-		_bullets[i].pos = p;
-		_bullets[i].vel = v;
+		_bullets[i].setBulletPos(p);
+		_bullets[i].setBulletVel(v);
 	}
+
+	
 }

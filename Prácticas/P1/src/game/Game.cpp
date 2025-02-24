@@ -86,9 +86,9 @@ void Game::start() {
 
 	auto &ihdlr = ih();
 
-	// reset the time before starting - so we calculate correct
-	// delta-time in the first iteration
-	//
+	// --- NOTA : El primero (sdlutils() métodos de tiempo) está basado en tiempo real, el segundo (sdlutils().virtualTimer()) es un objeto que nos permite pausar y reanudar el tiempo (para el pause).
+
+	// reset the time before starting - so we calculate correct delta-time in the first iteration
 	sdlutils().virtualTimer().resetTime();
 
 	while (!exit) {
@@ -131,7 +131,6 @@ void Game::refresh()
 void Game::checkCollisions() {
 
 	// the fighters Transform
-	//
 	auto fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
 	auto playerTF = _mngr->getComponent<Transform>(fighter);
 

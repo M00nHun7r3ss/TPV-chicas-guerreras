@@ -2,6 +2,8 @@
 #include "../ecs/Component.h"
 #include <array>
 #include <iterator>
+#include "../utils/Vector2D.h"
+#include <SDL.h>
 
 class Vector2D;
 class Transform;
@@ -12,8 +14,8 @@ public:
 
 	struct Bullet {
 		bool used = false;
-		Vector2D* pos;
-		Vector2D* vel;
+		Vector2D pos;
+		Vector2D vel;
 		int width;
 		int height;
 		float rot;
@@ -21,6 +23,10 @@ public:
 		// getters bala.
 		inline int bulletWidth() const { return width; }
 		inline int bulletHeight() const { return height; }
+
+		// setters bala.
+		inline void setBulletPos(Vector2D position) { pos = position; }
+		inline void setBulletVel(Vector2D velocity) { vel = velocity; }
 	};
 
 	constexpr static uint8_t _max_bullets = 20;
@@ -42,7 +48,9 @@ public:
 	}
 
 private:
-	void shoot(Vector2D* p, Vector2D* v, int width, int height, float r);
+	void shoot(Vector2D p, Vector2D v, int width, int height, float r);
 	bullets_array_t _bullets;
 	Transform* _trPlayer;
+
+	Uint32 _lastShoot;
 };
