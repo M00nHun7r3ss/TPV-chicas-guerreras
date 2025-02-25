@@ -46,12 +46,13 @@ void Gun::render()
 			SDL_Rect fireRect;
 			fireRect.x = b.pos.getX();
 			fireRect.y = b.pos.getY();
+			
 			// por darle un tamaño....
 			fireRect.w = 20.0f;
 			fireRect.h = 30.0f;
 
 			//Renderiza
-			fire.render(fireRect);
+			fire.render(fireRect, b.rot);
 		}
 	}
 }
