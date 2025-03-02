@@ -21,13 +21,15 @@ public:
 		float rot;
 
 		// getters bala.
-		inline int bulletWidth() const { return width; }
-		inline int bulletHeight() const { return height; }
+		inline int getBulletWidth() const { return width; }
+		inline int getBulletHeight() const { return height; }
 
 		// setters bala.
 		inline void setBulletPos(Vector2D position) { pos = position; }
 		inline void setBulletVel(Vector2D velocity) { vel = velocity; }
 		inline void setBulletRot(float rotation) { rot = rotation; }
+		inline void setBulletWidth(int wid) { width = wid; }
+		inline void setBulletHeight(int hei) { height = hei; }
 	};
 
 	constexpr static uint8_t _max_bullets = 20;

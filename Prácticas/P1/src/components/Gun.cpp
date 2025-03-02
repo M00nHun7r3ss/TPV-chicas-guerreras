@@ -48,8 +48,8 @@ void Gun::render()
 			fireRect.y = b.pos.getY();
 			
 			// por darle un tamaño....
-			fireRect.w = 20.0f;
-			fireRect.h = 30.0f;
+			fireRect.w = b.width;
+			fireRect.h = b.height;
 
 			//Renderiza con giro
 			fire.render(fireRect, b.rot);
@@ -76,8 +76,8 @@ void Gun::update()
 			b.pos.setY(b.pos.getY() + b.vel.getY());
 
 			//Si sale de pantalla, se desactiva
-			if (b.pos.getX() + b.bulletWidth() < 0 || b.pos.getX()> sdlutils().width() ||
-				b.pos.getY() + b.bulletHeight() < 0 || b.pos.getX()> sdlutils().height()) {
+			if (b.pos.getX() + b.getBulletWidth() < 0 || b.pos.getX()> sdlutils().width() ||
+				b.pos.getY() + b.getBulletHeight() < 0 || b.pos.getX()> sdlutils().height()) {
 				b.used = false;
 			}
 		}
@@ -120,8 +120,8 @@ void Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r)
 		_bullets[i].setBulletPos(p);
 		_bullets[i].setBulletVel(v);
 		_bullets[i].setBulletRot(r);
-		//¿Width y height?
-
+		_bullets[i].setBulletWidth(width);
+		_bullets[i].setBulletHeight(height);
 	}
 
 	
