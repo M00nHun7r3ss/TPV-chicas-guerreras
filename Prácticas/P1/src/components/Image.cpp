@@ -21,7 +21,7 @@ Image::~Image() {
 }
 
 void Image::initComponent() {
-	auto *mngr = _ent->getMngr();
+	ecs::Manager* mngr = Game::Instance()->getManager();
 	_tr = mngr->getComponent<Transform>(_ent);
 	assert(_tr != nullptr);
 }

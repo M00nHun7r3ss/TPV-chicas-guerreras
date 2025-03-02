@@ -7,7 +7,7 @@
 int main(int, char**) {
 
 	try {
-		Game* g;
+		Game* g = Game::Instance();
 		if (g->init())
 		{
 			g->initGame();

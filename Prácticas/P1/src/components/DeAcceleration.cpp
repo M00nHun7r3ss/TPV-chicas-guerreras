@@ -13,13 +13,13 @@ DeAcceleration::~DeAcceleration(){
 }
 
 void DeAcceleration::initComponent(){
-	auto* mngr = _ent->getMngr();
+	ecs::Manager* mngr = Game::Instance()->getManager();
 	_tr = mngr->getComponent<Transform>(_ent);
 	assert(_tr != nullptr);
 }
 
 void DeAcceleration::update(){
-	auto& vel = _tr->getVel();
+	Vector2D& vel = _tr->getVel();
 
 	// Calcula la nueva velocidad decelerada.
 	Vector2D deceleration = vel * _lessFactor;

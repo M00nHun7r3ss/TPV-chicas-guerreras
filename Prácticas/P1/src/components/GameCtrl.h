@@ -3,8 +3,9 @@
 #pragma once
 
 #include "../ecs/Component.h"
+#include "../utils/Vector2D.h"
 
-class Transform;
+/*class Transform;
 class GameCtrl: public ecs::Component {
 public:
 
@@ -34,5 +35,5 @@ private:
 	unsigned int _asteroidsLimit;
 
 	Vector2D _centroVent;
-};
+};*/
 

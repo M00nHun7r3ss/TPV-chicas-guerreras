@@ -78,7 +78,7 @@ void Game::initGame()
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
-	_mngr->addComponent<GameCtrl>(ginfo, tf);
+	//_mngr->addComponent<GameCtrl>(ginfo, tf);
 }
 
 void Game::start() {
@@ -139,7 +139,7 @@ void Game::checkCollisions() {
 
 	// the GameCtrl component
 	auto ginfo = _mngr->getHandler(ecs::hdlr::GAMEINFO);
-	auto gctrl = _mngr->getComponent<GameCtrl>(ginfo);
+	//auto gctrl = _mngr->getComponent<GameCtrl>(ginfo);
 
 	// For safety, we traverse with a normal loop until the current size. In this
 	// particular case we could use a for-each loop since the list stars is not
@@ -160,7 +160,7 @@ void Game::checkCollisions() {
 				playerTF->getHeight(), //
 					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
 				_mngr->setAlive(e, false);
-				gctrl->onAsteroidDestroyed();
+				//gctrl->onAsteroidDestroyed();
 
 				// play sound on channel 1 (if there is something playing there
 				// it will be cancelled

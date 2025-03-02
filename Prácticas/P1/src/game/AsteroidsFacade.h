@@ -1,10 +1,11 @@
 #pragma once
 #include "../ecs/ecs.h"
+#include "../game/Game.h"
 
 using ecs::entity_t;
 
 class AsteroidsFacade {
-public:
+protected:
 	AsteroidsFacade() {
 	}
 	virtual ~AsteroidsFacade() {

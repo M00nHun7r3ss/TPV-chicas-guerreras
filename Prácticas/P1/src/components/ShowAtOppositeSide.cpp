@@ -13,7 +13,7 @@ ShowAtOppositeSide::~ShowAtOppositeSide(){
 }
 
 void ShowAtOppositeSide::initComponent() {
-	auto* mngr = Game::Instance()->getManager();
+	ecs::Manager* mngr = Game::Instance()->getManager();
 	_tr = mngr->getComponent<Transform>(_ent);
 	assert(_tr != nullptr);
 }
@@ -25,8 +25,8 @@ void ShowAtOppositeSide::update()
 	float posY = _tr->getPos().getY();
 
 	// limites.
-	auto width = sdlutils().width();
-	auto height = sdlutils().height();
+	int width = sdlutils().width();
+	int height = sdlutils().height();
 
 	// las X.
 	if (posX < 0) _tr->getPos().setX(width);

@@ -1,5 +1,6 @@
 #pragma once
 #include "../ecs/Component.h"
+#include "../game/Game.h"
 
 class Vector2D;
 class Transform;

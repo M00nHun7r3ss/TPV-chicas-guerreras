@@ -2,6 +2,7 @@
 
 #include <SDL_stdinc.h>
 #include "../ecs/Component.h"
+#include "../game/Game.h"
 
 class Transform;
 class Generations : public ecs::Component {
@@ -16,8 +17,11 @@ public:
 	void render() override{}
 	void generate();
 
-private:
+	inline int getGenerationLevel() { return _generationLevel; }
+	inline void setGenerationLevel(int l) { _generationLevel = l; }
 
+private:
+	int _generationLevel;
 	Transform* _tr;
 };
 

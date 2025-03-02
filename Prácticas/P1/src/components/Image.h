@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../ecs/Component.h"
+#include "../game/Game.h"
 
 class Transform;
 class Texture;

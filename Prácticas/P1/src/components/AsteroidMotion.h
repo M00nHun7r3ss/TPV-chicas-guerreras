@@ -4,6 +4,7 @@
 #include <SDL_stdinc.h>
 
 #include "../ecs/Component.h"
+#include "../game/Game.h"
 
 class Transform;
 class AsteroidMotion: public ecs::Component {

@@ -18,17 +18,17 @@ FighterCtrl::~FighterCtrl()
 
 void FighterCtrl::initComponent()
 {
-	auto* mngr = _ent->getMngr();
+	ecs::Manager* mngr = Game::Instance()->getManager();
 	_tr = mngr->getComponent<Transform>(_ent);
 	assert(_tr != nullptr);
 }
 
 void FighterCtrl::update()
 {
-	auto &ihldr = ih();
+	InputHandler &ihldr = ih();
 
-	auto& vel_ = _tr->getVel();
-	auto rot = _tr->getRot();
+	Vector2D& vel_ = _tr->getVel();
+	float rot = _tr->getRot();
 
 	float thrust = 0.2f;
 	float speedLimit = 3.0f;
