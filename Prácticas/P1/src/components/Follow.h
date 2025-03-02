@@ -11,18 +11,18 @@ public:
 	__CMPID_DECL__(ecs::cmp::FOLLOW)
 
 	Follow();
-	Follow(Transform* playerTf);
+	Follow(Vector2D playerPos);
 	virtual ~Follow();
 	void initComponent() override;
 	void update() override;
 
 private:
+
 	// --- asteroide.
 	Transform* _tr; // transform asteroide.
 	Vector2D _vel; // velocidad asteroide.
 	Vector2D _pos; // posicion asteroide.
 
-	// --- player.
-	Transform* _playerTf; // transform del player.
+	Vector2D _playerPos; // posicion fighter.
 };
 

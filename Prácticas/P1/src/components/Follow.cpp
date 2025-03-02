@@ -10,8 +10,8 @@ Follow::Follow()
 	:_tr() {
 }
 
-Follow::Follow(Transform* playerTf)
-	:_tr(), _playerTf(playerTf) {
+Follow::Follow(Vector2D playerPos) :_tr(), _playerPos(playerPos)
+{
 }
 
 Follow::~Follow() {
@@ -24,7 +24,7 @@ void Follow::initComponent() {
 }
 
 void Follow::update() {
-	_vel.rotate(_vel.angle(_playerTf->getPos() - _tr->getPos()) > 0 ? 1.0f : -1.0f);
+	_vel.rotate(_vel.angle(_playerPos - _tr->getPos()) > 0 ? 1.0f : -1.0f);
 	_tr->getVel().set(_vel);
 }
 

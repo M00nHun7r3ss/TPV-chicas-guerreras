@@ -17,16 +17,8 @@
 GameCtrl::GameCtrl() :
 		_currNumOfAsteroids(0), 
 		_score(0), 
-		_asteroidsLimit(30)
-{
-}
-
-GameCtrl::GameCtrl(Transform* playerTf) :
-		_currNumOfAsteroids(0),
-		_score(0),
 		_asteroidsLimit(30),
-		_playerTf(playerTf)
-{
+		_centroVent((float)(sdlutils().width() / 2), (float)(sdlutils().height() / 2)) {
 }
 
 GameCtrl::~GameCtrl() {
@@ -110,7 +102,6 @@ void GameCtrl::createAsteroid(unsigned int n) {
 
 		// --- VELOCIDAD ALEATORIA ---
 		//Centro ventana para que los asteroides vayan hacia el centro
-		Vector2D _centroVent = { (float)(sdlutils().width() / 2) , (float)(sdlutils().height() / 2) };
 		int rx = rand.nextInt(-100, 101);
 		int ry = rand.nextInt(-100, 101);
 		Vector2D centro = { _centroVent.getX() + rx, _centroVent.getY() + ry};
@@ -127,7 +118,9 @@ void GameCtrl::createAsteroid(unsigned int n) {
 
 		// add a StarMotion component to resize/rotate the star
 		mngr->addComponent<AsteroidMotion>(e);
-		mngr->addComponent<Follow>(e, _playerTf);
+
+		//mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter))
+		//mngr->addComponent<Follow>(e, mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter)));
 
 		_currNumOfAsteroids++;
 	}

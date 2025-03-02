@@ -8,7 +8,7 @@ class Generations : public ecs::Component {
 public:
 	__CMPID_DECL__(ecs::cmp::GENERATIONS)
 
-		Generations();
+	Generations();
 	virtual ~Generations();
 
 	void initComponent() override;

@@ -1,0 +1,89 @@
+#include "AsteroidsUtils.h"
+
+#include <algorithm>
+#include "../ecs/Manager.h"
+#include "../sdlutils/InputHandler.h"
+#include "../sdlutils/SDLUtils.h"
+#include "../sdlutils/Texture.h"
+#include "../components/Image.h"
+#include "../components/Transform.h"
+#include "../ecs/Entity.h"
+#include "../components/ShowAtOppositeSide.h"
+#include "../components/AsteroidMotion.h"
+#include "../components/Follow.h"
+
+void AsteroidsUtils::create_asteroids(int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		//ecs::Manager* mngr = Instance;
+
+		for (unsigned int i = 0u; i < n; i++) {
+			// Always use the random number generator provided by SDLUtils
+			RandomNumberGenerator& rand = sdlutils().rand();
+
+			// add and entity to the manager
+			ecs::entity_t e = mngr->addEntity(ecs::grp::ASTEROIDS);
+
+			// add a Transform component, and initialise it with random size and position
+			Transform* tr = mngr->addComponent < Transform >(e);
+
+			// --- POS ALEATORIA ---
+			int size = 50;
+			//Lado por el que sale
+			//0 - arriba, 1 - abajo, 2 - izqd, 3 - dcha
+			int lado = rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
+			int x, y;
+			switch (lado) //Esto es asi porque el origen del sprite es arriba izquierda 
+			{
+			case 0: //Arriba
+				x = rand.nextInt(0, sdlutils().width() - size);
+				y = rand.nextInt(0, size);
+				break;
+			case 1: //Abajo
+				x = rand.nextInt(0, sdlutils().width() - size);
+				y = rand.nextInt(sdlutils().height() - 2 * size, sdlutils().height() - size);
+				break;
+			case 2: //Izquierda
+				x = rand.nextInt(0, size);
+				y = rand.nextInt(0, sdlutils().height() - size);
+				break;
+			case 3: //Derecha
+				x = rand.nextInt(sdlutils().width() - 2 * size, sdlutils().width() - size);
+				y = rand.nextInt(0, sdlutils().height() - size);
+				break;
+			default:
+				break;
+			}
+
+			// --- VELOCIDAD ALEATORIA ---
+			//Centro ventana para que los asteroides vayan hacia el centro
+			int rx = rand.nextInt(-100, 101);
+			int ry = rand.nextInt(-100, 101);
+			Vector2D centro = { _centroVent.getX() + rx, _centroVent.getY() + ry };
+
+			float speed = sdlutils().rand().nextInt(1, 10) / 10.0f;
+			Vector2D v = (centro - Vector2D(x, y)).normalize() * speed;
+
+			// inicializa el asteroide en ese transform
+			tr->init(Vector2D(x, y), v, size, size, 0.0f);
+
+			// Los demas componentes
+			mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
+			mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
+
+			// add a StarMotion component to resize/rotate the star
+			mngr->addComponent<AsteroidMotion>(e);
+
+			//mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter))
+			//mngr->addComponent<Follow>(e, mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter)));
+	}
+}
+
+void AsteroidsUtils::remove_all_asteroids()
+{
+}
+
+void AsteroidsUtils::split_astroid(ecs::Entity* a)
+{
+}

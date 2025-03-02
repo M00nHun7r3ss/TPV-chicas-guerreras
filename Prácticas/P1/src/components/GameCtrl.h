@@ -11,7 +11,6 @@ public:
 	__CMPID_DECL__(ecs::cmp::GAMECTRL)
 
 	GameCtrl();
-	GameCtrl(Transform* playerTf);
 	virtual ~GameCtrl();
 
 	inline void onAsteroidDissappeared() {
@@ -34,6 +33,6 @@ private:
 	unsigned int _score;
 	unsigned int _asteroidsLimit;
 
-	Transform* _playerTf;
+	Vector2D _centroVent;
 };
 

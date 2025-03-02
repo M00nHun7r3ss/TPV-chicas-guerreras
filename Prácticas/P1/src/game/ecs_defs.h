@@ -16,7 +16,8 @@
 	HEALTH, \
 	GUN, \
 	GENERATIONS, \
-	FOLLOW
+	ASTEROIDFACADE, \
+	FOLLOW 
 
 
 // Groups list - must have at least one element

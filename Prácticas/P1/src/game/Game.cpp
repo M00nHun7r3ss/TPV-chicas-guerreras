@@ -34,7 +34,7 @@ Game::~Game() {
 		SDLUtils::Release();
 }
 
-void Game::init() {
+bool Game::init() {
 
 	// initialize the SDL singleton
 	if (!SDLUtils::Init("Asteroids", 800, 600,
@@ -42,20 +42,22 @@ void Game::init() {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
-		return;
+		return false;
 	}
 
 	// initialize the InputHandler singleton
 	if (!InputHandler::Init()) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 				<< std::endl;
-		return;
+		return false;
 
 	}
 
-	// Create the manager
-	_mngr = new Manager();
+	return true;
+}
 
+void Game::initGame()
+{
 	// Create the fighter entity.
 	ecs::entity_t fighter = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
@@ -105,6 +107,7 @@ void Game::start() {
 			continue;
 		}
 
+		//¿Esto hace falta?
 		_mngr->update();
 		_mngr->refresh();
 

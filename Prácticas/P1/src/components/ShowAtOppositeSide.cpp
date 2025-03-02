@@ -13,7 +13,7 @@ ShowAtOppositeSide::~ShowAtOppositeSide(){
 }
 
 void ShowAtOppositeSide::initComponent() {
-	auto* mngr = _ent->getMngr();
+	auto* mngr = Game::Instance()->getManager();
 	_tr = mngr->getComponent<Transform>(_ent);
 	assert(_tr != nullptr);
 }

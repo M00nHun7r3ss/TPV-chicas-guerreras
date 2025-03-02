@@ -7,9 +7,12 @@
 int main(int, char**) {
 
 	try {
-		Game g;
-		g.init();
-		g.start();
+		Game* g;
+		if (g->init())
+		{
+			g->initGame();
+			g->start();
+		}
 	} catch (const std::string &e) { // catch exceptions thrown as strings
 		std::cerr << e << std::endl;
 	} catch (const char *e) { // catch exceptions thrown as char*

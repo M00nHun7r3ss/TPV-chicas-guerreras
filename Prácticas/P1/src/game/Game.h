@@ -2,18 +2,22 @@
 
 #pragma once
 
+#include "../utils/Singleton.h"
+
 namespace ecs {
 class Manager;
 }
 
-class Game {
+class Game : public Singleton<Game> {
 public:
-	Game();
 	virtual ~Game();
-	void init();
+	bool init();
+	void initGame();
 	void start();
 	void refresh();
+	inline ecs::Manager* getManager() { return _mngr; }
 private:
+	Game();
 	void checkCollisions();
 	ecs::Manager *_mngr;
 };
