@@ -17,30 +17,33 @@ StarMotion::~StarMotion() {
 }
 
 void StarMotion::initComponent() {
-	auto *mngr = _ent->getMngr();
+	ecs::Manager *mngr = _ent->getMngr();
 	_tr = mngr->getComponent<Transform>(_ent);
 	assert(_tr != nullptr);
 
-	_lastUpdate = sdlutils().currTime();
+	_lastUpdate = sdlutils().virtualTimer().currTime();
 }
 
 void StarMotion::update() {
 
-	// update every 50ms
-	if (_lastUpdate + 50 > sdlutils().currTime())
-		return;
+	//// update every 50ms
+	//if (_lastUpdate + 50 > sdlutils().virtualTimer().currTime())
+	//	return;
 
-	_lastUpdate = sdlutils().currTime();
+	//_lastUpdate = sdlutils().virtualTimer().currTime();
 
-	_tr->setWidth(_tr->getWidth() * 0.95f);
-	_tr->setHeight(_tr->getHeight() * 0.95f);
+	//pos = pos + vel
+	_tr->getPos().set(_tr->getPos() + _tr->getVel());
 
-	if (_tr->getWidth() < 5 || _tr->getHeight() < 5) {
-		auto *mngr = _ent->getMngr();
-		mngr->setAlive(_ent, false);
-		auto ginfo = mngr->getHandler(ecs::hdlr::GAMEINFO);
-		mngr->getComponent<GameCtrl>(ginfo)->onAsteroidDissappeared();
-	} else {
-		_tr->setRot(_tr->getRot() + 5.0f);
-	}
+	//_tr->setWidth(_tr->getWidth() * 0.95f);
+	//_tr->setHeight(_tr->getHeight() * 0.95f);
+
+	//if (_tr->getWidth() < 5 || _tr->getHeight() < 5) {
+	//	auto *mngr = _ent->getMngr();
+	//	mngr->setAlive(_ent, false);
+	//	auto ginfo = mngr->getHandler(ecs::hdlr::GAMEINFO);
+	//	mngr->getComponent<GameCtrl>(ginfo)->onAsteroidDissappeared();
+	//} else {
+	//	_tr->setRot(_tr->getRot() + 5.0f);
+	//}
 }

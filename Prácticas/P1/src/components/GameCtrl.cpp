@@ -12,11 +12,13 @@
 #include "Transform.h"
 #include "../ecs/Entity.h"
 #include "../components/ShowAtOppositeSide.h"
+#include "../components/StarMotion.h"
 
 GameCtrl::GameCtrl() :
 		_currNumOfAsteroids(0), //
 		_score(0), //
-		_asteroidsLimit(30) {
+		_asteroidsLimit(30)
+{
 }
 
 GameCtrl::~GameCtrl() {
@@ -33,6 +35,8 @@ void GameCtrl::update() {
 			createAsteroid(std::min(5u, _asteroidsLimit - _currNumOfAsteroids));
 		}
 	}
+
+	
 }
 
 void GameCtrl::render() {
@@ -68,6 +72,7 @@ void GameCtrl::createAsteroid(unsigned int n) {
 		// add a Transform component, and initialise it with random size and position
 		Transform* tr = mngr->addComponent < Transform > (e);
 
+		// --- POS ALEATORIA ---
 		int size = 50;
 		//Lado por el que sale
 		//0 - arriba, 1 - abajo, 2 - izqd, 3 - dcha
@@ -95,8 +100,20 @@ void GameCtrl::createAsteroid(unsigned int n) {
 			break;
 		}
 
-		tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
+		// --- VELOCIDAD ALEATORIA ---
+		//Centro ventana para que los asteroides vayan hacia el centro
+		Vector2D _centroVent = { (float)(sdlutils().width() / 2) , (float)(sdlutils().height() / 2) };
+		int rx = rand.nextInt(-100, 101);
+		int ry = rand.nextInt(-100, 101);
+		Vector2D centro = { _centroVent.getX() + rx, _centroVent.getY() + ry};
 
+		float speed = sdlutils().rand().nextInt(1, 10) / 10.0f;
+		Vector2D v = (centro - Vector2D(x, y)).normalize() * speed;
+
+		// inicializa el asteroide en ese transform
+		tr->init(Vector2D(x, y), v, size, size, 0.0f);
+
+		// Los demas componentes
 		mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
 		mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
