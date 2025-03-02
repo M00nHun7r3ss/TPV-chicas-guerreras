@@ -5,12 +5,11 @@
 #include <cassert>
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
-#include "GameCtrl.h"
 #include "Transform.h"
 
 
 AsteroidMotion::AsteroidMotion() :
-		_tr(), _lastUpdate() {
+		_tr() {
 }
 
 AsteroidMotion::~AsteroidMotion() {
@@ -20,8 +19,6 @@ void AsteroidMotion::initComponent() {
 	ecs::Manager *mngr = _ent->getMngr();
 	_tr = mngr->getComponent<Transform>(_ent);
 	assert(_tr != nullptr);
-
-	_lastUpdate = sdlutils().virtualTimer().currTime();
 }
 
 void AsteroidMotion::update(){

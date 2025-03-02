@@ -4,12 +4,14 @@
 
 #include "../ecs/Component.h"
 
+class Transform;
 class GameCtrl: public ecs::Component {
 public:
 
 	__CMPID_DECL__(ecs::cmp::GAMECTRL)
 
 	GameCtrl();
+	GameCtrl(Transform* playerTf);
 	virtual ~GameCtrl();
 
 	inline void onAsteroidDissappeared() {
@@ -31,5 +33,7 @@ private:
 	unsigned int _currNumOfAsteroids;
 	unsigned int _score;
 	unsigned int _asteroidsLimit;
+
+	Transform* _playerTf;
 };
 

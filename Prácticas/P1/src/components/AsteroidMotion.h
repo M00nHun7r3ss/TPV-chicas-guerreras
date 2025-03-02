@@ -9,7 +9,7 @@ class Transform;
 class AsteroidMotion: public ecs::Component {
 public:
 
-	__CMPID_DECL__(ecs::cmp::STARMOTION)
+	__CMPID_DECL__(ecs::cmp::ASTEROIDMOTION)
 
 	AsteroidMotion();
 	virtual ~AsteroidMotion();
@@ -18,6 +18,5 @@ public:
 
 private:
 	Transform *_tr;
-	Uint32 _lastUpdate;
 };
 

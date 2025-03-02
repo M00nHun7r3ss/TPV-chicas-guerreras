@@ -76,7 +76,7 @@ void Game::init() {
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
-	_mngr->addComponent<GameCtrl>(ginfo);
+	_mngr->addComponent<GameCtrl>(ginfo, tf);
 }
 
 void Game::start() {

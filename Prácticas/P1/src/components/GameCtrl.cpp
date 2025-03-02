@@ -12,11 +12,20 @@
 #include "../ecs/Entity.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/AsteroidMotion.h"
+#include "../components/Follow.h"
 
 GameCtrl::GameCtrl() :
-		_currNumOfAsteroids(0), //
-		_score(0), //
+		_currNumOfAsteroids(0), 
+		_score(0), 
 		_asteroidsLimit(30)
+{
+}
+
+GameCtrl::GameCtrl(Transform* playerTf) :
+		_currNumOfAsteroids(0),
+		_score(0),
+		_asteroidsLimit(30),
+		_playerTf(playerTf)
 {
 }
 
@@ -118,6 +127,7 @@ void GameCtrl::createAsteroid(unsigned int n) {
 
 		// add a StarMotion component to resize/rotate the star
 		mngr->addComponent<AsteroidMotion>(e);
+		mngr->addComponent<Follow>(e, _playerTf);
 
 		_currNumOfAsteroids++;
 	}

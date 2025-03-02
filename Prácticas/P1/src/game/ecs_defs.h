@@ -9,12 +9,14 @@
 	TRANSFORM, \
 	IMAGE, \
 	FIGHTERCTRL, \
-	STARMOTION, \
+	ASTEROIDMOTION, \
 	GAMECTRL, \
 	DEACCELERATION, \
 	SHOWATOPPOSITESIDE, \
 	HEALTH, \
-	GUN
+	GUN, \
+	GENERATIONS, \
+	FOLLOW
 
 
 // Groups list - must have at least one element
