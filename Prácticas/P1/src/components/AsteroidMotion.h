@@ -6,13 +6,13 @@
 #include "../ecs/Component.h"
 
 class Transform;
-class StarMotion: public ecs::Component {
+class AsteroidMotion: public ecs::Component {
 public:
 
 	__CMPID_DECL__(ecs::cmp::STARMOTION)
 
-	StarMotion();
-	virtual ~StarMotion();
+	AsteroidMotion();
+	virtual ~AsteroidMotion();
 	void initComponent() override;
 	void update() override;
 

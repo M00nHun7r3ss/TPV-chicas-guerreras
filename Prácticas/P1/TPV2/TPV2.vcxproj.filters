@@ -60,7 +60,7 @@
     <ClCompile Include="..\src\components\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\components\StarMotion.cpp">
+    <ClCompile Include="..\src\components\AsteroidMotion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\game\Game.cpp">
@@ -170,7 +170,7 @@
     <ClInclude Include="..\src\components\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\components\StarMotion.h">
+    <ClInclude Include="..\src\components\AsteroidMotion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\components\Transform.h">

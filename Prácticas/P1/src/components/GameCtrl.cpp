@@ -8,11 +8,10 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 #include "Image.h"
-#include "StarMotion.h"
 #include "Transform.h"
 #include "../ecs/Entity.h"
 #include "../components/ShowAtOppositeSide.h"
-#include "../components/StarMotion.h"
+#include "../components/AsteroidMotion.h"
 
 GameCtrl::GameCtrl() :
 		_currNumOfAsteroids(0), //
@@ -118,7 +117,7 @@ void GameCtrl::createAsteroid(unsigned int n) {
 		mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
 		// add a StarMotion component to resize/rotate the star
-		mngr->addComponent<StarMotion>(e);
+		mngr->addComponent<AsteroidMotion>(e);
 
 		_currNumOfAsteroids++;
 	}
