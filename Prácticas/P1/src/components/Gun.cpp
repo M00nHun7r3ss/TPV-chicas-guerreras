@@ -51,7 +51,7 @@ void Gun::render()
 			fireRect.w = 20.0f;
 			fireRect.h = 30.0f;
 
-			//Renderiza
+			//Renderiza con giro
 			fire.render(fireRect, b.rot);
 		}
 	}
@@ -119,6 +119,9 @@ void Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r)
 		_bullets[i].used = true;
 		_bullets[i].setBulletPos(p);
 		_bullets[i].setBulletVel(v);
+		_bullets[i].setBulletRot(r);
+		//¿Width y height?
+
 	}
 
 	
