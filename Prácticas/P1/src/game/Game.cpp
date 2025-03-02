@@ -148,7 +148,7 @@ void Game::checkCollisions() {
 		auto e = asteroids[i];
 		if (_mngr->isAlive(e)) { // if the star is active (it might have died in this frame)
 
-			// the Star's Transform
+			// the Asteroids's Transform
 			//
 			auto eTR = _mngr->getComponent<Transform>(e);
 

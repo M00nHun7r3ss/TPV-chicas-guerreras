@@ -56,21 +56,46 @@ void GameCtrl::render() {
 
 void GameCtrl::createAsteroid(unsigned int n) {
 
-	auto *mngr = _ent->getMngr();
+	ecs::Manager *mngr = _ent->getMngr();
 
-	for (auto i = 0u; i < n; i++) {
+	for (unsigned int i = 0u; i < n; i++) {
 		// Always use the random number generator provided by SDLUtils
-		auto &rand = sdlutils().rand();
+		RandomNumberGenerator &rand = sdlutils().rand();
 
 		// add and entity to the manager
-		auto e = mngr->addEntity(ecs::grp::ASTEROIDS);
+		ecs::entity_t e = mngr->addEntity(ecs::grp::ASTEROIDS);
 
 		// add a Transform component, and initialise it with random size and position
-		auto tr = mngr->addComponent < Transform > (e);
-		auto s = rand.nextInt(50, 100);
-		auto x = rand.nextInt(0, sdlutils().width() - s);
-		auto y = rand.nextInt(0, sdlutils().height() - s);
-		tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
+		Transform* tr = mngr->addComponent < Transform > (e);
+
+		int size = 50;
+		//Lado por el que sale
+		//0 - arriba, 1 - abajo, 2 - izqd, 3 - dcha
+		int lado = rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
+		int x, y;
+		switch (lado) //Esto es asi porque el origen del sprite es arriba izquierda 
+		{
+		case 0: //Arriba
+			x = rand.nextInt(0, sdlutils().width() - size);
+			y = rand.nextInt(0, size); 
+			break;
+		case 1: //Abajo
+			x = rand.nextInt(0, sdlutils().width() - size); 
+			y = rand.nextInt(sdlutils().height() - 2*size, sdlutils().height() - size);
+			break;
+		case 2: //Izquierda
+			x = rand.nextInt(0, size);
+			y = rand.nextInt(0, sdlutils().height() - size);
+			break;
+		case 3: //Derecha
+			x = rand.nextInt(sdlutils().width() - 2 * size, sdlutils().width() - size);
+			y = rand.nextInt(0, sdlutils().height() - size);
+			break;
+		default:
+			break;
+		}
+
+		tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
 
 		mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
 		mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
