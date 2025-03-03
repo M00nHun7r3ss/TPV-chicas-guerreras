@@ -2,19 +2,19 @@
 
 #include "Game.h"
 
-#include "../components/GameCtrl.h"
-#include "../components/Image.h"
-#include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
+#include "../components/Image.h"
+#include "../components/Transform.h"
 #include "../components/DeAcceleration.h"
 #include "../components/FighterCtrl.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Health.h"
 #include "../components/Gun.h"
+#include "../game/AsteroidsUtils.h"
 
 using ecs::Manager;
 
@@ -58,27 +58,12 @@ bool Game::init() {
 
 void Game::initGame()
 {
-	// Create the fighter entity.
-	ecs::entity_t fighter = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
 
-	Transform* tf = _mngr->addComponent<Transform>(fighter);
-	float s = 50.0f;
-	float x = (sdlutils().width() - s) / 2.0f;
-	float y = (sdlutils().height() - s) / 2.0f;
-	tf->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-
-	_mngr->addComponent<Image>(fighter, &sdlutils().images().at("fighter"));
-	_mngr->addComponent<DeAcceleration>(fighter);
-	_mngr->addComponent<FighterCtrl>(fighter);
-	_mngr->addComponent<ShowAtOppositeSide>(fighter);
-	_mngr->addComponent<Health>(fighter);
-	_mngr->addComponent<Gun>(fighter, tf);
 
 	// create the game info entity
-	auto ginfo = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
-	//_mngr->addComponent<GameCtrl>(ginfo, tf);
+	// ecs::entity_t ginfo = _mngr->addEntity();
+	//_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
+	//_mngr->addComponent<AsteroidsUtils>(ginfo, tf);
 }
 
 void Game::start() {

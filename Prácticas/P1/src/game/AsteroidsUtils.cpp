@@ -10,7 +10,6 @@
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../components/ShowAtOppositeSide.h"
-#include "../components/AsteroidMotion.h"
 #include "../components/Generations.h"
 #include "../components/Follow.h"
 
@@ -76,8 +75,39 @@ void AsteroidsUtils::create_asteroids(int n)
 		_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
 		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
-		// add a StarMotion component to resize/rotate the star
-		_mngr->addComponent<AsteroidMotion>(e);
+
+		//mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter))
+		//mngr->addComponent<Follow>(e, mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter)));
+
+		// _currNumOfAsteroids++;
+	}
+}
+
+void AsteroidsUtils::create_splitted_asteroids(ecs::entity_t* a)
+{
+	for (int i = 0; i < 2; i++) {
+
+		// add and entity to the manager
+		ecs::entity_t e = _mngr->addEntity(ecs::grp::ASTEROIDS);
+
+		// add a Transform component, and initialise it with random size and position
+		Transform* tr = _mngr->addComponent < Transform >(e);
+
+		// --- VELOCIDAD Y POSICION---
+		Transform* aTf = _mngr->getComponent<Transform>(*a);
+
+		float size = aTf->getHeight() / 2; // la mitad q el padre.
+
+		int r = sdlutils().rand().nextInt(0, 360);
+		Vector2D pos = aTf->getPos() + aTf->getVel().rotate(r) * 2 * std::max(size, size);
+		Vector2D vel = aTf->getVel().rotate(r) * 1.1f;
+	
+		// inicializa el asteroide en ese transform
+		tr->init(pos, vel, size, size, r);
+
+		// Los demas componentes
+		_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
+		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
 		//mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter))
 		//mngr->addComponent<Follow>(e, mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter)));
@@ -104,18 +134,12 @@ void AsteroidsUtils::split_astroid(ecs::Entity* a)
 
 	// la desactiva.
 	_mngr->setAlive(a, false); // mata.
-
-	//for (int i = 0; i < level; i++)
-	//{
-	//	_mngr->addEntity(ecs::grp::ASTEROIDS);
-	//}
-	//level.setGenerations(level -1)
-	//if (level > 0) create Asteroid(2)
 	
+	if (level - 1 > 0) {
+		// genera asteroides mas pequenos.
+		genComp->setGenerationLevel(level - 1);
+		create_splitted_asteroids(&a);
+	}
 
 	_mngr->refresh(); // limpia el cadaver.
-
-	
-		
-	
 }
