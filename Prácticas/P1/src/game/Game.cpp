@@ -92,15 +92,17 @@ void Game::start() {
 			continue;
 		}
 
-		//¿Esto hace falta?
-		_mngr->update();
-		_mngr->refresh();
+		_state->update();
 
-		checkCollisions();
+		////¿Esto hace falta?
+		//_mngr->update();
+		//_mngr->refresh();
 
-		sdlutils().clearRenderer();
-		_mngr->render();
-		sdlutils().presentRenderer();
+		//checkCollisions();
+
+		//sdlutils().clearRenderer();
+		//_mngr->render();
+		//sdlutils().presentRenderer();
 
 		Uint32 frameTime = sdlutils().virtualTimer().currRealTime() - startTime;
 

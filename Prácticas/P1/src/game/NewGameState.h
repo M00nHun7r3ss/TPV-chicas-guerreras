@@ -4,7 +4,7 @@
 class NewGameState : public GameState
 {
 public:
-	NewGameState() {}
+	NewGameState() = default;
 	virtual ~NewGameState() {}
 	void enter() override;
 	void leave() override;

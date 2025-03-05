@@ -13,7 +13,7 @@ public:
 	virtual ~Health();
 	void render() override;
 	void update();
-	void damage();
+	void damage(int n);
 	void heal();
 	int getHealth() { return _currentHealth; }
 

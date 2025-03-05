@@ -44,7 +44,7 @@ void Health::update()
 	if (ihldr.keyDownEvent()){
 		if (ihldr.isKeyDown(SDLK_e)) // Damage - E
 		{
-			damage();
+			damage(-1);
 		}
 		else if (ihldr.isKeyDown(SDLK_h)) // Heal - H
 		{
@@ -54,9 +54,9 @@ void Health::update()
 	
 }
 
-void Health::damage()
+void Health::damage(int n)
 {
-	_currentHealth--;
+	_currentHealth + n;
 	if (_currentHealth <= 0) {
 		//Muerto
 		std::cout << "Muerto" << std::endl;

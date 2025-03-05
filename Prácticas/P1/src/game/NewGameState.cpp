@@ -9,6 +9,8 @@
 #include "../components/Image.h"
 #include "../components/Transform.h"
 
+#include "FighterUtils.h"
+
 void NewGameState::update()
 {
 	// --- Text.
@@ -28,7 +30,7 @@ void NewGameState::update()
 
 	// ya sea por clic o por tecla...
 	if (ihldr.mouseButtonDownEvent() || ihldr.keyDownEvent()) {
-		// !!! reset_lives() de la fachada del caza.
+		_fUtils->reset_lives();
 	}
 	
 	// !!! cambia a NewRoundState
