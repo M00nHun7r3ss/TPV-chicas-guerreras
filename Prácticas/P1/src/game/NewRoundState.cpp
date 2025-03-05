@@ -1,13 +1,13 @@
-#include "NewGameState.h"
+#include "NewRoundState.h"
 
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 
-void NewGameState::update()
+void NewRoundState::update()
 {
 	// --- Text.
-	Texture startTex(sdlutils().renderer(), "Press any key to start a new game",
+	Texture startTex(sdlutils().renderer(), "Press ENTER to start the round",
 		sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x444444ff));
 
 	SDL_Rect dest = build_sdlrect( //
@@ -21,11 +21,12 @@ void NewGameState::update()
 	// --- Input.
 	InputHandler& ihldr = ih();
 
-	// ya sea por clic o por tecla...
-	if (ihldr.mouseButtonDownEvent() || ihldr.keyDownEvent()) {
-		_fUtils->reset_lives();
+	// si el enter es presionado...
+	if (ihldr.isKeyDown(SDL_SCANCODE_KP_ENTER)) {
+		_fUtils->reset_fighter();
+		_aUtils->remove_all_asteroids();
+		_aUtils->create_asteroids(10);
 
-		// !!! cambia a NewRoundState
+		// !!! cambia a RunningState
 	}
-	
 }
