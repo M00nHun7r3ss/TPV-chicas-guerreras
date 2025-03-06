@@ -2,8 +2,6 @@
 
 #include "AsteroidsFacade.h"
 
-
-
 class Transform;
 class AsteroidsUtils : public AsteroidsFacade
 {
@@ -18,8 +16,12 @@ public:
 	void remove_all_asteroids() override;
 	void split_astroid(ecs::Entity* a) override;
 
+	// getter n asteroids.
+	inline int getAsteroidNumber() { return _n; }
+
 private:
 	Vector2D _centroVent;
 	ecs::Manager* _mngr;
+	int _n; // nº de asteroides.
 };
 

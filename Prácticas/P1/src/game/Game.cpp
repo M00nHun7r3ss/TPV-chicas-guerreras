@@ -3,10 +3,13 @@
 #include "Game.h"
 
 #include "../ecs/Manager.h"
+
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
+
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../components/DeAcceleration.h"
@@ -14,7 +17,12 @@
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Health.h"
 #include "../components/Gun.h"
-#include "../game/AsteroidsUtils.h"
+
+#include "AsteroidsUtils.h"
+#include "NewGameState.h"
+#include "NewRoundState.h"
+#include "RunningState.h"
+#include "GameState.h"
 
 using ecs::Manager;
 
@@ -61,9 +69,19 @@ void Game::initGame()
 
 
 	// create the game info entity
-	// ecs::entity_t ginfo = _mngr->addEntity();
+	 //ecs::entity_t ginfo = _mngr->addEntity();
 	//_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
 	//_mngr->addComponent<AsteroidsUtils>(ginfo, tf);
+
+	// Create the manager
+	_mngr = new Manager();
+
+	_state = nullptr;
+	_paused_state = nullptr;
+	_running_state = nullptr;
+	_newgame_state = nullptr;
+	_newround_state = nullptr;
+	_gameover_state = nullptr;
 }
 
 void Game::start() {

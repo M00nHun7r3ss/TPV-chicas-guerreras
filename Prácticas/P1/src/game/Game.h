@@ -5,12 +5,12 @@
 #include "../utils/Singleton.h"
 #include "GameState.h"
 
-
 namespace ecs {
 class Manager;
 }
 
 class Game : public Singleton<Game> {
+	friend Singleton<Game>;
 public:
 	enum State {RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER};
 

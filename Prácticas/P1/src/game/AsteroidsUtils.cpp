@@ -16,11 +16,15 @@
 
 AsteroidsUtils::AsteroidsUtils()
 	: _centroVent((float)(sdlutils().width() / 2), (float)(sdlutils().height() / 2)),
-	  _mngr(Game::Instance()->getManager()){
+	  _mngr(Game::Instance()->getManager()),
+	  _n(0) // inicialmente 0.
+{
 }
 
 void AsteroidsUtils::create_asteroids(int n)
 {
+	_n = n;
+
 	for (int i = 0; i < n; i++){
 		// Always use the random number generator provided by SDLUtils
 		RandomNumberGenerator& rand = sdlutils().rand();
@@ -85,6 +89,8 @@ void AsteroidsUtils::create_asteroids(int n)
 
 void AsteroidsUtils::create_splitted_asteroids(ecs::entity_t* a)
 {
+	_n = _n + 2; // se crean 2 asteroides (los divididos).
+
 	for (int i = 0; i < 2; i++) {
 
 		// add and entity to the manager
@@ -118,6 +124,8 @@ void AsteroidsUtils::create_splitted_asteroids(ecs::entity_t* a)
 
 void AsteroidsUtils::remove_all_asteroids()
 {
+	_n = 0; // se borran todos.
+
 	// grupo ASTEROIDS.
 	const std::vector<ecs::Entity*>& asteroids = _mngr->getEntities(ecs::grp::ASTEROIDS);
 	size_t n = asteroids.size();
@@ -129,6 +137,8 @@ void AsteroidsUtils::remove_all_asteroids()
 
 void AsteroidsUtils::split_astroid(ecs::Entity* a)
 {
+	_n--; // se quita el asteroide splitteado.
+
 	Generations* genComp = _mngr->getComponent<Generations>(a);
 	int level = genComp->getGenerationLevel();
 

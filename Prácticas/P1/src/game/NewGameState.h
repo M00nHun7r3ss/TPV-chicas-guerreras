@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "FighterUtils.h"
 
 class NewGameState : public GameState
 {
@@ -10,5 +11,7 @@ public:
 	void leave() override;
 	void update() override;
 
+private:
+	FighterUtils* _fUtils;
 };
 
