@@ -28,5 +28,6 @@ void NewRoundState::update()
 		_aUtils->create_asteroids(10);
 
 		// !!! cambia a RunningState
+		Game::Instance()->setState(Game::RUNNING);
 	}
 }

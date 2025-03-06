@@ -26,6 +26,7 @@ void NewGameState::update()
 		_fUtils->reset_lives();
 
 		// !!! cambia a NewRoundState
+		Game::Instance()->setState(Game::NEWROUND);
 	}
 	
 }
