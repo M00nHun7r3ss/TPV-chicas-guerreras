@@ -22,7 +22,10 @@
 #include "NewGameState.h"
 #include "NewRoundState.h"
 #include "RunningState.h"
+#include "PausedState.h"
+#include "GameOverState.h"
 #include "GameState.h"
+
 
 using ecs::Manager;
 
@@ -58,7 +61,6 @@ bool Game::init() {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 				<< std::endl;
 		return false;
-
 	}
 
 	return true;
@@ -66,11 +68,6 @@ bool Game::init() {
 
 void Game::initGame()
 {
-	// create the game info entity
-	 //ecs::entity_t ginfo = _mngr->addEntity();
-	//_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
-	//_mngr->addComponent<AsteroidsUtils>(ginfo, tf);
-
 	// Create the manager
 	_mngr = new Manager();
 
@@ -110,16 +107,6 @@ void Game::start() {
 		}
 
 		_state->update();
-
-		////¿Esto hace falta?
-		//_mngr->update();
-		//_mngr->refresh();
-
-		//checkCollisions();
-
-		//sdlutils().clearRenderer();
-		//_mngr->render();
-		//sdlutils().presentRenderer();
 
 		Uint32 frameTime = sdlutils().virtualTimer().currRealTime() - startTime;
 

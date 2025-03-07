@@ -20,15 +20,20 @@ public:
 		float rot;
 
 		// getters bala.
+		inline Vector2D getBulletPos() const { return pos; }
+		inline Vector2D getBulletVel() const { return vel; }
 		inline int getBulletWidth() const { return width; }
 		inline int getBulletHeight() const { return height; }
+		inline float getBulletRot() const { return rot; }
+		inline bool isBulletUsed() const { return used; }
 
 		// setters bala.
 		inline void setBulletPos(Vector2D position) { pos = position; }
 		inline void setBulletVel(Vector2D velocity) { vel = velocity; }
-		inline void setBulletRot(float rotation) { rot = rotation; }
 		inline void setBulletWidth(int wid) { width = wid; }
 		inline void setBulletHeight(int hei) { height = hei; }
+		inline void setBulletRot(float rotation) { rot = rotation; }
+		inline void setBulletUsed(bool u) { used = u; }
 	};
 
 	constexpr static uint8_t _max_bullets = 20;

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "AsteroidsFacade.h"
 
 class Transform;

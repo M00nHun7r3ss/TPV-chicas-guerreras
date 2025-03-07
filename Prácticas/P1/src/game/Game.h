@@ -10,7 +10,7 @@ class Manager;
 }
 
 class Game : public Singleton<Game> {
-	friend Singleton<Game>;
+	friend Singleton;
 public:
 	enum State {RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER};
 
