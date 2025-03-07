@@ -79,11 +79,8 @@ void AsteroidsUtils::create_asteroids(int n)
 		_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
 		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
-
-		//mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter))
 		//mngr->addComponent<Follow>(e, mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter)));
 
-		// _currNumOfAsteroids++;
 	}
 }
 
@@ -135,7 +132,7 @@ void AsteroidsUtils::remove_all_asteroids()
 	}
 }
 
-void AsteroidsUtils::split_astroid(ecs::Entity* a)
+void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 {
 	_n--; // se quita el asteroide splitteado.
 

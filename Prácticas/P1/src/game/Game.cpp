@@ -66,8 +66,6 @@ bool Game::init() {
 
 void Game::initGame()
 {
-
-
 	// create the game info entity
 	 //ecs::entity_t ginfo = _mngr->addEntity();
 	//_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
@@ -76,6 +74,7 @@ void Game::initGame()
 	// Create the manager
 	_mngr = new Manager();
 
+	// Inizialize states
 	_state = nullptr;
 	_paused_state = nullptr;
 	_running_state = nullptr;

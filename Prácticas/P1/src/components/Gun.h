@@ -1,7 +1,6 @@
 #pragma once
 #include "../ecs/Component.h"
 #include <array>
-#include <iterator>
 #include "../utils/Vector2D.h"
 #include <SDL.h>
 
