@@ -19,14 +19,14 @@ void RunningState::update()
 
 	// Si hay 0 asteroides cambia al estado GameOverState y sale del metodo.
 	if (_aUtils->getAsteroidNumber() == 0 && !exit) {
-		_g->setState(Game::GAMEOVER);
+		Game::Instance()->setState(Game::GAMEOVER);
 		exit = true;
 	}
 
 	// Si el usuario pulsa la tecla P cambia al estado PauseState y sale del metodo.
 	InputHandler& ihldr = ih();
 	if (ihldr.keyDownEvent() && ihldr.isKeyDown(SDLK_p) && !exit) {
-		_g->setState(Game::PAUSED);
+		Game::Instance()->setState(Game::PAUSED);
 		exit = true;
 	}
 
@@ -103,11 +103,11 @@ void RunningState::checkCollisions()
 				//Quita una vida, si le quedan, reinicia ronda
 				if (_fUtils->update_lives(-1) > 0) {
 					// !!! cambia a NewRoundState
-					_g->setState(Game::NEWROUND);
+					Game::Instance()->setState(Game::NEWROUND);
 				}
 				else {
 					// !!! cambia a GameOverState
-					_g->setState(Game::GAMEOVER);
+					Game::Instance()->setState(Game::GAMEOVER);
 				}
 			}
 			//SI HAY CHOQUE, NO TIENE QUE SEGUIR COMPROBANDO??

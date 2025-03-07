@@ -14,6 +14,7 @@ class Game : public Singleton<Game> {
 public:
 	enum State {RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER};
 
+	Game();
 	virtual ~Game();
 	bool init();
 	void initGame();
@@ -46,8 +47,7 @@ public:
 		_state->enter();
 	}
 private:
-	Game();
-	void checkCollisions();
+
 	ecs::Manager *_mngr;
 
 	GameState* _state;

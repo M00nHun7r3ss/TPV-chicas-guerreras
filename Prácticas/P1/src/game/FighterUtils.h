@@ -21,6 +21,5 @@ public:
 
 private:
 	ecs::Manager* _mngr;
-
 	void reset_fighter_pos();
 };

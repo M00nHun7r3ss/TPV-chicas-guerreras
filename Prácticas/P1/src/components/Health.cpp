@@ -1,6 +1,5 @@
 #include "Health.h"
 
-#include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/InputHandler.h"
 

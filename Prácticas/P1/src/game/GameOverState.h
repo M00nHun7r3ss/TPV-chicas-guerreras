@@ -12,7 +12,7 @@ public:
 	GameOverState() = default;
 	virtual ~GameOverState() {}
 	void enter() override;
-	void leave() override;
+	void leave() override {}
 	void update() override;
 
 private:

@@ -30,11 +30,24 @@
 using ecs::Manager;
 
 Game::Game() :
-		_mngr(nullptr) {
+		_mngr(new Manager()), 
+		_newgame_state(nullptr), 
+		_newround_state(nullptr),
+		_paused_state(nullptr), 
+		_running_state(nullptr), 
+		_gameover_state(nullptr),
+		_state(nullptr){
 }
 
 Game::~Game() {
 	delete _mngr;
+
+	delete _gameover_state;
+	delete _running_state;
+	delete _paused_state;
+	delete _newgame_state;
+	delete _newround_state;
+	delete _state;
 
 	// release InputHandler if the instance was created correctly.
 	if (InputHandler::HasInstance())
@@ -68,16 +81,17 @@ bool Game::init() {
 
 void Game::initGame()
 {
-	// Create the manager
-	_mngr = new Manager();
-
 	// Inizialize states
-	_state = nullptr;
-	_paused_state = nullptr;
-	_running_state = nullptr;
-	_newgame_state = nullptr;
-	_newround_state = nullptr;
-	_gameover_state = nullptr;
+	_newgame_state = new NewGameState();
+	_newround_state = new NewRoundState();
+	_paused_state = new PausedState();
+	_running_state = new RunningState();
+	_gameover_state = new GameOverState();
+
+
+	_state = _newgame_state;
+
+	_state->enter();
 }
 
 void Game::start() {
@@ -122,41 +136,3 @@ void Game::refresh()
 {
 }
 
-void Game::checkCollisions() {
-
-	// the fighters Transform
-	auto fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
-	auto playerTF = _mngr->getComponent<Transform>(fighter);
-
-	// the GameCtrl component
-	auto ginfo = _mngr->getHandler(ecs::hdlr::GAMEINFO);
-	//auto gctrl = _mngr->getComponent<GameCtrl>(ginfo);
-
-	// For safety, we traverse with a normal loop until the current size. In this
-	// particular case we could use a for-each loop since the list stars is not
-	// modified.
-	//
-	auto &asteroids = _mngr->getEntities(ecs::grp::ASTEROIDS);
-	auto n = asteroids.size();
-	for (auto i = 0u; i < n; i++) {
-		auto e = asteroids[i];
-		if (_mngr->isAlive(e)) { // if the star is active (it might have died in this frame)
-
-			// the Asteroids's Transform
-			//
-			auto eTR = _mngr->getComponent<Transform>(e);
-
-			// check if PacMan collides with the Star (i.e., eat it)
-			if (Collisions::collides(playerTF->getPos(), playerTF->getWidth(),
-				playerTF->getHeight(), //
-					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
-				_mngr->setAlive(e, false);
-				//gctrl->onAsteroidDestroyed();
-
-				// play sound on channel 1 (if there is something playing there
-				// it will be cancelled
-				//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
-			}
-		}
-	}
-}

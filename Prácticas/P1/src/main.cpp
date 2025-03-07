@@ -6,13 +6,15 @@
 
 int main(int, char**) {
 
+	
+
 	try {
-		Game* g = Game::Instance();
-		if (g->init())
-		{
-			g->initGame();
-			g->start();
+		if (Game::Init()) { // con este Init llamas a init!!!
+			Game::Instance()->initGame();
+			Game::Instance()->start();
+			
 		}
+		Game::Release();
 	} catch (const std::string &e) { // catch exceptions thrown as strings
 		std::cerr << e << std::endl;
 	} catch (const char *e) { // catch exceptions thrown as char*

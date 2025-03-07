@@ -58,7 +58,10 @@ void FighterUtils::reset_fighter()
 void FighterUtils::reset_lives()
 {
 	//Resetea la vida a 3
-	_mngr->getComponent<Health>(_fighter)->heal();
+	//_mngr->getComponent<Health>(_fighter)->heal();
+
+	_mngr->getComponent<Health>(_mngr->getHandler(ecs::hdlr::FIGHTER))->heal();
+	
 }
 
 int FighterUtils::update_lives(int n)
