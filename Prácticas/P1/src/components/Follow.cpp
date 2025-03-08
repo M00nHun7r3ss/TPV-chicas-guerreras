@@ -11,8 +11,8 @@ Follow::Follow()
 }
 
 Follow::Follow(ecs::entity_t fighter)
-	:_tr(), _fighter(fighter)
-	 
+	:_tr(),
+	_fighter(fighter)
 {
 }
 
@@ -27,8 +27,13 @@ void Follow::initComponent() {
 }
 
 void Follow::update() {
-	_vel.rotate(_vel.angle(_tFighter->getPos() - _tr->getPos()) > 0 ? 1.0f : -1.0f);
-	_tr->getVel().angle(_vel);
+
+	_pos = _tr->getPos();
+	_vel = _tr->getVel();
+
+	//_vel = _vel.rotate(_vel.angle(_tFighter->getPos() - _pos) > 0 ? 1.0f : -1.0f);
+
+	_tr->getVel().set(_vel.rotate(_vel.angle(_tFighter->getPos() - _pos) > 0 ? 1.0f : -1.0f));
 
 }
 
