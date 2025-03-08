@@ -34,9 +34,12 @@ void AsteroidsUtils::create_asteroids(int n)
 
 		// add a Transform component, and initialise it with random size and position
 		Transform* tr = _mngr->addComponent < Transform >(e);
+		Generations* gen = _mngr->addComponent<Generations>(e); // add Generations Component
+		gen->generate(); // and makes the generation.
 
 		// --- POS ALEATORIA ---
-		int size = 50;
+		int size = gen->getGenerationSize();
+
 		//Lado por el que sale
 		//0 - arriba, 1 - abajo, 2 - izqd, 3 - dcha
 		int lado = rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
@@ -78,8 +81,6 @@ void AsteroidsUtils::create_asteroids(int n)
 		// Los demas componentes
 		_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Component (cambiar luego).
 		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
-		Generations* gen = _mngr->addComponent<Generations>(e); // add Generations Component
-		gen->generate(); // and makes the generation.
 
 		//mngr->addComponent<Follow>(e, mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter)));
 
@@ -100,7 +101,7 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 	// --- VELOCIDAD Y POSICION---
 	Transform* aTf = _mngr->getComponent<Transform>(*a);
 
-	float size = aTf->getHeight() / 2; // la mitad q el padre.
+	float size = 10.0f + 25.0f * (lvl + 1); // (lvl + 1) pa q no haga 0* algo
 
 	int r = sdlutils().rand().nextInt(0, 360);
 	Vector2D pos = aTf->getPos() + aTf->getVel().rotate(r) * 2 * std::max(size, size);
@@ -109,16 +110,17 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 	// inicializa el asteroide en ese transform
 	tr->init(pos, vel, size, size, r);
 
-	// Los demas componentes
-	_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
-	_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
-
 	// --- generations del e (splitted).
 	_mngr->addComponent<Generations>(e);
 	Generations* gen = _mngr->getComponent<Generations>(e);
 
 	// Queremos que el hijo tenga 1 menos que el padre.
 	gen->setGenerationLevel(lvl - 1);
+
+	// Los demas componentes
+	_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
+	_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
+
 
 }
 
@@ -149,7 +151,7 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			create_splitted_asteroids(&a, level);
+			create_splitted_asteroids(&a, level-1);
 		}
 	}
 

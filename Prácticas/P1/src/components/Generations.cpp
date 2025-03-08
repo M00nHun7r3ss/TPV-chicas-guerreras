@@ -25,13 +25,12 @@ void Generations::generate()
 	RandomNumberGenerator& rand = sdlutils().rand(); // random number generator.
 
 	// 0 -> SMALL, 1 -> MEDIUM, 2 -> BIG
-	//_generationLevel = rand.nextInt(0, 3);
-	_generationLevel = 2;
+	_generationLevel = rand.nextInt(0, 3);
+	//_generationLevel = 2;
 
-	int g = 10.0f + 25.0f * _generationLevel;
+	float g = 10.0f + 25.0f * (_generationLevel + 1); // (lvl + 1) pa q no haga 0* algo
 
-	_tr->setHeight(g);
-	_tr->setWidth(g);
+	setGenerationSize(g);
 
 	// Además, de manera aleatoria, decide si quieres añadir uno de los componentes Follow o
 	// TowardsDestination.Puedes usar imágenes distintas para cada configuración de asteroides.

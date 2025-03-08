@@ -37,7 +37,7 @@ void NewRoundState::update()
 	if (ihldr.isKeyDown(SDL_SCANCODE_0)) { // !!! cambiar.
 		_fUtils->reset_fighter();
 		_aUtils->remove_all_asteroids();
-		_aUtils->create_asteroids(1);
+		_aUtils->create_asteroids(10);
 
 		// !!! cambia a RunningState
 		Game::Instance()->setState(Game::RUNNING);
