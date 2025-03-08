@@ -43,8 +43,6 @@ void RunningState::update()
 	int n = _aUtils->getAsteroidNumber();
 	
 	for (int i = 0; i < n; i++) {
-		entity_t e = _asteroids[i];
-	
 		_mngr->update(_asteroids[i]);
 	}
 
@@ -60,8 +58,6 @@ void RunningState::update()
 
 	//looks each asteroid
 	for (int i = 0; i < n; i++) {
-		entity_t e = _asteroids[i];
-
 		_mngr->render(_asteroids[i]);
 	}
 

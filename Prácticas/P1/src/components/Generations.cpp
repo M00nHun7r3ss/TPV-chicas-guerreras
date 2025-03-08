@@ -25,7 +25,8 @@ void Generations::generate()
 	RandomNumberGenerator& rand = sdlutils().rand(); // random number generator.
 
 	// 0 -> SMALL, 1 -> MEDIUM, 2 -> BIG
-	_generationLevel = rand.nextInt(0, 3);
+	//_generationLevel = rand.nextInt(0, 3);
+	_generationLevel = 2;
 
 	int g = 10.0f + 5.0f * _generationLevel;
 
