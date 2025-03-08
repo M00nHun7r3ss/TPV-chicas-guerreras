@@ -7,16 +7,16 @@
 class RunningState : public GameState
 {
 public:
-	RunningState() : _mngr(Game::Instance()->getManager()), _lastAsteroidAdded(0) {};
+	RunningState(FighterFacade* f, AsteroidsFacade* a);
 	virtual ~RunningState() {}
-	void enter() override {}
-	void leave() override {}
+	void enter() override { std::cout << "Entered RUNNINGSTATE" << std::endl; }
+	void leave() override { std::cout << "Exited RUNNINGSTATE" << std::endl; }
 	void update() override;
 
 private:
 	ecs::Manager* _mngr;
-	FighterUtils* _fUtils;
-	AsteroidsUtils* _aUtils;
+	FighterFacade* _fUtils;
+	AsteroidsFacade* _aUtils;
 
 	void checkCollisions();
 

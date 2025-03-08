@@ -13,6 +13,14 @@
 #include "../components/Transform.h"
 #include "../components/Gun.h"
 
+RunningState::RunningState(FighterFacade* f, AsteroidsFacade* a)
+	: _mngr(Game::Instance()->getManager()),
+	  _lastAsteroidAdded(0),
+      _aUtils(a),
+      _fUtils(f)
+{
+}
+
 void RunningState::update()
 {
 	bool exit = false;

@@ -7,7 +7,7 @@
 using ecs::entity_t;
 
 class AsteroidsFacade {
-protected:
+public:
 	AsteroidsFacade() {
 	}
 	virtual ~AsteroidsFacade() {
@@ -15,4 +15,5 @@ protected:
 	virtual void create_asteroids(int n) = 0;
 	virtual void remove_all_asteroids() = 0;
 	virtual void split_asteroid(ecs::Entity* a) = 0;
+	virtual int getAsteroidNumber() = 0; // anadido despues.
 };

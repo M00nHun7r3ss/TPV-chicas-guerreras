@@ -4,6 +4,12 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 
+NewRoundState::NewRoundState(FighterFacade* f, AsteroidsFacade* a)
+	: _fUtils(f),
+	  _aUtils(a)
+{
+}
+
 void NewRoundState::update()
 {
 	// --- Text.
@@ -22,7 +28,7 @@ void NewRoundState::update()
 	InputHandler& ihldr = ih();
 
 	// si el enter es presionado...
-	if (ihldr.isKeyDown(SDL_SCANCODE_KP_ENTER)) {
+	if (ihldr.isKeyDown(SDL_SCANCODE_0)) { // !!! cambiar.
 		_fUtils->reset_fighter();
 		_aUtils->remove_all_asteroids();
 		_aUtils->create_asteroids(10);

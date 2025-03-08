@@ -9,14 +9,14 @@
 class GameOverState : public GameState
 {
 public:
-	GameOverState() = default;
+	GameOverState(AsteroidsFacade* a);
 	virtual ~GameOverState() {}
 	void enter() override;
-	void leave() override {}
+	void leave() override;
 	void update() override;
 
 private:
-	AsteroidsUtils* _aUtils;
+	AsteroidsFacade* _aUtils;
 	bool _mode; // false -> LOOSER; true -> CHAMPION
 };
 

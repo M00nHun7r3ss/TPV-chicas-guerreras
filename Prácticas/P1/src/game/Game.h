@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "FighterFacade.h"
 #include "../utils/Singleton.h"
 #include "GameState.h"
 

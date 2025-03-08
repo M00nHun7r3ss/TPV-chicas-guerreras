@@ -4,6 +4,11 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 
+NewGameState::NewGameState(FighterFacade* f)
+	: _fUtils(f)
+{
+}
+
 void NewGameState::update()
 {
 	// --- Text.

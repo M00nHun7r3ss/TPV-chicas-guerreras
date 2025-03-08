@@ -6,15 +6,15 @@
 class NewRoundState : public GameState
 {
 public:
-	NewRoundState() = default;
+	NewRoundState(FighterFacade* f, AsteroidsFacade* a);
 	virtual ~NewRoundState() {}
-	void enter() override {}
-	void leave() override {}
+	void enter() override { std::cout << "Entered NEWROUNDSTATE" << std::endl; }
+	void leave() override { std::cout << "Exited NEWROUNDSTATE" << std::endl; }
 	void update() override;
 
 private:
-	FighterUtils* _fUtils;
-	AsteroidsUtils* _aUtils;
+	FighterFacade* _fUtils;
+	AsteroidsFacade* _aUtils;
 
 };
 

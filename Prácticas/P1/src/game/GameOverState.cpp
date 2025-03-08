@@ -1,7 +1,14 @@
 #include "GameOverState.h"
 
+GameOverState::GameOverState(AsteroidsFacade* a)
+	: _aUtils(a)
+{
+}
+
 void GameOverState::enter()
 {
+	std::cout << "Entered GAMEOVERSTATE" << std::endl;
+
 	if (_aUtils->getAsteroidNumber() == 0)
 	{
 		// CHAMPION.
@@ -12,6 +19,11 @@ void GameOverState::enter()
 		// LOOSER.
 		_mode = false;
 	}
+}
+
+void GameOverState::leave()
+{
+	std::cout << "Exited GAMEOVERSTATE" << std::endl;
 }
 
 void GameOverState::update()

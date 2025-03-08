@@ -5,13 +5,13 @@
 class NewGameState : public GameState
 {
 public:
-	NewGameState() = default;
+	NewGameState(FighterFacade* f);
 	virtual ~NewGameState() {}
-	void enter() override {}
-	void leave() override {}
+	void enter() override { std::cout << "Entered NEWGAMESTATE" << std::endl; }
+	void leave() override { std::cout << "Exited NEWGAMEGSTATE" << std::endl; }
 	void update() override;
 
 private:
-	FighterUtils* _fUtils = new FighterUtils();
+	FighterFacade* _fUtils;
 };
 

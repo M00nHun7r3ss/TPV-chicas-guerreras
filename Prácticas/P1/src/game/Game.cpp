@@ -35,19 +35,11 @@ Game::Game() :
 		_newround_state(nullptr),
 		_paused_state(nullptr), 
 		_running_state(nullptr), 
-		_gameover_state(nullptr),
-		_state(nullptr){
+		_gameover_state(nullptr){
 }
 
 Game::~Game() {
 	delete _mngr;
-
-	delete _gameover_state;
-	delete _running_state;
-	delete _paused_state;
-	delete _newgame_state;
-	delete _newround_state;
-	delete _state;
 
 	// release InputHandler if the instance was created correctly.
 	if (InputHandler::HasInstance())
@@ -81,13 +73,20 @@ bool Game::init() {
 
 void Game::initGame()
 {
-	// Inizialize states
-	_newgame_state = new NewGameState();
-	_newround_state = new NewRoundState();
-	_paused_state = new PausedState();
-	_running_state = new RunningState();
-	_gameover_state = new GameOverState();
 
+	// Inizialize and declare facades.
+	AsteroidsFacade* ast_facade = new AsteroidsUtils();
+	FighterFacade* fighter_facade = new FighterUtils();
+
+	// Inizialize states
+	_newgame_state = new NewGameState(fighter_facade);
+	_newround_state = new NewRoundState(fighter_facade, ast_facade);
+	_paused_state = new PausedState();
+	_running_state = new RunningState(fighter_facade, ast_facade);
+	_gameover_state = new GameOverState(ast_facade);
+
+	fighter_facade->create_fighter();
+	ast_facade->create_asteroids(20);
 
 	_state = _newgame_state;
 

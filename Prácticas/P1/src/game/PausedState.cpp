@@ -2,11 +2,14 @@
 
 void PausedState::enter()
 {
+	std::cout << "Entered PAUSESTATE" << std::endl;
 	sdlutils().virtualTimer().pause();
+
 }
 
 void PausedState::leave()
 {
+	std::cout << "Exited PAUSESTATE" << std::endl;
 	sdlutils().virtualTimer().resume();
 }
 

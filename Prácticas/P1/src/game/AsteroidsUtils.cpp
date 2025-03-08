@@ -124,12 +124,12 @@ void AsteroidsUtils::remove_all_asteroids()
 	_n = 0; // se borran todos.
 
 	// grupo ASTEROIDS.
-	const std::vector<ecs::Entity*>& asteroids = _mngr->getEntities(ecs::grp::ASTEROIDS);
+	const std::vector<ecs::entity_t>& asteroids = _mngr->getEntities(ecs::grp::ASTEROIDS);
 	size_t n = asteroids.size();
 	for (int i = 0; i < n; i++) {
 		_mngr->setAlive(asteroids[i], false); // mata.
-		_mngr->refresh(); // limpia el cadaver.
 	}
+		_mngr->refresh(); // limpia el cadaver.
 }
 
 void AsteroidsUtils::split_asteroid(ecs::Entity* a)
