@@ -27,6 +27,7 @@
     <ClCompile Include="..\src\components\Health.cpp" />
     <ClCompile Include="..\src\components\Image.cpp" />
     <ClCompile Include="..\src\components\ShowAtOppositeSide.cpp" />
+    <ClCompile Include="..\src\components\TowardsDestination.cpp" />
     <ClCompile Include="..\src\ecs\Manager.cpp" />
     <ClCompile Include="..\src\game\AsteroidsUtils.cpp" />
     <ClCompile Include="..\src\game\FighterUtils.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\ShowAtOppositeSide.h" />
+    <ClInclude Include="..\src\components\TowardsDestination.h" />
     <ClInclude Include="..\src\components\Transform.h" />
     <ClInclude Include="..\src\ecs\Component.h" />
     <ClInclude Include="..\src\ecs\ecs.h" />

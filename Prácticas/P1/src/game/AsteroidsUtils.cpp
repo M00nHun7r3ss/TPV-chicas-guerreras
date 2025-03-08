@@ -12,7 +12,7 @@
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Generations.h"
 #include "../components/Follow.h"
-
+#include "../components/TowardsDestination.h"
 
 AsteroidsUtils::AsteroidsUtils()
 	: _centroVent((float)(sdlutils().width() / 2), (float)(sdlutils().height() / 2)),
@@ -83,15 +83,15 @@ void AsteroidsUtils::create_asteroids(int n)
 		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
 		int comp = rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
-		//if (comp == 0)
-		//{
+		if (comp == 0)
+		{
 			entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
 			_mngr->addComponent<Follow>(e, fighter);
-		//}
-		//else
-		//{
-			
-		//}
+		}
+		else
+		{
+			_mngr->addComponent<TowardsDestination>(e);
+		}
 
 	}
 }
@@ -132,15 +132,15 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 
 	RandomNumberGenerator& rand = sdlutils().rand();
 	int comp = rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
-	//if (comp == 0)
-	//{
+	if (comp == 0)
+	{
 		entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
 		_mngr->addComponent<Follow>(e, fighter);
-	//}
-	//else
-	//{
-
-	//}
+	}
+	else
+	{
+		_mngr->addComponent<TowardsDestination>(e);
+	}
 
 }
 

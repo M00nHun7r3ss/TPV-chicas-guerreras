@@ -28,10 +28,7 @@ void Generations::generate()
 	_generationLevel = rand.nextInt(0, 3);
 	//_generationLevel = 2;
 
-	float g = 10.0f + 25.0f * (_generationLevel + 1); // (lvl + 1) pa q no haga 0* algo
+	float g = 10.0f + 5.0f * (_generationLevel + 1); // (lvl + 1) pa q no haga 0* algo
 
 	setGenerationSize(g);
-
-	// Además, de manera aleatoria, decide si quieres añadir uno de los componentes Follow o
-	// TowardsDestination.Puedes usar imágenes distintas para cada configuración de asteroides.
 }
