@@ -54,7 +54,6 @@ void RunningState::update()
 	//Comprueba colisiones
 	checkCollisions();
 
-
 	// Renderiza las entidades de caza y asteroides
 	_mngr->render(fighterEnt);
 

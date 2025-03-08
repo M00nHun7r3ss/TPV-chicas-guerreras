@@ -23,7 +23,7 @@ AsteroidsUtils::AsteroidsUtils()
 
 void AsteroidsUtils::create_asteroids(int n)
 {
-	_n = n;
+	_n += n;
 
 	for (int i = 0; i < n; i++){
 		// Always use the random number generator provided by SDLUtils
