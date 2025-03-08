@@ -75,7 +75,7 @@ void RunningState::update()
 	VirtualTimer& vt = sdlutils().virtualTimer();
 
 	if (vt.currTime() > _timeBetweenEachSpawn + _lastAsteroidAdded) {
-		_aUtils->create_asteroids(1);
+		//_aUtils->create_asteroids(1);
 		_lastAsteroidAdded = vt.currTime();
 	}
 }
@@ -125,7 +125,6 @@ void RunningState::checkCollisions()
 					Game::Instance()->setState(Game::GAMEOVER);
 				}
 			}
-			//SI HAY CHOQUE, NO TIENE QUE SEGUIR COMPROBANDO??
 
 			//Recorremos las balas
 			for (Gun::Bullet& b : *playerGun)

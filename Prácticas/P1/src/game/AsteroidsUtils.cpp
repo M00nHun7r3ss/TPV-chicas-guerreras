@@ -63,16 +63,6 @@ void AsteroidsUtils::create_asteroids(int n)
 			break;
 		}
 
-		/*
-		SDL_Rect r = { x, y, size, size };
-		SDL_SetRenderDrawColor(sdlutils().renderer(), 255, 255, 255, 255);
-		SDL_RenderDrawRect(sdlutils().renderer(), &r);
-
-		SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 0, 0, 255);
-
-		SDL_RenderPresent(sdlutils().renderer());
-		*/
-
 		// --- VELOCIDAD ALEATORIA ---
 		//Centro ventana para que los asteroides vayan hacia el centro
 		int rx = rand.nextInt(-100, 101);
@@ -86,8 +76,9 @@ void AsteroidsUtils::create_asteroids(int n)
 		tr->init(Vector2D(x, y), v, size, size, 0.0f);
 
 		// Los demas componentes
-		_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
+		_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Component (cambiar luego).
 		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
+		_mngr->addComponent<Generations>(e); // add Generations Component
 
 		//mngr->addComponent<Follow>(e, mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter)));
 
@@ -144,10 +135,10 @@ void AsteroidsUtils::remove_all_asteroids()
 
 void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 {
-	_n--; // se quita el asteroide splitteado.
-
 	Generations* genComp = _mngr->getComponent<Generations>(a);
 	int level = genComp->getGenerationLevel();
+
+	_n--; // se quita el asteroide splitteado.
 
 	// la desactiva.
 	_mngr->setAlive(a, false); // mata.
