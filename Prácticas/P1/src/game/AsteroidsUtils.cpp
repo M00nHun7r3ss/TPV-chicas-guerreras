@@ -141,20 +141,17 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 	Generations* genComp = _mngr->getComponent<Generations>(a);
 	int level = genComp->getGenerationLevel();
 
-
 	// la desactiva.
 	_mngr->setAlive(a, false); // mata.
-
 	_n--; // se quita el asteroide splitteado.
 
 	if (level > 0)
 	{
-		for (int i =0; i < 2; i++)
+		for (int i = 0; i < 2; i++)
 		{
-			create_splitted_asteroids(&a, level - 1);
+			create_splitted_asteroids(&a, level);
 		}
 	}
-	
 
 	_mngr->refresh(); // limpia el cadaver.
 }

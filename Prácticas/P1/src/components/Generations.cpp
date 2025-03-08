@@ -28,7 +28,7 @@ void Generations::generate()
 	//_generationLevel = rand.nextInt(0, 3);
 	_generationLevel = 2;
 
-	int g = 10.0f + 5.0f * _generationLevel;
+	int g = 10.0f + 25.0f * _generationLevel;
 
 	_tr->setHeight(g);
 	_tr->setWidth(g);
