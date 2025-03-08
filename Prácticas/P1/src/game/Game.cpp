@@ -86,7 +86,6 @@ void Game::initGame()
 	_gameover_state = new GameOverState(ast_facade);
 
 	fighter_facade->create_fighter();
-	ast_facade->create_asteroids(20);
 
 	_state = _newgame_state;
 
@@ -120,6 +119,14 @@ void Game::start() {
 		}
 
 		_state->update();
+
+		//Esto es para que renderice
+		_mngr->update();
+		_mngr->refresh();
+
+		sdlutils().clearRenderer();
+		_mngr->render();
+		sdlutils().presentRenderer();
 
 		Uint32 frameTime = sdlutils().virtualTimer().currRealTime() - startTime;
 
