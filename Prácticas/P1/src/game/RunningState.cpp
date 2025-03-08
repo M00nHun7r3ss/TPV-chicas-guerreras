@@ -17,7 +17,8 @@ RunningState::RunningState(FighterFacade* f, AsteroidsFacade* a)
 	: _mngr(Game::Instance()->getManager()),
 	  _lastAsteroidAdded(0),
       _aUtils(a),
-      _fUtils(f)
+      _fUtils(f),
+	  _asteroids(_mngr->getEntities(ecs::grp::ASTEROIDS))
 {
 }
 
@@ -38,11 +39,13 @@ void RunningState::update()
 		exit = true;
 	}
 
-	// Actualizar entidad de caza y asteroides
-	std::vector<entity_t> asteroidsEnt = _mngr->getEntities(ecs::grp::ASTEROIDS);
-	for (entity_t asteroid : asteroidsEnt)
-	{
-		_mngr->update(asteroid);
+	//size of vector
+	int n = _aUtils->getAsteroidNumber();
+	
+	for (int i = 0; i < n; i++) {
+		entity_t e = _asteroids[i];
+	
+		_mngr->update(_asteroids[i]);
 	}
 
 	entity_t fighterEnt = _mngr->getHandler(ecs::hdlr::FIGHTER);
@@ -51,13 +54,17 @@ void RunningState::update()
 	//Comprueba colisiones
 	checkCollisions();
 
-	// Renderiza las entidades de caza y asteroides
-	for (entity_t asteroid : asteroidsEnt)
-	{
-		_mngr->render(asteroid);
-	}
 
+	// Renderiza las entidades de caza y asteroides
 	_mngr->render(fighterEnt);
+
+
+	//looks each asteroid
+	for (int i = 0; i < n; i++) {
+		entity_t e = _asteroids[i];
+
+		_mngr->render(_asteroids[i]);
+	}
 
 	//Quita entidades muertas
 	_mngr->refresh();
@@ -70,6 +77,7 @@ void RunningState::update()
 
 	if (vt.currTime() > _timeBetweenEachSpawn + _lastAsteroidAdded) {
 		_aUtils->create_asteroids(1);
+		_lastAsteroidAdded = vt.currTime();
 	}
 }
 
@@ -83,13 +91,11 @@ void RunningState::checkCollisions()
 	// For safety, we traverse with a normal loop until the current size. In this
 	// particular case we could use a for-each loop since the list asteroids is not modified.
 
-	//get asteroids vector
-	const std::vector<entity_t>& asteroids = _mngr->getEntities(ecs::grp::ASTEROIDS);
 	//size of vector
 	int n = _aUtils->getAsteroidNumber();
 	//looks each asteroid
 	for (int i = 0; i < n; i++) {
-		entity_t e = asteroids[i];
+		entity_t e = _asteroids[i];
 		if (_mngr->isAlive(e)) { // if the asteroid is active (it might have died in this frame)
 
 			// the Asteroid's Transform
@@ -108,12 +114,14 @@ void RunningState::checkCollisions()
 				aTR->getHeight(), 
 				aTR->getRot())){
 
+				int lives = _fUtils->update_lives(-1);
+
 				//Quita una vida, si le quedan, reinicia ronda
-				if (_fUtils->update_lives(-1) > 0) {
+				if (lives > 0) {
 					// !!! cambia a NewRoundState
 					Game::Instance()->setState(Game::NEWROUND);
 				}
-				else {
+				else if ( lives <= 0) {
 					// !!! cambia a GameOverState
 					Game::Instance()->setState(Game::GAMEOVER);
 				}

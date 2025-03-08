@@ -67,6 +67,7 @@ void FighterUtils::reset_lives()
 
 int FighterUtils::update_lives(int n)
 {
+	std::cout << "Ha quitado vida" << std::endl;
 	//Quita n vidas
 	_mngr->getComponent<Health>(_mngr->getHandler(ecs::hdlr::FIGHTER))->damage(n);
 

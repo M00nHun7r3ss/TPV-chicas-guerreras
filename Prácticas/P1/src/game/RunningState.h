@@ -3,6 +3,7 @@
 #include "FighterUtils.h"
 #include "AsteroidsUtils.h"
 #include <SDL.h>
+#include <vector>
 
 class RunningState : public GameState
 {
@@ -21,6 +22,8 @@ private:
 	void checkCollisions();
 
 	Uint32 _lastAsteroidAdded;
+
+	const std::vector<entity_t>& _asteroids;
 };
 
 

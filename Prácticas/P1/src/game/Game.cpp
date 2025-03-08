@@ -87,7 +87,7 @@ void Game::initGame()
 
 	fighter_facade->create_fighter();
 
-	_state = _gameover_state;
+	_state = _newgame_state;
 
 	_state->enter();
 }

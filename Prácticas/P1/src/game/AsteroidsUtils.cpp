@@ -63,6 +63,16 @@ void AsteroidsUtils::create_asteroids(int n)
 			break;
 		}
 
+		/*
+		SDL_Rect r = { x, y, size, size };
+		SDL_SetRenderDrawColor(sdlutils().renderer(), 255, 255, 255, 255);
+		SDL_RenderDrawRect(sdlutils().renderer(), &r);
+
+		SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 0, 0, 255);
+
+		SDL_RenderPresent(sdlutils().renderer());
+		*/
+
 		// --- VELOCIDAD ALEATORIA ---
 		//Centro ventana para que los asteroides vayan hacia el centro
 		int rx = rand.nextInt(-100, 101);
