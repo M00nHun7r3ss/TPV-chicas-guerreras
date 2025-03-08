@@ -82,7 +82,16 @@ void AsteroidsUtils::create_asteroids(int n)
 		_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Component (cambiar luego).
 		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
-		//mngr->addComponent<Follow>(e, mngr->getComponent<Transform>(mngr->setHandler(ecs::hdlr::FIGHTER, fighter)));
+		int comp = rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
+		//if (comp == 0)
+		//{
+			entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
+			_mngr->addComponent<Follow>(e, fighter);
+		//}
+		//else
+		//{
+			
+		//}
 
 	}
 }
@@ -121,6 +130,17 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 	_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
 	_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
+	RandomNumberGenerator& rand = sdlutils().rand();
+	int comp = rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
+	//if (comp == 0)
+	//{
+		entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
+		_mngr->addComponent<Follow>(e, fighter);
+	//}
+	//else
+	//{
+
+	//}
 
 }
 

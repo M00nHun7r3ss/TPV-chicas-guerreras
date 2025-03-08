@@ -22,5 +22,6 @@ private:
 	int _n; // nº de asteroides.
 
 	void create_splitted_asteroids(ecs::entity_t* a, int lvl); // no hay n porque siempre se crean 2. "a" es el asteroide del que salen al romperse.
+	void generateAsteroid(Vector2D& pos, Vector2D& vel, int lvl);
 };
 

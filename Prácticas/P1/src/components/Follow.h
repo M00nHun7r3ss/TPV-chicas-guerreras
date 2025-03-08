@@ -12,7 +12,7 @@ public:
 	__CMPID_DECL__(ecs::cmp::FOLLOW)
 
 	Follow();
-	Follow(Vector2D playerPos);
+	Follow(ecs::entity_t fighter);
 	virtual ~Follow();
 	void initComponent() override;
 	void update() override;
@@ -24,6 +24,9 @@ private:
 	Vector2D _vel; // velocidad asteroide.
 	Vector2D _pos; // posicion asteroide.
 
-	Vector2D _playerPos; // posicion fighter.
+	// --- caza.
+	ecs::entity_t _fighter; // fighter
+	Transform* _tFighter; // transform caza.
+
 };
 
