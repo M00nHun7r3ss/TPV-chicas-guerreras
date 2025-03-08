@@ -4,6 +4,7 @@ void PausedState::enter()
 {
 	std::cout << "Entered PAUSESTATE" << std::endl;
 	sdlutils().virtualTimer().pause();
+	_message = &sdlutils().msgs().at("PausedState");
 
 }
 
@@ -15,17 +16,16 @@ void PausedState::leave()
 
 void PausedState::update()
 {
-	// --- Text.
-	Texture startTex(sdlutils().renderer(), "Press any key to resume the game",
-		sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x444444ff));
+	// --- Message
+	_dest = build_sdlrect(
+		(sdlutils().width() - _message->width()) / 2.0f,
+		(sdlutils().height() - _message->height()) / 2.0f,
+		_message->width(),
+		_message->height());
 
-	SDL_Rect dest = build_sdlrect( 
-		(sdlutils().width() - startTex.width()) / 2.0f, 
-		sdlutils().height() - startTex.height() / 2.0f, 
-		startTex.width(), 
-		startTex.height());
-
-	startTex.render(dest);
+	sdlutils().clearRenderer();
+	_message->render(_dest);
+	sdlutils().presentRenderer();
 
 	// --- Input.
 	InputHandler& ihldr = ih();

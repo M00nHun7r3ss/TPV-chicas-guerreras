@@ -1,10 +1,14 @@
 #pragma once
 #include "GameState.h"
-#include "Game.h"
+
+#include <SDL_rect.h>
+#include <string>
+
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/InputHandler.h"
+
+#include "Game.h"
 #include "AsteroidsUtils.h"
-#include <string>
 
 class GameOverState : public GameState
 {
@@ -17,6 +21,6 @@ public:
 
 private:
 	AsteroidsFacade* _aUtils;
-	bool _mode; // false -> LOOSER; true -> CHAMPION
+    Texture* _message;
+    SDL_Rect _dest;
 };
-

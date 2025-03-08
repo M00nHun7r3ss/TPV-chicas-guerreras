@@ -87,7 +87,7 @@ void Game::initGame()
 
 	fighter_facade->create_fighter();
 
-	_state = _newgame_state;
+	_state = _gameover_state;
 
 	_state->enter();
 }
@@ -124,9 +124,16 @@ void Game::start() {
 		_mngr->update();
 		_mngr->refresh();
 
-		sdlutils().clearRenderer();
-		_mngr->render();
-		sdlutils().presentRenderer();
+		if (_state == _running_state)
+		{
+			sdlutils().clearRenderer();
+			_mngr->render();
+			sdlutils().presentRenderer();
+		}
+		else
+		{
+			_mngr->render();
+		}
 
 		Uint32 frameTime = sdlutils().virtualTimer().currRealTime() - startTime;
 

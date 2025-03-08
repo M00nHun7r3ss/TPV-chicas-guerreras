@@ -12,12 +12,12 @@ void GameOverState::enter()
 	if (_aUtils->getAsteroidNumber() == 0)
 	{
 		// CHAMPION.
-		_mode = true; 
+		_message = &sdlutils().msgs().at("GameOverGood");
 	}
 	else
 	{
 		// LOOSER.
-		_mode = false;
+		_message = &sdlutils().msgs().at("GameOverBad");
 	}
 }
 
@@ -28,28 +28,16 @@ void GameOverState::leave()
 
 void GameOverState::update()
 {
-	std::string text;
+	// --- Message
+	_dest = build_sdlrect( 
+		(sdlutils().width() - _message->width()) / 2.0f, 
+		(sdlutils().height() - _message->height()) / 2.0f, 
+		_message->width(), 
+		_message->height());
 
-	if (_mode)
-	{
-		text = "Game Over Loser! Press ENTER to continue.";
-	}
-	else
-	{
-		text = "Game Over Champion! Press ENTER to continue.";
-	}
-
-	// --- Text.
-	Texture startTex(sdlutils().renderer(), text,
-		sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x444444ff));
-
-	SDL_Rect dest = build_sdlrect( //
-		(sdlutils().width() - startTex.width()) / 2.0f, //
-		sdlutils().height() - startTex.height() / 2.0f, //
-		startTex.width(), //
-		startTex.height());
-
-	startTex.render(dest);
+	sdlutils().clearRenderer();
+	_message->render(_dest);
+	sdlutils().presentRenderer();
 
 	// --- Input.
 	InputHandler& ihldr = ih();
