@@ -110,7 +110,7 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 	// --- VELOCIDAD Y POSICION---
 	Transform* aTf = _mngr->getComponent<Transform>(*a);
 
-	float size = 10.0f + 25.0f * (lvl + 1); // (lvl + 1) pa q no haga 0* algo
+	float size = 10.0f + 5.0f * (lvl + 1); // (lvl + 1) pa q no haga 0* algo
 
 	int r = sdlutils().rand().nextInt(0, 360);
 	Vector2D pos = aTf->getPos() + aTf->getVel().rotate(r) * 2 * std::max(size, size);
