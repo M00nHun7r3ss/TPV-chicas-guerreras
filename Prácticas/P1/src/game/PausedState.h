@@ -1,13 +1,12 @@
 #pragma once
 #include "GameState.h"
 
-#include <SDL_rect.h>
-#include <string>
-
-#include "../sdlutils/SDLUtils.h"
-#include "../sdlutils/InputHandler.h"
-
 #include "Game.h"
+
+#include <SDL_rect.h>
+
+#include "../sdlutils/InputHandler.h"
+#include "../sdlutils/SDLUtils.h"
 
 class PausedState : public GameState
 {

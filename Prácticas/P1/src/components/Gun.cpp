@@ -33,13 +33,13 @@ void Gun::render()
 	// ---- ¡¡¡¡ PASOS PARA RENDERIZAR !!!! ----.
 
 	// reference to the SDLUtils Singleton.
-	auto& sdl = *SDLUtils::Instance();
+	SDLUtils& sdl = *SDLUtils::Instance();
 
 	// store the 'renderer' in a local variable, just for convenience
 	SDL_Renderer* renderer = sdl.renderer();
 
 	// fire image.
-	auto& fire = sdl.images().at("fire");
+	Texture& fire = sdl.images().at("fire");
 
 	//Recorremos el array de balas
 	for (Gun::Bullet& b : _bullets) {
@@ -62,7 +62,7 @@ void Gun::render()
 
 void Gun::update()
 {
-	auto& ihldr = ih();
+	InputHandler& ihldr = ih();
 	int bw = 5;
 	int bh = 20;
 	Vector2D c = _trPlayer->getPos() + Vector2D(_trPlayer->getWidth() / 2.0f, _trPlayer->getHeight() / 2.0f);
@@ -89,7 +89,7 @@ void Gun::update()
 	// Inicialmente empieza en 0.25 segundos.
 	Uint32 _timeBetweenEachSpawn = 250;
 
-	auto& vt = sdlutils().virtualTimer();
+	VirtualTimer& vt = sdlutils().virtualTimer();
 
 	// Puede disparar en caso de apretar la tecla S (meter comprobación de keyDownEvent para evitar que suelte todo el rato).
 	if (ihldr.keyDownEvent()) {

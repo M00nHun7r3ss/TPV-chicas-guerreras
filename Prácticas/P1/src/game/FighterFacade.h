@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../ecs/ecs.h"
+
 #include "../game/Game.h"
-#include "../ecs/Component.h"
+
 #include "../utils/Vector2D.h"
 
 class FighterFacade {

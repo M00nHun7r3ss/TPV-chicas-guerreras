@@ -2,7 +2,6 @@
 
 void PausedState::enter()
 {
-	std::cout << "Entered PAUSESTATE" << std::endl;
 	sdlutils().virtualTimer().pause();
 	_message = &sdlutils().msgs().at("PausedState");
 
@@ -10,7 +9,6 @@ void PausedState::enter()
 
 void PausedState::leave()
 {
-	std::cout << "Exited PAUSESTATE" << std::endl;
 	sdlutils().virtualTimer().resume();
 }
 

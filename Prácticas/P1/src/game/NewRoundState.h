@@ -2,12 +2,9 @@
 #include "GameState.h"
 
 #include <SDL_rect.h>
-#include <string>
 
 #include "../sdlutils/SDLUtils.h"
-#include "../sdlutils/InputHandler.h"
 
-#include "Game.h"
 #include "FighterUtils.h"
 #include "AsteroidsUtils.h"
 
@@ -17,7 +14,7 @@ public:
 	NewRoundState(FighterFacade* f, AsteroidsFacade* a);
 	virtual ~NewRoundState() {}
 	void enter() override;
-	void leave() override { std::cout << "Exited NEWROUNDSTATE" << std::endl; }
+	void leave() override {}
 	void update() override;
 
 private:

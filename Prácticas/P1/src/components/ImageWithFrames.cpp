@@ -31,7 +31,7 @@ void ImageWithFrames::render()
 	// Inicialmente empieza en 0.5 segundos.
 	Uint32 _timeBetweenEachSpawn = 50;
 
-	auto& vt = sdlutils().virtualTimer();
+	VirtualTimer& vt = sdlutils().virtualTimer();
 
 	//Gestion de frames
 	if (vt.currTime() > _timeBetweenEachSpawn + _lastFrame) {

@@ -11,10 +11,7 @@ NewGameState::NewGameState(FighterFacade* f)
 
 void NewGameState::enter()
 {
-	std::cout << "Entered NEWGAMESTATE" << std::endl;
-
 	_message = &sdlutils().msgs().at("NewGameState");
-
 }
 
 void NewGameState::update()

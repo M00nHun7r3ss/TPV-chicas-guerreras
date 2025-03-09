@@ -7,7 +7,6 @@
 #include "../ecs/Entity.h"
 
 #include "../sdlutils/InputHandler.h"
-#include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 
 #include "../components/Image.h"
@@ -21,7 +20,8 @@
 AsteroidsUtils::AsteroidsUtils()
 	: _centroVent((float)(sdlutils().width() / 2), (float)(sdlutils().height() / 2)),
 	  _mngr(Game::Instance()->getManager()),
-	  _n(0) // inicialmente 0.
+	  _n(0), // inicialmente 0.
+      _rand(sdlutils().rand())
 {
 }
 
@@ -30,9 +30,6 @@ void AsteroidsUtils::create_asteroids(int n)
 	_n += n;
 
 	for (int i = 0; i < n; i++){
-		// Always use the random number generator provided by SDLUtils
-		RandomNumberGenerator& rand = sdlutils().rand();
-
 		// add and entity to the manager
 		ecs::entity_t e = _mngr->addEntity(ecs::grp::ASTEROIDS);
 
@@ -46,25 +43,25 @@ void AsteroidsUtils::create_asteroids(int n)
 
 		//Lado por el que sale
 		//0 - arriba, 1 - abajo, 2 - izqd, 3 - dcha
-		int lado = rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
+		int lado = _rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
 		int x, y;
 		switch (lado) //Esto es asi porque el origen del sprite es arriba izquierda 
 		{
 		case 0: //Arriba
-			x = rand.nextInt(0, sdlutils().width() - size);
-			y = rand.nextInt(0, size);
+			x = _rand.nextInt(0, sdlutils().width() - size);
+			y = _rand.nextInt(0, size);
 			break;
 		case 1: //Abajo
-			x = rand.nextInt(0, sdlutils().width() - size);
-			y = rand.nextInt(sdlutils().height() - 2 * size, sdlutils().height() - size);
+			x = _rand.nextInt(0, sdlutils().width() - size);
+			y = _rand.nextInt(sdlutils().height() - 2 * size, sdlutils().height() - size);
 			break;
 		case 2: //Izquierda
-			x = rand.nextInt(0, size);
-			y = rand.nextInt(0, sdlutils().height() - size);
+			x = _rand.nextInt(0, size);
+			y = _rand.nextInt(0, sdlutils().height() - size);
 			break;
 		case 3: //Derecha
-			x = rand.nextInt(sdlutils().width() - 2 * size, sdlutils().width() - size);
-			y = rand.nextInt(0, sdlutils().height() - size);
+			x = _rand.nextInt(sdlutils().width() - 2 * size, sdlutils().width() - size);
+			y = _rand.nextInt(0, sdlutils().height() - size);
 			break;
 		default:
 			break;
@@ -72,8 +69,8 @@ void AsteroidsUtils::create_asteroids(int n)
 
 		// --- VELOCIDAD ALEATORIA --- (case 2)
 		//Centro ventana para que los asteroides vayan hacia el centro
-		int rx = rand.nextInt(-100, 101);
-		int ry = rand.nextInt(-100, 101);
+		int rx = _rand.nextInt(-100, 101);
+		int ry = _rand.nextInt(-100, 101);
 		Vector2D centro = { _centroVent.getX() + rx, _centroVent.getY() + ry };
 
 		float speed = sdlutils().rand().nextInt(1, 10) / 10.0f;
@@ -87,7 +84,7 @@ void AsteroidsUtils::create_asteroids(int n)
 
 		std::string text;
 
-		int comp = rand.nextInt(0, 3); // para que salga 0 -> follow; 1-> towardsdestination, 2 -> va al centro
+		int comp = _rand.nextInt(0, 3); // para que salga 0 -> follow; 1-> towardsdestination, 2 -> va al centro
 		if (comp == 0) // FOLLOW (case 0)
 		{
 			entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
@@ -127,7 +124,7 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 
 	float size = 10.0f + 5.0f * (lvl + 1); // (lvl + 1) pa q no haga 0* algo
 
-	int r = sdlutils().rand().nextInt(0, 360);
+	int r = _rand.nextInt(0, 360);
 	Vector2D pos = aTf->getPos() + aTf->getVel().rotate(r) * 2 * std::max(size, size);
 	Vector2D vel = aTf->getVel().rotate(r) * 1.1f;
 
@@ -145,8 +142,7 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 	_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
 	std::string text;
-	RandomNumberGenerator& rand = sdlutils().rand();
-	int comp = rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
+	int comp = _rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
 	if (comp == 0) // FOLLOW (case 0)
 	{
 		entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);

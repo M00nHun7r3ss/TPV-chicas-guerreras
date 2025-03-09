@@ -2,8 +2,9 @@
 
 #pragma once
 
-#include "FighterFacade.h"
 #include "../utils/Singleton.h"
+
+#include "FighterFacade.h"
 #include "GameState.h"
 
 namespace ecs {
@@ -20,7 +21,6 @@ public:
 	bool init();
 	void initGame();
 	void start();
-	void refresh();
 	inline ecs::Manager* getManager() { return _mngr; }
 
 	inline void setState(State s) {

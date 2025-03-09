@@ -1,9 +1,9 @@
 #pragma once
+
 #include "FighterFacade.h"
 
-
-
 class Transform;
+
 class FighterUtils : public FighterFacade {
 
 public:

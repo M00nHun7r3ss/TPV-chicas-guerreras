@@ -8,15 +8,6 @@
 #include "../sdlutils/SDLUtils.h"
 
 #include "../utils/Vector2D.h"
-#include "../utils/Collisions.h"
-
-#include "../components/Image.h"
-#include "../components/Transform.h"
-#include "../components/DeAcceleration.h"
-#include "../components/FighterCtrl.h"
-#include "../components/ShowAtOppositeSide.h"
-#include "../components/Health.h"
-#include "../components/Gun.h"
 
 #include "AsteroidsUtils.h"
 #include "NewGameState.h"
@@ -97,7 +88,7 @@ void Game::start() {
 	// a boolean to exit the loop
 	bool exit = false;
 
-	auto &ihdlr = ih();
+	InputHandler& ihdlr = ih();
 
 	// --- NOTA : El primero (sdlutils() métodos de tiempo) está basado en tiempo real, el segundo (sdlutils().virtualTimer()) es un objeto que nos permite pausar y reanudar el tiempo (para el pause).
 
@@ -122,7 +113,6 @@ void Game::start() {
 
 		//Esto es para que renderice
 		_mngr->update();
-		//_mngr->refresh();
 
 		if (_state == _running_state)
 		{
@@ -141,11 +131,6 @@ void Game::start() {
 			SDL_Delay(10 - frameTime);
 	}
 
-	refresh();
 
-}
-
-void Game::refresh()
-{
 }
 

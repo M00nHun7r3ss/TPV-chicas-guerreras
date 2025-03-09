@@ -1,7 +1,11 @@
 #pragma once
+
 #include "AsteroidsFacade.h"
 
+#include "../sdlutils/SDLUtils.h"
+
 class Transform;
+
 class AsteroidsUtils : public AsteroidsFacade
 {
 public:
@@ -15,13 +19,13 @@ public:
 	void split_asteroid(ecs::Entity* a) override;
 
 	// getter n asteroids.
-	inline int getAsteroidNumber() { return _n; }
+	inline int getAsteroidNumber() override { return _n; }
 private:
 	Vector2D _centroVent;
 	ecs::Manager* _mngr;
 	int _n; // nº de asteroides.
+	RandomNumberGenerator& _rand;
 
 	void create_splitted_asteroids(ecs::entity_t* a, int lvl); // no hay n porque siempre se crean 2. "a" es el asteroide del que salen al romperse.
-	void generateAsteroid(Vector2D& pos, Vector2D& vel, int lvl);
 };
 

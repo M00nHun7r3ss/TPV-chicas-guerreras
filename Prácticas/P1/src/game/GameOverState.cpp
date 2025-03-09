@@ -7,8 +7,6 @@ GameOverState::GameOverState(AsteroidsFacade* a)
 
 void GameOverState::enter()
 {
-	std::cout << "Entered GAMEOVERSTATE" << std::endl;
-
 	if (_aUtils->getAsteroidNumber() == 0)
 	{
 		// CHAMPION.
@@ -19,11 +17,6 @@ void GameOverState::enter()
 		// LOOSER.
 		_message = &sdlutils().msgs().at("GameOverBad");
 	}
-}
-
-void GameOverState::leave()
-{
-	std::cout << "Exited GAMEOVERSTATE" << std::endl;
 }
 
 void GameOverState::update()

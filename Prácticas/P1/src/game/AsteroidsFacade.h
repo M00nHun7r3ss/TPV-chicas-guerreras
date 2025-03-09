@@ -1,7 +1,8 @@
 #pragma once
 #include "../ecs/ecs.h"
+
 #include "../game/Game.h"
-#include "../ecs/Component.h"
+
 #include "../utils/Vector2D.h"
 
 using ecs::entity_t;

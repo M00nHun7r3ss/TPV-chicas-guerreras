@@ -32,6 +32,7 @@ void FighterUtils::create_fighter()
 	Transform* tf = _mngr->addComponent<Transform>(_fighter);
 	reset_fighter_pos();
 
+	//Anade componentes
 	_mngr->addComponent<Image>(_fighter, &sdlutils().images().at("fighter"));
 	_mngr->addComponent<DeAcceleration>(_fighter);
 	_mngr->addComponent<FighterCtrl>(_fighter);
@@ -54,16 +55,11 @@ void FighterUtils::reset_fighter()
 
 void FighterUtils::reset_lives()
 {
-	//Resetea la vida a 3
-	//_mngr->getComponent<Health>(_fighter)->heal();
-
 	_mngr->getComponent<Health>(_mngr->getHandler(ecs::hdlr::FIGHTER))->heal();
-	
 }
 
 int FighterUtils::update_lives(int n)
 {
-	std::cout << "Ha quitado vida" << std::endl;
 	//Quita n vidas
 	_mngr->getComponent<Health>(_mngr->getHandler(ecs::hdlr::FIGHTER))->damage(n);
 

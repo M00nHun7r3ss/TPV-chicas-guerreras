@@ -12,8 +12,6 @@ NewRoundState::NewRoundState(FighterFacade* f, AsteroidsFacade* a)
 
 void NewRoundState::enter()
 {
-	std::cout << "Entered NEWROUNDSTATE" << std::endl;
-
 	_message = &sdlutils().msgs().at("NewRoundState");
 }
 
