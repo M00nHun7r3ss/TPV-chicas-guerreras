@@ -25,24 +25,6 @@ void Health::render() {
 	}
 }
 
-void Health::update()
-{
-	auto& ihldr = ih();
-
-	if (ihldr.keyDownEvent()){
-		if (ihldr.isKeyDown(SDLK_e)) // Damage - E
-		{
-			damage(-1);
-		}
-		else if (ihldr.isKeyDown(SDLK_h)) // Heal - H
-		{
-			heal();
-		}
-	}
-
-	
-}
-
 void Health::damage(int n)
 {
 	_currentHealth += n;

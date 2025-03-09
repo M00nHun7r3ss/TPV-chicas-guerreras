@@ -34,10 +34,10 @@ void NewRoundState::update()
 	InputHandler& ihldr = ih();
 
 	// si el enter es presionado...
-	if (ihldr.isKeyDown(SDL_SCANCODE_0)) { // !!! cambiar.
+	if (ihldr.isKeyDown(SDL_SCANCODE_RETURN)) { 
 		_fUtils->reset_fighter();
 		_aUtils->remove_all_asteroids();
-		_aUtils->create_asteroids(1);
+		_aUtils->create_asteroids(10);
 
 		// !!! cambia a RunningState
 		Game::Instance()->setState(Game::RUNNING);

@@ -48,9 +48,8 @@ void FighterCtrl::update()
 		vel_.set(newVel);
 
 		//Efecto de sonido, pendiente de que lo suba Samir
-		/*// play sound on channel 1 (if there is something playing there
-		// it will be cancelled
-		sdlutils().soundEffects().at("thrust").play(0, 1);*/
+		// play sound on channel 1 (if there is something playing there it will be cancelled
+		sdlutils().soundEffects().at("thrust").play(0, 1);
 	}
 }
 

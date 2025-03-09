@@ -1,9 +1,7 @@
 {
 
   "fonts" : [
-    { "id" : "ARIAL16", "file" : "resources/fonts/ARIAL.ttf", "size": 16 },
-    { "id" : "ARIAL24", "file" : "resources/fonts/ARIAL.ttf", "size": 24 },
-    { "id" : "ARIAL48", "file" : "resources/fonts/ARIAL.ttf", "size": 48 }
+    { "id" : "ARIAL24", "file" : "resources/fonts/ARIAL.ttf", "size": 24 }
   ],
 
     "images": [
@@ -26,10 +24,6 @@
         {
             "id": "heart",
             "file": "resources/images/heart.png"
-        },
-        {
-            "id": "star",
-            "file": "resources/images/star.png"
         }
     ],
   
@@ -43,41 +37,12 @@
 
     "sounds": [
         {
-            "id": "gunshot",
+            "id": "thrust",
+            "file": "resources/sound/thrust.wav"
+        },
+        {
+            "id": "fire",
             "file": "resources/sound/gunshot.wav"
-        },
-        {
-            "id": "explosion",
-            "file": "resources/sound/explosion.wav"
-        },
-        {
-            "id": "pacman_eat",
-            "file": "resources/sound/pacman_eat.wav"
-        },
-        {
-            "id": "pacman_death",
-            "file": "resources/sound/pacman_death.wav"
-        },
-        {
-            "id": "pacman_won",
-            "file": "resources/sound/pacman_won.wav"
-        },
-        {
-            "id": "pacman_intro",
-            "file": "resources/sound/pacman_intro.wav"
         }
-    ],
-
-  "musics" : [
-    { "id" : "beat", "file" : "resources/sound/beat.wav" },
-    {
-        "id": "imperial_march",
-        "file": "resources/sound/imperial_march.wav"
-    },
-    {
-        "id": "pacman_chomp",
-        "file": "resources/sound/pacman_chomp.wav"
-    }
-  ]
-
+    ]
 }

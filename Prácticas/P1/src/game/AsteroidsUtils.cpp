@@ -83,7 +83,6 @@ void AsteroidsUtils::create_asteroids(int n)
 		tr->init(Vector2D(x, y), v, size, size, 0.0f);
 
 		// Los demas componentes
-		_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Component (cambiar luego).
 		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
 		int comp = rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
@@ -91,12 +90,12 @@ void AsteroidsUtils::create_asteroids(int n)
 		{
 			entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
 			_mngr->addComponent<Follow>(e, fighter);
-			//_mngr->addComponent<ImageWithFrames>(e); // add an Image With Frames Component Plateado
+			_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("asteroid_gold"), 6, 5); // add an Image With Frames Component Dorado
 		}
 		else
 		{
 			_mngr->addComponent<TowardsDestination>(e);
-			//_mngr->addComponent<ImageWithFrames>(e); // add an Image With Frames Component Dorado
+			_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("asteroid"), 6, 5); // add an Image With Frames Component Plateado
 		}
 
 	}
@@ -142,10 +141,12 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 	{
 		entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
 		_mngr->addComponent<Follow>(e, fighter);
+		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("asteroid_gold"), 6, 5); // add an Image With Frames Component Dorado
 	}
 	else
 	{
 		_mngr->addComponent<TowardsDestination>(e);
+		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("asteroid"), 6, 5); // add an Image With Frames Component Plateado
 	}
 
 }

@@ -102,6 +102,7 @@ void Gun::update()
 
 void Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r)
 {
+	sdlutils().soundEffects().at("fire").play(0, 1);
 
 	//indice para la busqueda circular
 	int _lastUsed = 0;

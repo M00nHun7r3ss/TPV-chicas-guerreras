@@ -29,24 +29,38 @@ void ImageWithFrames::initComponent()
 void ImageWithFrames::render()
 {
 	// Inicialmente empieza en 0.5 segundos.
-	Uint32 _timeBetweenEachSpawn = 500;
+	Uint32 _timeBetweenEachSpawn = 50;
 
 	auto& vt = sdlutils().virtualTimer();
 
-	if ( vt.currTime() > _timeBetweenEachSpawn + _lastFrame) {
+	//Gestion de frames
+	if (vt.currTime() > _timeBetweenEachSpawn + _lastFrame) {
+
+		_fCol = (_fCol + 1) % _nCols; //Contempla el salto de linea
+		if (_fCol == 0) //Al volver a la columna 0, cambia de fila
+		{
+			_fRow = (_fRow + 1) % _nRows; //Contempla el salto de columna
+		}
 
 		// Reinicia el contador
 		_lastFrame = vt.currTime();
-
-		// Va avanzando
-		for (int i = 0; i < _nCols; i++)
-		{
-			_fCol = _fCol + 1 % _nCols; //Contempla el salto de linea
-		}
-
 	}
 
-	//Renderizamos 
-	//_tex->render();
-	
+	// --- RECTANGULO SOURCE: gestion de la propia textura (como avanza, como se muestra, como se renderiza)
+	SDL_Rect src = build_sdlrect(
+		_fCol * (_tex->width() / _nCols),	// posX * (anchura de cada fila).
+		_fRow * (_tex->height() / _nRows),  // posY * (altura de cada fila).
+		_tex->width() / _nCols,				// anchura textura / columnas.
+		_tex->height() / _nRows				// altura textura / filas.
+	);
+
+	// --- RECTANGULO DESTINO: rectangulo del asteroide ingame y ya.
+	SDL_Rect dest = build_sdlrect(
+		_tr->getPos().getX(),	    // pos x asteroide)
+		_tr->getPos().getY(),		// pos y asteroide
+		_tr->getWidth(),		    // en horizontal hay 6 frames.
+		_tr->getHeight()		    // en vertical hay 5 frames.
+	); 
+
+	_tex->render(src, dest, _tr->getRot());
 }
