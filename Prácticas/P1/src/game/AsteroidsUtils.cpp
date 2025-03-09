@@ -2,17 +2,21 @@
 
 #include <algorithm>
 #include <vector>
+
 #include "../ecs/Manager.h"
 #include "../ecs/Entity.h"
+
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
+
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Generations.h"
 #include "../components/Follow.h"
 #include "../components/TowardsDestination.h"
+#include "../components/ImageWithFrames.h"
 
 AsteroidsUtils::AsteroidsUtils()
 	: _centroVent((float)(sdlutils().width() / 2), (float)(sdlutils().height() / 2)),
@@ -87,10 +91,12 @@ void AsteroidsUtils::create_asteroids(int n)
 		{
 			entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
 			_mngr->addComponent<Follow>(e, fighter);
+			//_mngr->addComponent<ImageWithFrames>(e); // add an Image With Frames Component Plateado
 		}
 		else
 		{
 			_mngr->addComponent<TowardsDestination>(e);
+			//_mngr->addComponent<ImageWithFrames>(e); // add an Image With Frames Component Dorado
 		}
 
 	}

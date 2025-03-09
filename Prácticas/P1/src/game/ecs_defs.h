@@ -18,7 +18,8 @@
 	GENERATIONS, \
 	ASTEROIDFACADE, \
 	FIGHTERFACADE, \
-	FOLLOW 
+	FOLLOW, \
+	IMAGEWITHFRAMES
 
 
 // Groups list - must have at least one element
