@@ -77,7 +77,7 @@ void Gun::update()
 
 			//Si sale de pantalla, se desactiva
 			if (b.pos.getX() + b.getBulletWidth() < 0 || b.pos.getX()> sdlutils().width() ||
-				b.pos.getY() + b.getBulletHeight() < 0 || b.pos.getX()> sdlutils().height()) {
+				b.pos.getY() + b.getBulletHeight() < 0 || b.pos.getY()> sdlutils().height()) {
 				b.used = false;
 			}
 		}

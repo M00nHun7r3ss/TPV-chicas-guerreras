@@ -122,7 +122,7 @@ void Game::start() {
 
 		//Esto es para que renderice
 		_mngr->update();
-		_mngr->refresh();
+		//_mngr->refresh();
 
 		if (_state == _running_state)
 		{

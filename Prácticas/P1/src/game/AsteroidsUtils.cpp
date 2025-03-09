@@ -154,7 +154,7 @@ void AsteroidsUtils::remove_all_asteroids()
 	for (int i = 0; i < n; i++) {
 		_mngr->setAlive(asteroids[i], false); // mata.
 	}
-		_mngr->refresh(); // limpia el cadaver.
+
 }
 
 void AsteroidsUtils::split_asteroid(ecs::Entity* a)
@@ -175,5 +175,4 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 		}
 	}
 
-	_mngr->refresh(); // limpia el cadaver.
 }

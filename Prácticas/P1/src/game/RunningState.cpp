@@ -71,7 +71,7 @@ void RunningState::update()
 	VirtualTimer& vt = sdlutils().virtualTimer();
 
 	if (vt.currTime() > _timeBetweenEachSpawn + _lastAsteroidAdded) {
-		_aUtils->create_asteroids(1);
+		//_aUtils->create_asteroids(1);
 		_lastAsteroidAdded = vt.currTime();
 	}
 }
