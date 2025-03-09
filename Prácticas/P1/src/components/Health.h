@@ -1,8 +1,8 @@
 #pragma once
+
 #include "../ecs/Component.h"
 
 class Texture;
-class Transform;
 
 class Health : public ecs::Component
 {
@@ -15,12 +15,12 @@ public:
 	void render() override;
 	void damage(int n);
 	void heal();
+
 	int getHealth() { return _currentHealth; }
 
 private:
 	int _currentHealth;
 	int _maxHealth;
-	Transform* _tr;
 	Texture& _tex;
 };
 

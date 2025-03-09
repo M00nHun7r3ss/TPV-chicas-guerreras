@@ -1,12 +1,12 @@
 #include "TowardsDestination.h"
 
-#include <cassert>
-
-#include <algorithm>
-#include "../ecs/Manager.h"
-#include "../sdlutils/SDLUtils.h"
 #include "Transform.h"
 
+#include <cassert>
+
+#include "../ecs/Manager.h"
+
+#include "../sdlutils/SDLUtils.h"
 
 TowardsDestination::TowardsDestination()
 	:_tr() {
@@ -27,8 +27,6 @@ void TowardsDestination::update() {
 	_vel = _tr->getVel();
 
 	Vector2D newPos = randomPos();
-
-	//_tr->getVel().set(_vel.rotate(_vel.angle(newPos - _pos)));
 
 	//Si ha llegado al destino
 	if (_pos.getX() == newPos.getX() && _pos.getY() == newPos.getY())

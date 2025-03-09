@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SDL_stdinc.h>
 #include "../ecs/Component.h"
+
 #include "../game/Game.h"
 
 class Transform;
@@ -12,9 +12,6 @@ public:
 	Generations();
 	virtual ~Generations();
 
-	void initComponent() override;
-	void update() override{}
-	void render() override{}
 	void generate();
 
 	// generation
@@ -25,12 +22,8 @@ public:
 	inline int getGenerationSize() { return _gSize; }
 	inline void setGenerationSize(float s) { _gSize = s; }
 
-
 private:
 	int _generationLevel;
-	Transform* _tr;
-
 	float _gSize;
-
 };
 

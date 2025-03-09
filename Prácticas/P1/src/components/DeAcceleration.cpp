@@ -1,10 +1,10 @@
 #include "DeAcceleration.h"
 
+#include "Transform.h"
+
 #include <cassert>
 
 #include "../ecs/Manager.h"
-#include "../sdlutils/SDLUtils.h"
-#include "Transform.h"
 
 DeAcceleration::DeAcceleration(): _lessFactor(0.995f), _stopFactor(0.05f), _tr() {
 }
@@ -30,5 +30,4 @@ void DeAcceleration::update(){
 		vel.setX(0);
 		vel.setY(0);
 	}
-	
 }

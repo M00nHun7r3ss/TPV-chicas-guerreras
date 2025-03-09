@@ -1,10 +1,12 @@
 #include "Follow.h"
 
-#include <cassert>
-#include "../ecs/Manager.h"
-#include "../sdlutils/SDLUtils.h"
 #include "Transform.h"
 
+#include <cassert>
+
+#include "../ecs/Manager.h"
+
+#include "../sdlutils/SDLUtils.h"
 
 Follow::Follow()
 	:_tr(){
@@ -12,8 +14,7 @@ Follow::Follow()
 
 Follow::Follow(ecs::entity_t fighter)
 	:_tr(),
-	_fighter(fighter)
-{
+	_fighter(fighter){
 }
 
 Follow::~Follow() {
@@ -24,6 +25,7 @@ void Follow::initComponent() {
 	_tr = mngr->getComponent<Transform>(_ent);
 	_tFighter = mngr->getComponent<Transform>(_fighter);
 	assert(_tr != nullptr);
+	assert(_tFighter != nullptr);
 }
 
 void Follow::update() {
@@ -34,4 +36,3 @@ void Follow::update() {
 	_tr->getVel().set(_vel.rotate(_vel.angle(_tFighter->getPos() - _pos) > 0 ? 1.0f : -1.0f));
 
 }
-

@@ -9,8 +9,6 @@
 	TRANSFORM, \
 	IMAGE, \
 	FIGHTERCTRL, \
-	ASTEROIDMOTION, \
-	GAMECTRL, \
 	DEACCELERATION, \
 	SHOWATOPPOSITESIDE, \
 	HEALTH, \
@@ -19,18 +17,17 @@
 	ASTEROIDFACADE, \
 	FIGHTERFACADE, \
 	FOLLOW, \
+	TOWARDDESTINATION, \
 	IMAGEWITHFRAMES
 
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	ASTEROIDS, \
-	STARS
+	ASTEROIDS
 
 // Handlers list - must have at least one element
 //
 #define _HDLRS_LIST_ \
-    FIGHTER, \
-	GAMEINFO
+    FIGHTER
 

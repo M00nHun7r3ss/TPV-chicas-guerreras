@@ -2,14 +2,16 @@
 #include <SDL_stdinc.h>
 
 #include "../ecs/Component.h"
+
 #include "../utils/Vector2D.h"
+
 #include "../game/Game.h"
 
 class Transform;
 class TowardsDestination : public ecs::Component {
 public:
 
-	__CMPID_DECL__(ecs::cmp::FOLLOW)
+	__CMPID_DECL__(ecs::cmp::TOWARDDESTINATION)
 
 	TowardsDestination();
 	TowardsDestination(ecs::entity_t fighter);

@@ -2,7 +2,9 @@
 #include <SDL_stdinc.h>
 
 #include "../ecs/Component.h"
+
 #include "../utils/Vector2D.h"
+
 #include "../game/Game.h"
 
 class Transform;

@@ -1,9 +1,12 @@
 #include "Gun.h"
 
+#include "Transform.h"
+
 #include "../ecs/Manager.h"
+
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
-#include "Transform.h"
+
 
 class Vector2D;
 

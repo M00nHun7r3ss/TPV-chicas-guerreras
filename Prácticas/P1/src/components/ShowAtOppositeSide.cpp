@@ -1,10 +1,12 @@
 #include "ShowAtOppositeSide.h"
 
+#include "Transform.h"
+
 #include <cassert>
 
 #include "../ecs/Manager.h"
+
 #include "../sdlutils/SDLUtils.h"
-#include "Transform.h"
 
 ShowAtOppositeSide::ShowAtOppositeSide() : _tr() {
 }
@@ -29,11 +31,10 @@ void ShowAtOppositeSide::update()
 	int height = sdlutils().height();
 
 	// las X.
-	if (posX < 0) _tr->getPos().setX(width);
-	else if (posX > width) _tr->getPos().setX(0);
+	if (posX + _tr->getWidth() < 0) _tr->getPos().setX(width); // para que se haga bien con el tamano nave
+	else if (posX > width) _tr->getPos().setX(- _tr->getWidth()); // para que al salir salga con su tamano
 
 	// las Y.
-	if (posY < 0) _tr->getPos().setY(height);
-	else if (posY > height) _tr->getPos().setY(0);
-
+	if (posY + _tr->getHeight() < 0) _tr->getPos().setY(height); // para que se haga bien con el tamano nave
+	else if (posY > height) _tr->getPos().setY(- _tr->getHeight()); // para que al salir salga con su tamano
 }

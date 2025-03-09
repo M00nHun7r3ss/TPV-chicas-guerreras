@@ -1,12 +1,15 @@
 #include "FighterCtrl.h"
 
+#include "Image.h"
+#include "Transform.h"
+
 #include <cassert>
 
 #include "../ecs/Manager.h"
+
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
-#include "Image.h"
-#include "Transform.h"
+
 
 FighterCtrl::FighterCtrl() : _tr(nullptr)
 {

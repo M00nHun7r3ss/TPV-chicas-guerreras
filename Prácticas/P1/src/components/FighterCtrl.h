@@ -1,5 +1,7 @@
 #pragma once
+
 #include "../ecs/Component.h"
+
 #include "../game/Game.h"
 
 class Transform;
@@ -15,7 +17,6 @@ public:
 	void update() override;
 	
 private:
-	//void createAsteroid();
 	Transform* _tr;
 };
 

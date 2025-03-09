@@ -1,20 +1,16 @@
 #include "FighterUtils.h"
 
-#include <algorithm>
-#include <vector>
 #include "../ecs/Manager.h"
-#include "../ecs/Entity.h"
+
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
+
 #include "../utils/Vector2D.h"
-#include "../utils/Collisions.h"
 
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../components/ShowAtOppositeSide.h"
-#include "../components/Generations.h"
-#include "../components/Follow.h"
 #include "../components/DeAcceleration.h"
 #include "../components/FighterCtrl.h"
 #include "../components/Health.h"

@@ -70,7 +70,7 @@ void AsteroidsUtils::create_asteroids(int n)
 			break;
 		}
 
-		// --- VELOCIDAD ALEATORIA ---
+		// --- VELOCIDAD ALEATORIA --- (case 2)
 		//Centro ventana para que los asteroides vayan hacia el centro
 		int rx = rand.nextInt(-100, 101);
 		int ry = rand.nextInt(-100, 101);
@@ -85,18 +85,28 @@ void AsteroidsUtils::create_asteroids(int n)
 		// Los demas componentes
 		_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
-		int comp = rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
-		if (comp == 0)
+		std::string text;
+
+		int comp = rand.nextInt(0, 3); // para que salga 0 -> follow; 1-> towardsdestination, 2 -> va al centro
+		if (comp == 0) // FOLLOW (case 0)
 		{
 			entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
 			_mngr->addComponent<Follow>(e, fighter);
-			_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("asteroid_gold"), 6, 5); // add an Image With Frames Component Dorado
+
+			text = "asteroid_gold"; // add an Image With Frames Component Dorado
 		}
-		else
+		else if (comp == 1) // TOWARDSDESTINATION (case 1)
 		{
 			_mngr->addComponent<TowardsDestination>(e);
-			_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("asteroid"), 6, 5); // add an Image With Frames Component Plateado
+
+			text = "asteroid"; // add an Image With Frames Component Plateado
 		}
+		else // para el --- Velocidad aleatoria (case 2)
+		{
+			text = "asteroid"; // add an Image With Frames Component Plateado
+		}
+
+		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at(text), 6, 5); 
 
 	}
 }
@@ -132,22 +142,26 @@ void AsteroidsUtils::create_splitted_asteroids(entity_t* a, int lvl)
 	gen->setGenerationLevel(lvl - 1);
 
 	// Los demas componentes
-	_mngr->addComponent<Image>(e, &sdlutils().images().at("star")); // add an Image Componet (cambiar luego).
 	_mngr->addComponent<ShowAtOppositeSide>(e); // add ShowAtOppositeSide Component.
 
+	std::string text;
 	RandomNumberGenerator& rand = sdlutils().rand();
 	int comp = rand.nextInt(0, 2); // para que salga 0 -> follow; 1-> towardsdestination
-	if (comp == 0)
+	if (comp == 0) // FOLLOW (case 0)
 	{
 		entity_t fighter = _mngr->getHandler(ecs::hdlr::FIGHTER);
 		_mngr->addComponent<Follow>(e, fighter);
-		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("asteroid_gold"), 6, 5); // add an Image With Frames Component Dorado
+
+		text = "asteroid_gold"; // add an Image With Frames Component Dorado
 	}
-	else
+	else if (comp == 1) // TOWARDSDESTINATION (case 1)
 	{
 		_mngr->addComponent<TowardsDestination>(e);
-		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("asteroid"), 6, 5); // add an Image With Frames Component Plateado
+
+		text = "asteroid"; // add an Image With Frames Component Plateado
 	}
+
+	_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at(text), 6, 5);
 
 }
 
@@ -173,6 +187,8 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 	// la desactiva.
 	_mngr->setAlive(a, false); // mata.
 	_n--; // se quita el asteroide splitteado.
+
+	sdlutils().soundEffects().at("hit").play(0, 1); // destruye asteroide
 
 	if (level > 0)
 	{
