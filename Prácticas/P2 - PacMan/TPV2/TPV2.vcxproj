@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\ecs\Manager.cpp" />
+    <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
     <ClCompile Include="..\SRC\json\JSONValue.cpp" />
     <ClCompile Include="..\SRC\json\json_demo.cpp" />
@@ -29,10 +31,30 @@
     <ClCompile Include="..\SRC\sdlutils\sdlutils_demo.cpp" />
     <ClCompile Include="..\SRC\sdlutils\SoundEffect.cpp" />
     <ClCompile Include="..\SRC\sdlutils\Texture.cpp" />
+    <ClCompile Include="..\src\systems\CollisionsSystem.cpp" />
+    <ClCompile Include="..\src\systems\GameCtrlSystem.cpp" />
+    <ClCompile Include="..\src\systems\PacManSystem.cpp" />
+    <ClCompile Include="..\src\systems\RenderSystem.cpp" />
+    <ClCompile Include="..\src\systems\StarsSystem.cpp" />
     <ClCompile Include="..\SRC\utils\Collisions.cpp" />
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\components\Image.h" />
+    <ClInclude Include="..\src\components\Points.h" />
+    <ClInclude Include="..\src\components\StarMotion.h" />
+    <ClInclude Include="..\src\components\Transform.h" />
+    <ClInclude Include="..\src\ecs\Component.h" />
+    <ClInclude Include="..\src\ecs\ecs.h" />
+    <ClInclude Include="..\src\ecs\ecs_defs_example.h" />
+    <ClInclude Include="..\src\ecs\Entity.h" />
+    <ClInclude Include="..\src\ecs\Manager.h" />
+    <ClInclude Include="..\src\ecs\messages.h" />
+    <ClInclude Include="..\src\ecs\messages_defs_example.h" />
+    <ClInclude Include="..\src\ecs\System.h" />
+    <ClInclude Include="..\src\game\ecs_defs.h" />
+    <ClInclude Include="..\src\game\Game.h" />
+    <ClInclude Include="..\src\game\messages_defs.h" />
     <ClInclude Include="..\SRC\json\JSON.h" />
     <ClInclude Include="..\SRC\json\JSONValue.h" />
     <ClInclude Include="..\SRC\json\json_demo.h" />
@@ -48,6 +70,11 @@
     <ClInclude Include="..\SRC\sdlutils\SoundEffect.h" />
     <ClInclude Include="..\SRC\sdlutils\Texture.h" />
     <ClInclude Include="..\SRC\sdlutils\VirtualTimer.h" />
+    <ClInclude Include="..\src\systems\CollisionsSystem.h" />
+    <ClInclude Include="..\src\systems\GameCtrlSystem.h" />
+    <ClInclude Include="..\src\systems\PacManSystem.h" />
+    <ClInclude Include="..\src\systems\RenderSystem.h" />
+    <ClInclude Include="..\src\systems\StarsSystem.h" />
     <ClInclude Include="..\SRC\utils\Collisions.h" />
     <ClInclude Include="..\SRC\utils\DynamicBitSet.h" />
     <ClInclude Include="..\SRC\utils\GenID.h" />

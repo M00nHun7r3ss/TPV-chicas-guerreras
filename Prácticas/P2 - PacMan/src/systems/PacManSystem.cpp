@@ -17,38 +17,47 @@ PacManSystem::~PacManSystem() {
 
 void PacManSystem::initSystem() {
 	// create the PacMan entity
-	//
-	auto pacman = _mngr->addEntity();
+	ecs::entity_t pacman = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
 
-	_pmTR = _mngr->addComponent<Transform>(pacman);
-	auto s = 50.0f;
-	auto x = (sdlutils().width() - s) / 2.0f;
-	auto y = (sdlutils().height() - s) / 2.0f;
-	_pmTR->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
+	// add components.
 	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+	_pmTR = _mngr->addComponent<Transform>(pacman);
+
+	// pacman's initial position.
+	float s = 50.0f;
+	float x = (sdlutils().width() - s) / 2.0f;
+	float y = (sdlutils().height() - s) / 2.0f;
+
+	// initial parameters
+	_pmTR->init(Vector2D(x, y), // pos.
+				Vector2D(),		// vel (0.0f,0.0f).
+				s,			    // width.
+				s,				// height.
+				0.0f			// rotation.
+	);
 }
 
 void PacManSystem::update() {
 
-	auto &ihldr = ih();
+	InputHandler &ihldr = ih();
 
 	if (ihldr.keyDownEvent()) {
 
 		if (ihldr.isKeyDown(SDL_SCANCODE_RIGHT)) { // rotate right
-			_pmTR->_rot = _pmTR->_rot + 5.0f;
+			// sumamos 90.0f grados a la rotación 
+			_pmTR->_rot = _pmTR->_rot + 90.0f;
 
-			// also rotate the PacMan so it looks in the same
-			// direction where it moves
-			//
-			_pmTR->_vel = _pmTR->_vel.rotate(5.0f);
+			// y rotamos el vector de velocidad en 90.0f.
+			_pmTR->_vel = _pmTR->_vel.rotate(90.0f);
+
 		} else if (ihldr.isKeyDown(SDL_SCANCODE_LEFT)) { // rotate left
-			_pmTR->_rot = _pmTR->_rot - 5.0f;
+			// restamos 90.0f grados de la rotación 
+			_pmTR->_rot = _pmTR->_rot - 90.0f;
 
-			// also rotate the PacMan so it looks in the same
-			// direction where it moves
-			//
-			_pmTR->_vel = _pmTR->_vel.rotate(-5.0f);
+			// y rotamos el vector de velocidad en -90.0f grados.
+			_pmTR->_vel = _pmTR->_vel.rotate(-90.0f);
+
 		} else if (ihldr.isKeyDown(SDL_SCANCODE_UP)) { // increase speed
 
 			// add 1.0f to the speed (respecting the limit 3.0f). Recall
