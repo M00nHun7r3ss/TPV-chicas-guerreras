@@ -1,15 +1,18 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
 
 #include "RenderSystem.h"
+#include "GameCtrlSystem.h"
 
 #include "../components/Image.h"
 #include "../components/Transform.h"
+#include "../components/Health.h"
+
 #include "../ecs/Manager.h"
+
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
-#include "GameCtrlSystem.h"
-#include "../components/Health.h"
+
 
 RenderSystem::RenderSystem() {
 
@@ -62,7 +65,7 @@ void RenderSystem::drawLives(){
 void RenderSystem::drawMsgs() {
 	// draw the score
 	//
-	auto score = _mngr->getSystem<GameCtrlSystem>()->getScore();
+	unsigned int score = _mngr->getSystem<GameCtrlSystem>()->getScore();
 
 	Texture scoreTex(sdlutils().renderer(), std::to_string(score),
 			sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x444444ff));

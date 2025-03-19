@@ -26,8 +26,8 @@ void GameCtrlSystem::update() {
 		if (ihldr.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 			Message m;
-			m.id = _m_CREATE_STARS;
-			m.create_stars_data.n = 5;
+			m.id = _m_CREATE_GHOST;
+			m.create_ghost_data.n = 5;
 			_mngr->send(m);
 		}
 	}
@@ -35,8 +35,8 @@ void GameCtrlSystem::update() {
 
 void GameCtrlSystem::recieve(const Message &m) {
 	switch (m.id) {
-	case _m_STAR_EATEN:
-		_score += _mngr->getComponent<Points>(m.star_eaten_data.e)->_points;
+	case _m_GHOST_EATEN:
+		_score += _mngr->getComponent<Points>(m.ghost_eaten_data.e)->_points;
 		break;
 	default:
 		break;

@@ -4,13 +4,12 @@
 
 class Texture;
 
-class Health : public ecs::Component
+struct Health : public ecs::Component
 {
 public:
 
 	Health();
 	virtual ~Health();
-	void render();
 	void damage(int n);
 	void heal();
 

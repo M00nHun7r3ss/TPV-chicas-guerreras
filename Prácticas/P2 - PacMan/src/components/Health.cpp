@@ -12,19 +12,6 @@ Health::Health()
 Health::~Health() {
 }
 
-void Health::render() {
-
-	// pos arriba izquierda.
-	SDL_Rect dest = { 5, 10, 40, 40 };
-
-	// vamos modificando la x y renderizando para que vayan en fila.
-	for (int i = 0; i < _currentHealth; i++) {
-		assert(&_tex != nullptr);
-		_tex.render(dest);
-		dest.x = dest.x + 45;
-	}
-}
-
 void Health::damage(int n)
 {
 	_currentHealth += n;

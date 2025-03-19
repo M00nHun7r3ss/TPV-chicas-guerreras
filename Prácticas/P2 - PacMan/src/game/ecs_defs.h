@@ -8,19 +8,20 @@ struct Transform;
 struct Image;
 struct StarMotion;
 struct Points;
+struct Health;
 
 #define _CMPS_LIST_ \
 	Transform, \
 	Image, \
 	StarMotion, \
-	Points,
+	Points, \
+	Health
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
 	STARS, \
 	GHOSTS, \
-	LIVES
 
 // Handlers list - must have at least one element
 //
