@@ -16,6 +16,7 @@ public:
 private:
 	void drawStars();
 	void drawPacMan();
+	void drawLives();
 	void drawMsgs();
 	void draw(Transform *tr, Texture *tex);
 };

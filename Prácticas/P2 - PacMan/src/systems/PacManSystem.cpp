@@ -25,17 +25,7 @@ void PacManSystem::initSystem() {
 	_pmTR = _mngr->addComponent<Transform>(pacman);
 
 	// pacman's initial position.
-	float s = 50.0f;
-	float x = (sdlutils().width() - s) / 2.0f;
-	float y = (sdlutils().height() - s) / 2.0f;
-
-	// initial parameters
-	_pmTR->init(Vector2D(x, y), // pos.
-				Vector2D(),		// vel (0.0f,0.0f).
-				s,			    // width.
-				s,				// height.
-				0.0f			// rotation.
-	);
+	resetPacman();
 }
 
 void PacManSystem::update() {
@@ -58,29 +48,15 @@ void PacManSystem::update() {
 			// y rotamos el vector de velocidad en -90.0f grados.
 			_pmTR->_vel = _pmTR->_vel.rotate(-90.0f);
 
-		} else if (ihldr.isKeyDown(SDL_SCANCODE_UP)) { // increase speed
+		} else if (ihldr.isKeyDown(SDL_SCANCODE_UP)) {
 
-			// add 1.0f to the speed (respecting the limit 3.0f). Recall
-			// that speed is the length of the velocity vector
-			float speed = std::min(3.0f, _pmTR->_vel.magnitude() + 1.0f);
+			//ponemos la velocidad a 0.0f, -3.0f, con su rotacion actual
+			_pmTR->_vel = Vector2D(0.0f, -3.0f).rotate(_pmTR->_rot);
 
-			// change the length of velocity vecto to 'speed'. We need
-			// '.rotate(rot)' for the case in which the current speed is
-			// 0, so we rotate it to the same direction where the PacMan
-			// is looking
-			//
-			_pmTR->_vel = Vector2D(0, -speed).rotate(_pmTR->_rot);
-		} else if (ihldr.isKeyDown(SDL_SCANCODE_DOWN)) { // decrease speed
-			// subtract 1.0f to the speed (respecting the limit 0.0f). Recall
-			// that speed is the length of the velocity vector
-			float speed = std::max(0.0f, _pmTR->_vel.magnitude() - 1.0f);
+		} else if (ihldr.isKeyDown(SDL_SCANCODE_DOWN)) { 
 
-			// change the length of velocity vector to 'speed'. We need
-			// '.rotate(rot)' for the case in which the current speed is
-			// 0, so we rotate it to the same direction where the PacMan
-			// is looking
-			//
-			_pmTR->_vel = Vector2D(0, -speed).rotate(_pmTR->_rot);
+			//ponemos la velocidad a 0.0f, 0.0f, con su rotacion actual
+			_pmTR->_vel = Vector2D(0.0f, 0.0f).rotate(_pmTR->_rot);
 		}
 
 	}
@@ -106,4 +82,20 @@ void PacManSystem::update() {
 		_pmTR->_vel.set(0.0f, 0.0f);
 	}
 
+}
+
+void PacManSystem::resetPacman()
+{
+	// resets pacman's initial position.
+	float s = 50.0f;
+	float x = (sdlutils().width() - s) / 2.0f;
+	float y = (sdlutils().height() - s) / 2.0f;
+
+	// initial parameters
+	_pmTR->init(Vector2D(x, y), // pos.
+		Vector2D(),		// vel (0.0f,0.0f).
+		s,			    // width.
+		s,				// height.
+		0.0f			// rotation.
+	);
 }

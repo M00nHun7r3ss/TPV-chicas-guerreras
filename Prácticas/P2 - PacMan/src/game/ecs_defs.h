@@ -13,12 +13,14 @@ struct Points;
 	Transform, \
 	Image, \
 	StarMotion, \
-	Points
+	Points,
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	STARS
+	STARS, \
+	GHOSTS, \
+	LIVES
 
 // Handlers list - must have at least one element
 //
@@ -27,14 +29,14 @@ struct Points;
 
 // Systems list - must have at least one element
 //
-class StarsSystem;
+class GhostSystem;
 class RenderSystem;
 class PacManSystem;
 class GameCtrlSystem;
 class CollisionsSystem;
 
 #define _SYS_LIST_ \
-    StarsSystem, \
+    GhostSystem, \
 	RenderSystem, \
 	PacManSystem, \
 	GameCtrlSystem, \

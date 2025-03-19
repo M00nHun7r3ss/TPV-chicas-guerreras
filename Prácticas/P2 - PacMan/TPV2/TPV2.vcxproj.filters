@@ -69,7 +69,10 @@
     <ClCompile Include="..\src\systems\RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\systems\StarsSystem.cpp">
+    <ClCompile Include="..\src\systems\GhostSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\Health.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -197,7 +200,10 @@
     <ClInclude Include="..\src\systems\RenderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\systems\StarsSystem.h">
+    <ClInclude Include="..\src\systems\GhostSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\Health.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

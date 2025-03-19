@@ -6,8 +6,11 @@
 
 using msgId_type = uint8_t;
 enum msgId : msgId_type {
-	_m_STAR_EATEN, //
-	_m_CREATE_STARS
+	_m_GHOST_EATEN, //Ya estaba
+	_m_CREATE_GHOST,  //Ya estaba
+	_m_NEW_GAME, _m_ROUND_START, _m_ROUND_OVER, _m_GAME_OVER, //Estados de juego
+	_m_PACMAN_FOOD_COLLISION, _m_PACMAN_GHOST_COLLISION, //Colisiones
+	_m_IMMUNITY_START, _m_IMMUNITY_END //Inmunidad
 };
 
 
@@ -19,16 +22,16 @@ struct Message {
 	// every where.
 
 	union {
-
-		// _m_STAR_EATEN
+		// Añadir sub-structs para los mensajes que llevan más información
+		//_m_GHOST_EATEN
 		struct {
 			ecs::entity_t e;
-		} star_eaten_data;
+		} ghost_eaten_data;
 
-		// _m_CREATE_STARS
+		//_m_CREATE_GHOST
 		struct {
 			unsigned int n;
-		} create_stars_data;
+		} create_ghost_data;
 
 	};
 };

@@ -9,6 +9,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 #include "GameCtrlSystem.h"
+#include "../components/Health.h"
 
 RenderSystem::RenderSystem() {
 
@@ -28,22 +29,35 @@ void RenderSystem::update() {
 
 void RenderSystem::drawStars() {
 	// draw stars
-	for (auto e : _mngr->getEntities(ecs::grp::STARS)) {
+	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::STARS)) {
 
-		auto tr = _mngr->getComponent<Transform>(e);
-		auto tex = _mngr->getComponent<Image>(e)->_tex;
+		Transform* tr = _mngr->getComponent<Transform>(e);
+		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
 		draw(tr, tex);
 	}
 }
 
 void RenderSystem::drawPacMan() {
-	auto e = _mngr->getHandler(ecs::hdlr::PACMAN);
-	auto tr = _mngr->getComponent<Transform>(e);
-	auto tex = _mngr->getComponent<Image>(e)->_tex;
+	ecs::entity_t e = _mngr->getHandler(ecs::hdlr::PACMAN);
+	Transform* tr = _mngr->getComponent<Transform>(e);
+	Texture* tex = _mngr->getComponent<Image>(e)->_tex;
 	draw(tr, tex);
 
 }
 
+void RenderSystem::drawLives(){
+	// draw pacman lives
+	ecs::entity_t e = _mngr->getHandler(ecs::hdlr::PACMAN);
+	int lives = _mngr->getComponent<Health>(e)->getHealth();
+	// vamos modificando la x y renderizando para que vayan en fila.
+	for (int i = 0; i < lives; i++) {
+		Transform* tr = _mngr->getComponent<Transform>(e);
+		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
+		assert(&tex != nullptr);
+		draw(tr, tex);
+		tr->_pos.setX(tr->_pos.getX() + 45);
+	}
+}
 
 void RenderSystem::drawMsgs() {
 	// draw the score

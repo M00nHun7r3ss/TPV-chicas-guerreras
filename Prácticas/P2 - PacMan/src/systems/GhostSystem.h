@@ -3,18 +3,18 @@
 #pragma once
 #include "../ecs/System.h"
 
-class StarsSystem: public ecs::System {
+class GhostSystem: public ecs::System {
 public:
 
-	StarsSystem();
-	virtual ~StarsSystem();
+	GhostSystem();
+	virtual ~GhostSystem();
 	void initSystem() override;
 	void update() override;
-	void addStar(unsigned int n);
-	void onStarEaten(ecs::entity_t e);
+	void addGhost(unsigned int n);
+	void onGhostEaten(ecs::entity_t e);
 	void recieve(const Message &m) override;
 private:
-	unsigned int _starsLimit;
-	unsigned int _currNumOfStars;
+	unsigned int _ghostLimit;
+	unsigned int _currNumOfGhost;
 };
 
