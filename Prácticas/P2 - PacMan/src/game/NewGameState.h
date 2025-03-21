@@ -19,4 +19,3 @@ private:
 	Texture* _message;
 	SDL_Rect _dest;
 };
-

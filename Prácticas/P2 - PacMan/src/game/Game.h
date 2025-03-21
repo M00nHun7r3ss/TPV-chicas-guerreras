@@ -19,7 +19,9 @@ public:
 
 	enum State { RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER };
 
-	Game();
+	//enum System { PACMAN, GAMECTRL, GHOST, RENDER, COLLISIONS};
+
+	//Game();
 	virtual ~Game();
 	bool init();
 	void initGame();
@@ -51,13 +53,24 @@ public:
 		}
 		_state->enter();
 	}
+
+	//Getters systems
+	ecs::System* pacmanSys() { return _pacmanSys; }
+	ecs::System* gameCtrlSys() { return _gameCtrlSys; }
+	ecs::System* ghostSys() { return _ghostSys; }
+	ecs::System* renderSys() { return _renderSys; }
+	ecs::System* collisionSys() { return _collisionSys; }
+
 private:
-	ecs::Manager *_mngr;
+
+	Game();
+
+	ecs::Manager* _mngr;
 
 	// --- Systems.
 	ecs::System *_pacmanSys;
 	ecs::System *_gameCtrlSys;
-	ecs::System *_startsSys;
+	ecs::System *_ghostSys;
 	ecs::System *_renderSys;
 	ecs::System *_collisionSys;
 

@@ -1,5 +1,6 @@
 #include "NewGameState.h"
 
+//#include "Game.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
@@ -31,11 +32,13 @@ void NewGameState::update()
 
 	// ya sea por clic o por tecla...
 	if (ihldr.mouseButtonDownEvent() || ihldr.keyDownEvent()) {
-		//Resetea vidas de player
-		//_fUtils->reset_lives();
+
+		//Envia mensaje de que ha empezado juego
+
 
 		// !!! cambia a NewRoundState
 		//Game::Instance()->setState(Game::NEWROUND);
+
 	}
 
 }
