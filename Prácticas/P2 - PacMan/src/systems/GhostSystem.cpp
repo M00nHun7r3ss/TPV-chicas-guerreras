@@ -12,7 +12,7 @@
 #include "GameCtrlSystem.h"
 
 GhostSystem::GhostSystem() :
-		_ghostLimit(30), _currNumOfGhost(0) {
+		_ghostLimit(10), _currNumOfGhost(0) {
 }
 
 GhostSystem::~GhostSystem() {
@@ -23,13 +23,13 @@ void GhostSystem::initSystem() {
 
 void GhostSystem::update() {
 
-	auto currTime = sdlutils().currRealTime();
-	auto stars = _mngr->getEntities(ecs::grp::STARS);
-	auto n = stars.size();
+	Uint32 currTime = sdlutils().currRealTime();
+	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
+	size_t n = ghosts.size();
 
-	for (auto i = 0u; i < n; i++) {
-		auto tr = _mngr->getComponent<Transform>(stars[i]);
-		auto starmotion = _mngr->getComponent<StarMotion>(stars[i]);
+	/*for (unsigned i = 0u; i < n; i++) {
+		// 1. Pilla los componentes de cada fantasma.
+		Transform* tr = _mngr->getComponent<Transform>(ghosts[i]); 
 
 		if (starmotion->shouldUpdate(currTime)) {
 
@@ -47,6 +47,17 @@ void GhostSystem::update() {
 				_currNumOfGhost--;
 			}
 		}
+	}*/
+
+	// Anade asteroide cada 5 segundos
+	// Inicialmente empieza en 5 segundos.
+	Uint32 _timeBetweenEachSpawn = 5000;
+
+	VirtualTimer& vt = sdlutils().virtualTimer();
+
+	if (vt.currTime() > _timeBetweenEachSpawn + _lastAsteroidAdded) {
+		_aUtils->create_asteroids(1);
+		_lastAsteroidAdded = vt.currTime();
 	}
 }
 
@@ -56,11 +67,7 @@ void GhostSystem::addGhost(unsigned int n) {
 	//
 	RandomNumberGenerator& rand = sdlutils().rand();
 
-	//unsigned limit = std::min( //
-	//		static_cast<unsigned int>(n), 
-	//		_ghostLimit - _currNumOfGhost);
-
-	for (auto i = 0u; i < _ghostLimit; i++) {
+	for (unsigned i = 0u; i < _ghostLimit; i++) {
 
 		// add an entity to the manager
 		ecs::entity_t e = _mngr->addEntity(ecs::grp::GHOSTS);
@@ -68,7 +75,6 @@ void GhostSystem::addGhost(unsigned int n) {
 		// add a Transform component
 		Transform* tr = _mngr->addComponent<Transform>(e);
 
-		// --- POS ALEATORIA ---
 		int size = 30;
 
 		//Esquina por el que sale
@@ -101,19 +107,7 @@ void GhostSystem::addGhost(unsigned int n) {
 		tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
 
 		// add an Image Component
-		//
 		_mngr->addComponent<Image>(e, &sdlutils().images().at("star"));
-
-		//// add a StarMotion component to resize/rotate the star
-		////
-		//auto motion = _mngr->addComponent<StarMotion>(e);
-
-		//motion->_rot = rand.nextInt(5, 10);
-		//motion->_sizeLimit = rand.nextInt(2, 10);
-		//motion->_updateFreq = rand.nextInt(20, 100);
-
-		auto pts = _mngr->addComponent<Points>(e);
-		pts->_points = rand.nextInt(1, 5);
 
 		_currNumOfGhost++;
 	}
@@ -215,6 +209,19 @@ void GhostSystem::onGhostEaten(ecs::entity_t e) {
 	sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 }
 
+void GhostSystem::removeAllGhosts()
+{
+	// Cuando acaba una ronda quita todos los fantasmas actuales.
+	_currNumOfGhost = 0;
+
+	// grupo GHOSTS.
+	const std::vector<ecs::entity_t>& ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
+	size_t n = ghosts.size();
+	for (int i = 0; i < n; i++) {
+		_mngr->setAlive(ghosts[i], false); // mata.
+	}
+}
+
 void GhostSystem::recieve(const Message &m) {
 	switch (m.id) {
 	case _m_GHOST_EATEN:
@@ -223,6 +230,10 @@ void GhostSystem::recieve(const Message &m) {
 	case _m_CREATE_GHOST:
 		addGhost(m.create_ghost_data.n);
 		break;
+
+	case _m_ROUND_OVER:
+		break;
+
 	default:
 		break;
 	}

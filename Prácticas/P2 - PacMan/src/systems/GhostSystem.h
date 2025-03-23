@@ -12,6 +12,7 @@ public:
 	void update() override;
 	void addGhost(unsigned int n);
 	void onGhostEaten(ecs::entity_t e);
+	void removeAllGhosts();
 	void recieve(const Message &m) override;
 private:
 	unsigned int _ghostLimit;

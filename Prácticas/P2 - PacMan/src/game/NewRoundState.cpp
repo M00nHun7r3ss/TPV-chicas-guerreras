@@ -1,6 +1,7 @@
 #include "NewRoundState.h"
 
-#include "Game.h"
+#include "../ecs/Manager.h"
+
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
@@ -34,6 +35,9 @@ void NewRoundState::update()
 	if (ihldr.isKeyDown(SDL_SCANCODE_RETURN)) {
 
 		//Envia mensaje de que ha empezado ronda
+		Message m;
+		m.id = _m_ROUND_START;
+		_mngr->send(m);
 
 		// !!! cambia a RunningState
 		Game::Instance()->setState(Game::RUNNING);

@@ -123,7 +123,7 @@ void Game::start() {
 		_mngr->refresh();
 
 		//¿Borra mensajes pendientes?
-		_mngr->flushMessages();
+		//_mngr->flushMessages();
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 

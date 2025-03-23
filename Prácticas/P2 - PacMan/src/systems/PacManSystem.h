@@ -14,7 +14,13 @@ public:
 	void initSystem() override;
 	void update() override;
 	void resetPacman();
+	void recieve(const Message& m) override;
 private:
+
+	void stopOnBorders();
+	void pacmanInput();
+	void handleMessages();
+
 	Transform *_pmTR;
 };
 
