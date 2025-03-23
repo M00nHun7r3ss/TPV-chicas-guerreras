@@ -25,17 +25,18 @@ using ecs::Manager;
 Game::Game() :
 		_mngr(), //
 		_pacmanSys(), //
-		_gameCtrlSys(), //
-		_ghostSys(), //
-		_renderSys(), //
-		_collisionSys() {
+		_ghostSys()
+		//_gameCtrlSys(), //
+		//_renderSys(), //
+		//_collisionSys()
+{
 
 }
 
 Game::~Game() {
 
 	// delete manager
-	delete _mngr;
+	//delete _mngr;
 
 	// release InputHandler if the instance was created correctly.
 	if (InputHandler::HasInstance())
@@ -46,12 +47,12 @@ Game::~Game() {
 		SDLUtils::Release();
 
 	// delete states
-	delete _state;
-	delete _running_state;
-	delete _paused_state;
-	delete _newgame_state;
-	delete _newround_state;
-	delete _gameover_state;
+	//delete _state;
+	//delete _running_state;
+	//delete _paused_state;
+	//delete _newgame_state;
+	//delete _newround_state;
+	//delete _gameover_state;
 
 }
 
@@ -85,9 +86,9 @@ void Game::initGame()
 	// add the systems
 	_pacmanSys = _mngr->addSystem<PacManSystem>();
 	_ghostSys = _mngr->addSystem<GhostSystem>();
-	_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
-	_renderSys = _mngr->addSystem<RenderSystem>();
-	_collisionSys = _mngr->addSystem<CollisionsSystem>();
+	//_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
+	//_renderSys = _mngr->addSystem<RenderSystem>();
+	//_collisionSys = _mngr->addSystem<CollisionsSystem>();
 
 	// add the states
 	_running_state = new RunningState();

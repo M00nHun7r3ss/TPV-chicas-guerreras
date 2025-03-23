@@ -158,25 +158,16 @@
     <ClInclude Include="..\SRC\utils\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\components\StarMotion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\components\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\components\Points.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ecs\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ecs\ecs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ecs\ecs_defs_example.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ecs\Entity.h">
@@ -186,9 +177,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ecs\messages.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ecs\messages_defs_example.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ecs\System.h">

@@ -12,7 +12,7 @@
 #include "GameCtrlSystem.h"
 
 GhostSystem::GhostSystem() :
-		_ghostLimit(10), _currNumOfGhost(0) {
+		_ghostLimit(10), _currNumOfGhost(0), _lastGhostAdded(0){
 }
 
 GhostSystem::~GhostSystem() {
@@ -49,15 +49,15 @@ void GhostSystem::update() {
 		}
 	}*/
 
-	// Anade asteroide cada 5 segundos
+	// Anade fantasma cada 5 segundos si hay menos de 10
 	// Inicialmente empieza en 5 segundos.
 	Uint32 _timeBetweenEachSpawn = 5000;
 
 	VirtualTimer& vt = sdlutils().virtualTimer();
-
-	if (vt.currTime() > _timeBetweenEachSpawn + _lastAsteroidAdded) {
-		_aUtils->create_asteroids(1);
-		_lastAsteroidAdded = vt.currTime();
+		//Timer													   //Number of ghosts
+	if (vt.currTime() > _timeBetweenEachSpawn + _lastGhostAdded && _currNumOfGhost <= _ghostLimit) {
+		addGhost(1);
+		_lastGhostAdded = vt.currTime();
 	}
 }
 
@@ -230,8 +230,8 @@ void GhostSystem::recieve(const Message &m) {
 	case _m_CREATE_GHOST:
 		addGhost(m.create_ghost_data.n);
 		break;
-
 	case _m_ROUND_OVER:
+		removeAllGhosts(); //Se quitan al salir de ronda. Al entrar se generan.
 		break;
 
 	default:

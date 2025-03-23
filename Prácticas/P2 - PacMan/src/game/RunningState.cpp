@@ -38,6 +38,7 @@ void RunningState::update()
 	Game::Instance()->pacmanSys()->update();
 	Game::Instance()->collisionSys()->update();
 
+	//Si no va aquí, llevar al game, cuando se llame al update de RunningState -> preguntar a Samir
 	sdlutils().clearRenderer();
 	Game::Instance()->renderSys()->update();
 	sdlutils().presentRenderer();

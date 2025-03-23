@@ -2,7 +2,13 @@
 
 /*
  CORRECCIONES PRÁCTICA 1:
-
+	· Inicializar variables en orden (int a, int b, int c - a(1), b(2), c(3))
+	· Siempre inicializar las variables
+	· Borrar lo creado en la constructora (p.ejemplo: estados, sistemas...)
+	· No llamar clearRenderer() dentro de los estados (??? RUNNING STATE
+	· entity_t es un puntero, no hacer entity_t*
+	· En vez de definir cosas en métodos, hacerlo en el .h
+	· En ImageWithFrames::render() solo renderizamos los frames. En ImageWithFrames::update() solo calculamos el frame a renderizar.
  */
 
 
@@ -27,7 +33,7 @@ public:
 
 	//enum System { PACMAN, GAMECTRL, GHOST, RENDER, COLLISIONS};
 
-	//Game();
+	Game();
 	virtual ~Game();
 	bool init();
 	void initGame();
@@ -62,23 +68,23 @@ public:
 
 	//Getters systems
 	ecs::System* pacmanSys() { return _pacmanSys; }
-	ecs::System* gameCtrlSys() { return _gameCtrlSys; }
+	//ecs::System* gameCtrlSys() { return _gameCtrlSys; }
 	ecs::System* ghostSys() { return _ghostSys; }
-	ecs::System* renderSys() { return _renderSys; }
-	ecs::System* collisionSys() { return _collisionSys; }
+	//ecs::System* renderSys() { return _renderSys; }
+	//ecs::System* collisionSys() { return _collisionSys; }
 
 private:
 
-	Game();
+	//Game();
 
 	ecs::Manager* _mngr;
 
 	// --- Systems.
 	ecs::System *_pacmanSys;
-	ecs::System *_gameCtrlSys;
+	//ecs::System *_gameCtrlSys;
 	ecs::System *_ghostSys;
-	ecs::System *_renderSys;
-	ecs::System *_collisionSys;
+	//ecs::System *_renderSys;
+	//ecs::System *_collisionSys;
 
 	// --- States.
 	GameState* _state;

@@ -48,16 +48,12 @@
   <ItemGroup>
     <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
-    <ClInclude Include="..\src\components\Points.h" />
-    <ClInclude Include="..\src\components\StarMotion.h" />
     <ClInclude Include="..\src\components\Transform.h" />
     <ClInclude Include="..\src\ecs\Component.h" />
     <ClInclude Include="..\src\ecs\ecs.h" />
-    <ClInclude Include="..\src\ecs\ecs_defs_example.h" />
     <ClInclude Include="..\src\ecs\Entity.h" />
     <ClInclude Include="..\src\ecs\Manager.h" />
     <ClInclude Include="..\src\ecs\messages.h" />
-    <ClInclude Include="..\src\ecs\messages_defs_example.h" />
     <ClInclude Include="..\src\ecs\System.h" />
     <ClInclude Include="..\src\game\ecs_defs.h" />
     <ClInclude Include="..\src\game\Game.h" />

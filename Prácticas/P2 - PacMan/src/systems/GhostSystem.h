@@ -17,5 +17,6 @@ public:
 private:
 	unsigned int _ghostLimit;
 	unsigned int _currNumOfGhost;
+	unsigned int _lastGhostAdded;
 };
 
