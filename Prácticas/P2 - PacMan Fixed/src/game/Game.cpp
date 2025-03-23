@@ -37,7 +37,7 @@ Game::~Game() {
 		SDLUtils::Release();
 }
 
-void Game::init() {
+bool Game::init() {
 
 	// initialize the SDL singleton
 	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
@@ -45,17 +45,22 @@ void Game::init() {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
-		return;
+		return false;
 	}
 
 	// initialize the InputHandler singleton
 	if (!InputHandler::Init()) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 				<< std::endl;
-		return;
+		return false;
 
 	}
 
+	return true;
+}
+
+void Game::initGame()
+{
 	// Create the manager
 	_mngr = new Manager();
 

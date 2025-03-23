@@ -15,8 +15,11 @@
 
 using msgId_t = uint8_t;
 enum msgId : msgId_t {
-	STAR_EATEN, //
-	CREATE_STARS
+	STAR_EATEN, // estaba
+	CREATE_STARS, // estaba
+	_m_NEW_GAME, _m_ROUND_START, _m_ROUND_OVER, _m_GAME_OVER, //Estados de juego
+	_m_PACMAN_FOOD_COLLISION, _m_PACMAN_GHOST_COLLISION, //Colisiones
+	_m_IMMUNITY_START, _m_IMMUNITY_END //Inmunidad
 };
 
 

@@ -13,7 +13,12 @@ public:
 	virtual ~PacManSystem();
 	void initSystem() override;
 	void update() override;
+	void recieve(const Message& m) override;
 private:
+	void resetPacman();
+	void stopOnBorders();
+	void pacmanInput();
+
 	Transform *_pmTR;
 };
 
