@@ -11,12 +11,6 @@
 
 #include "../components/Transform.h"
 
-#include "../systems/CollisionsSystem.h"
-#include "../systems/GameCtrlSystem.h"
-//#include "../systems/GhostSystem.h"
-#include "../systems/PacManSystem.h"
-#include "../systems/RenderSystem.h"
-
 RunningState::RunningState()
 {
 }
@@ -33,14 +27,14 @@ void RunningState::update()
 	}
 
 	// Update de cada sistema
-	//Game::Instance()->gameCtrlSys()->update();
-	//Game::Instance()->ghostSys()->update();
-	//Game::Instance()->pacmanSys()->update();
-	//Game::Instance()->collisionSys()->update();
+	Game::Instance()->gameCtrlSys()->update();
+	Game::Instance()->ghostSys()->update();
+	Game::Instance()->pacmanSys()->update();
+	Game::Instance()->collisionSys()->update();
 
 	//Si no va aquí, llevar al game, cuando se llame al update de RunningState -> preguntar a Samir
 	sdlutils().clearRenderer();
-	//Game::Instance()->renderSys()->update();
+	Game::Instance()->renderSys()->update();
 	sdlutils().presentRenderer();
 
 }

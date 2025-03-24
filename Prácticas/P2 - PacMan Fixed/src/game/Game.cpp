@@ -5,22 +5,30 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../utils/Vector2D.h"
+#include "../utils/Collisions.h"
+//Systems
 #include "../systems/CollisionsSystem.h"
 #include "../systems/GameCtrlSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/StarsSystem.h"
-#include "../utils/Vector2D.h"
-#include "../utils/Collisions.h"
+//Scenes
+#include "GameState.h"
+#include "NewGameState.h"
+#include "NewRoundState.h"
+#include "PauseState.h"
+#include "RunningState.h"
+#include "GameOverState.h"
 
 using ecs::Manager;
 
 Game::Game() :
-		_mngr(), //
-		_pacmanSys(), //
-		_gameCtrlSys(), //
-		_startsSys(), //
-		_renderSys(), //
+		_mngr(), 
+		_pacmanSys(), 
+		_gameCtrlSys(), 
+		_ghostSys(), 
+		_renderSys(), 
 		_collisionSys() {
 
 }
@@ -35,6 +43,14 @@ Game::~Game() {
 	// release SLDUtil if the instance was created correctly.
 	if (SDLUtils::HasInstance())
 		SDLUtils::Release();
+
+	// delete states
+	delete _state;
+	delete _running_state;
+	delete _paused_state;
+	delete _newgame_state;
+	delete _newround_state;
+	delete _gameover_state;
 }
 
 bool Game::init() {
@@ -66,10 +82,19 @@ void Game::initGame()
 
 	// add the systems
 	_pacmanSys = _mngr->addSystem<PacManSystem>();
-	_startsSys = _mngr->addSystem<StarsSystem>();
+	_ghostSys = _mngr->addSystem<StarsSystem>();
 	_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
+
+	// add the states
+	_running_state = new RunningState();
+	_paused_state = new PauseState();
+	_newgame_state = new NewGameState();
+	_newround_state = new NewRoundState();
+	_gameover_state = new GameOverState();
+
+	_state = _running_state; //Cambiar a _newgame_state
 }
 
 void Game::start() {
@@ -90,16 +115,13 @@ void Game::start() {
 			continue;
 		}
 
-		_pacmanSys->update();
-		_startsSys->update();
-		_gameCtrlSys->update();
-		_collisionSys->update();
+		//Actualizamos el estado
+		_state->update();
 
 		_mngr->refresh();
 
-		sdlutils().clearRenderer();
-		_renderSys->update();
-		sdlutils().presentRenderer();
+		//¿Borra mensajes pendientes?
+		_mngr->flushMessages();
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 

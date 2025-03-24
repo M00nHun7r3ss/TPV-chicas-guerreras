@@ -1,6 +1,9 @@
 #include "GameOverState.h"
 
-#include "Game.h"
+#include "../ecs/Manager.h"
+#include "../sdlutils/InputHandler.h"
+#include "../sdlutils/SDLUtils.h"
+#include "../sdlutils/Texture.h"
 
 GameOverState::GameOverState()
 {
