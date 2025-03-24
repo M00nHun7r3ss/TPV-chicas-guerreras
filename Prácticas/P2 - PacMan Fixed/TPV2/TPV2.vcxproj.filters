@@ -69,7 +69,7 @@
     <ClCompile Include="..\src\systems\RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\systems\StarsSystem.cpp">
+    <ClCompile Include="..\src\systems\GhostSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\game\NewGameState.cpp">
@@ -209,7 +209,7 @@
     <ClInclude Include="..\src\systems\RenderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\systems\StarsSystem.h">
+    <ClInclude Include="..\src\systems\GhostSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\GameOverState.h">

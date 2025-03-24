@@ -12,7 +12,7 @@
 #include "../systems/GameCtrlSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
-#include "../systems/StarsSystem.h"
+#include "../systems/GhostSystem.h"
 //Scenes
 #include "GameState.h"
 #include "NewGameState.h"
@@ -46,11 +46,11 @@ Game::~Game() {
 
 	// delete states
 	delete _state;
-	delete _running_state;
-	delete _paused_state;
-	delete _newgame_state;
-	delete _newround_state;
-	delete _gameover_state;
+	//delete _running_state;
+	//delete _paused_state;
+	//delete _newgame_state;
+	//delete _newround_state;
+	//delete _gameover_state;
 }
 
 bool Game::init() {
@@ -82,7 +82,7 @@ void Game::initGame()
 
 	// add the systems
 	_pacmanSys = _mngr->addSystem<PacManSystem>();
-	_ghostSys = _mngr->addSystem<StarsSystem>();
+	_ghostSys = _mngr->addSystem<GhostSystem>();
 	_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();

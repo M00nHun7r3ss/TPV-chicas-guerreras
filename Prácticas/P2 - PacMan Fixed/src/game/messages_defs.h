@@ -6,9 +6,9 @@
 
 using msgId_type = uint8_t;
 enum msgId : msgId_type {
-	_m_STAR_EATEN, // estaba
-	_m_CREATE_STARS, // estaba
-	_m_NEW_GAME, _m_ROUND_START, _m_ROUND_OVER, _m_GAME_OVER, //Estados de juego
+	_m_GHOST_EATEN, // estaba
+	_m_CREATE_GHOSTS, // estaba
+	_m_NEW_GAME, _m_ROUND_START, _m_ROUND_OVER,/* _m_PAUSE_START, _m_PAUSE_OVER,*/ _m_GAME_OVER, //Estados de juego
 	_m_PACMAN_FOOD_COLLISION, _m_PACMAN_GHOST_COLLISION, //Colisiones
 	_m_IMMUNITY_START, _m_IMMUNITY_END //Inmunidad
 };
