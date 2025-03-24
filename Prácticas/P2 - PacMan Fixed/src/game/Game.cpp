@@ -9,7 +9,6 @@
 #include "../utils/Collisions.h"
 //Systems
 #include "../systems/CollisionsSystem.h"
-#include "../systems/GameCtrlSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/GhostSystem.h"
@@ -26,7 +25,6 @@ using ecs::Manager;
 Game::Game() :
 		_mngr(), 
 		_pacmanSys(), 
-		_gameCtrlSys(), 
 		_ghostSys(), 
 		_renderSys(), 
 		_collisionSys() {
@@ -83,7 +81,7 @@ void Game::initGame()
 	// add the systems
 	_pacmanSys = _mngr->addSystem<PacManSystem>();
 	_ghostSys = _mngr->addSystem<GhostSystem>();
-	_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
+	//_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
 

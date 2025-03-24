@@ -7,7 +7,6 @@
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
-#include "GameCtrlSystem.h"
 
 GhostSystem::GhostSystem() 
 	: _ghostLimit(10), 

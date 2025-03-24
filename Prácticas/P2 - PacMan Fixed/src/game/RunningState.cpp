@@ -27,7 +27,6 @@ void RunningState::update()
 	}
 
 	// Update de cada sistema
-	Game::Instance()->gameCtrlSys()->update();
 	Game::Instance()->ghostSys()->update();
 	Game::Instance()->pacmanSys()->update();
 	Game::Instance()->collisionSys()->update();

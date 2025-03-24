@@ -60,9 +60,6 @@
     <ClCompile Include="..\src\systems\CollisionsSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\systems\GameCtrlSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\systems\PacManSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -85,6 +82,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\game\GameOverState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\systems\FoodSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\systems\ImmunitySystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -200,9 +203,6 @@
     <ClInclude Include="..\src\systems\CollisionsSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\systems\GameCtrlSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\systems\PacManSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -228,6 +228,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\RunningState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\systems\FoodSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\systems\ImmunitySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -66,7 +66,6 @@ public:
 
 	//Getters Systems
 	ecs::System* pacmanSys() { return _pacmanSys; }
-	ecs::System* gameCtrlSys() { return _gameCtrlSys; }
 	ecs::System* ghostSys() { return _ghostSys; }
 	ecs::System* renderSys() { return _renderSys; }
 	ecs::System* collisionSys() { return _collisionSys; }
@@ -79,7 +78,6 @@ private:
 
 	//Systems
 	ecs::System* _pacmanSys;
-	ecs::System* _gameCtrlSys;
 	ecs::System* _ghostSys;
 	ecs::System* _renderSys;
 	ecs::System* _collisionSys;
