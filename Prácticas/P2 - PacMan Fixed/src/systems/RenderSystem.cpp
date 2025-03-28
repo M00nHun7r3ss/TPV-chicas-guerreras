@@ -26,19 +26,19 @@ void RenderSystem::update() {
 }
 
 void RenderSystem::drawStars() {
-	// draw stars
-	for (auto e : _mngr->getEntities(ecs::grp::GHOSTS)) {
+	// draw ghosts
+	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::GHOSTS)) {
 
-		auto tr = _mngr->getComponent<Transform>(e);
-		auto tex = _mngr->getComponent<Image>(e)->_tex;
+		Transform* tr = _mngr->getComponent<Transform>(e);
+		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
 		draw(tr, tex);
 	}
 }
 
 void RenderSystem::drawPacMan() {
-	auto e = _mngr->getHandler(ecs::hdlr::PACMAN);
-	auto tr = _mngr->getComponent<Transform>(e);
-	auto tex = _mngr->getComponent<Image>(e)->_tex;
+	ecs::entity_t e = _mngr->getHandler(ecs::hdlr::PACMAN);
+	Transform* tr = _mngr->getComponent<Transform>(e);
+	Texture* tex = _mngr->getComponent<Image>(e)->_tex;
 	draw(tr, tex);
 
 }
@@ -63,6 +63,28 @@ void RenderSystem::drawMsgs() {
 	//// draw add stars message
 	//sdlutils().msgs().at("addstars").render(10, 10);
 
+}
+
+void RenderSystem::drawHealth()
+{
+	// draw hearts
+	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::HEALTH)) {
+
+		Transform* tr = _mngr->getComponent<Transform>(e);
+		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
+		draw(tr, tex);
+		// vamos modificando la x y renderizando para que vayan en fila.
+		tr->_pos.setX(tr->_pos.getX()+45);
+	}
+
+	//// pos arriba izquierda.
+	//SDL_Rect dest = { 5, 10, 40, 40 };
+
+	//// vamos modificando la x y renderizando para que vayan en fila.
+	//for (int i = 0; i < _currentHealth; i++) {
+
+	//	dest.x = dest.x + 45;
+	//}
 }
 
 void RenderSystem::draw(Transform *tr, Texture *tex) {

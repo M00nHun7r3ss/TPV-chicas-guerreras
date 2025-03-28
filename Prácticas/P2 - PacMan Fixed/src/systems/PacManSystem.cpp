@@ -54,7 +54,7 @@ void PacManSystem::resetPacman()
 
 void PacManSystem::recieve(const Message& m)
 {
-	/*switch (m.id)
+	switch (m.id)
 	{
 	case _m_NEW_GAME:
 		// cura la vida.
@@ -66,7 +66,7 @@ void PacManSystem::recieve(const Message& m)
 
 	default:
 		break;
-	}*/
+	}
 }
 
 void PacManSystem::stopOnBorders()

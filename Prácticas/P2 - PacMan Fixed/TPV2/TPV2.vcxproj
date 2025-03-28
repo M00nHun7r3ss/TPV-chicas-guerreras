@@ -46,6 +46,7 @@
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\Points.h" />
     <ClInclude Include="..\src\components\StarMotion.h" />

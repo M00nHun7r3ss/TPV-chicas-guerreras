@@ -47,7 +47,7 @@ void CollisionsSystem::update() {
 
 				Message m;
 				m.id = _m_GHOST_EATEN;
-				m.star_eaten_data.e = e;
+				m.ghost_eaten_data.e = e;
 				_mngr->send(m);
 
 			}

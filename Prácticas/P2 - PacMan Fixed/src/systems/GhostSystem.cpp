@@ -118,11 +118,11 @@ void GhostSystem::removeAllGhosts()
 void GhostSystem::recieve(const Message &m) {
 	switch (m.id) {
 	case _m_GHOST_EATEN:
-		onGhostEaten(m.star_eaten_data.e);
+		onGhostEaten(m.ghost_eaten_data.e);
 		break;
 
 	case _m_CREATE_GHOSTS:
-		addGhost(m.create_stars_data.n);
+		addGhost(m.create_ghost_data.n);
 		break;
 
 	case _m_ROUND_OVER:
