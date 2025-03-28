@@ -1,9 +1,11 @@
 #include "PauseState.h"
 
+#include "Game.h"
+
 void PauseState::enter()
 {
 	sdlutils().virtualTimer().pause();
-	_message = &sdlutils().msgs().at("PauseState");
+	_message = &sdlutils().msgs().at("paused");
 
 }
 
@@ -32,6 +34,6 @@ void PauseState::update()
 	if (ihldr.mouseButtonDownEvent() || ihldr.keyDownEvent()) {
 
 		// !!! cambia a RunningState
-		//Game::Instance()->setState(Game::RUNNING);
+		Game::Instance()->setState(Game::RUNNING);
 	}
 }

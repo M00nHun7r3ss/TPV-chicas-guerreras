@@ -1,25 +1,20 @@
 #include "GameOverState.h"
 
-#include "../ecs/Manager.h"
-#include "../sdlutils/InputHandler.h"
-#include "../sdlutils/SDLUtils.h"
-#include "../sdlutils/Texture.h"
-
-GameOverState::GameOverState()
-{
-}
+#include "Game.h"
 
 void GameOverState::enter()
 {
+	_message = &sdlutils().msgs().at("gameover");
+
 	//if (_aUtils->getAsteroidNumber() == 0)
 	//{
 	//	// CHAMPION.
-	//	_message = &sdlutils().msgs().at("GameOverGood");
+		//_message = &sdlutils().msgs().at("gameovergood");
 	//}
 	//else
 	//{
 	//	// LOOSER.
-	//	_message = &sdlutils().msgs().at("GameOverBad");
+	//	_message = &sdlutils().msgs().at("gameoverbad");
 	//}
 }
 
@@ -42,6 +37,6 @@ void GameOverState::update()
 	// ya sea por clic o por tecla...
 	if (ihldr.mouseButtonDownEvent() || ihldr.keyDownEvent()) {
 		// !!! cambia a NewGameState
-		//Game::Instance()->setState(Game::NEWGAME);
+		Game::Instance()->setState(Game::NEWGAME);
 	}
 }

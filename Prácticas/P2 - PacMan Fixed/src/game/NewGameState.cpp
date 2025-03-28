@@ -1,17 +1,10 @@
 #include "NewGameState.h"
 
 #include "../ecs/Manager.h"
-#include "../sdlutils/InputHandler.h"
-#include "../sdlutils/SDLUtils.h"
-#include "../sdlutils/Texture.h"
-
-NewGameState::NewGameState()
-{
-}
 
 void NewGameState::enter()
 {
-	_message = &sdlutils().msgs().at("NewGameState");
+	_message = &sdlutils().msgs().at("newgame");
 }
 
 void NewGameState::update()
@@ -36,8 +29,7 @@ void NewGameState::update()
 		//Envia mensaje de que ha empezado juego
 		Message m;
 		m.id = _m_NEW_GAME;
-		_mngr->send(m);
-
+		Game::Instance()->getManager()->send(m);
 
 		// !!! cambia a NewRoundState
 		Game::Instance()->setState(Game::NEWROUND);

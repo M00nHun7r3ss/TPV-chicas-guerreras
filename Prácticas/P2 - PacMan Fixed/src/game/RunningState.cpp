@@ -22,7 +22,8 @@ void RunningState::update()
 	// Si el usuario pulsa la tecla P cambia al estado PauseState y sale del metodo.
 	InputHandler& ihldr = ih();
 	if (ihldr.keyDownEvent() && ihldr.isKeyDown(SDLK_p) && !exit) {
-		//Game::Instance()->setState(Game::PAUSED);
+		Game::Instance()->setState(Game::PAUSED);
+		
 		exit = true;
 	}
 

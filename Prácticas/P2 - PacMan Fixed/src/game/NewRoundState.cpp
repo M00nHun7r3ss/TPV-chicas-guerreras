@@ -2,17 +2,9 @@
 
 #include "../ecs/Manager.h"
 
-#include "../sdlutils/InputHandler.h"
-#include "../sdlutils/SDLUtils.h"
-#include "../sdlutils/Texture.h"
-
-NewRoundState::NewRoundState()
-{
-}
-
 void NewRoundState::enter()
 {
-	_message = &sdlutils().msgs().at("NewRoundState");
+	_message = &sdlutils().msgs().at("newround");
 }
 
 void NewRoundState::update()
@@ -36,10 +28,10 @@ void NewRoundState::update()
 
 		//Envia mensaje de que ha empezado ronda
 		Message m;
-		//m.id = _m_ROUND_START;
-		_mngr->send(m);
+		m.id = _m_ROUND_START;
+		Game::Instance()->getManager()->send(m);
 
 		// !!! cambia a RunningState
-		//Game::Instance()->setState(Game::RUNNING);
+		Game::Instance()->setState(Game::RUNNING);
 	}
 }
