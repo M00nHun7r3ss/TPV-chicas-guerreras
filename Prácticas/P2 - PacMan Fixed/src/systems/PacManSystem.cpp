@@ -2,6 +2,7 @@
 
 #include "PacManSystem.h"
 
+#include "../components/Health.h"
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
@@ -9,7 +10,7 @@
 #include "../sdlutils/SDLUtils.h"
 
 PacManSystem::PacManSystem() :
-		_pmTR(nullptr) {
+		_pmTR(nullptr), _pmHealth(nullptr) {
 }
 
 PacManSystem::~PacManSystem() {
@@ -22,6 +23,7 @@ void PacManSystem::initSystem() {
 
 	_pmTR = _mngr->addComponent<Transform>(pacman);
 	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+	_pmHealth = _mngr->addComponent<Health>(pacman, &sdlutils().images().at("heart"));
 
 	resetPacman();
 }
@@ -57,10 +59,12 @@ void PacManSystem::recieve(const Message& m)
 	switch (m.id)
 	{
 	case _m_NEW_GAME:
-		// cura la vida.
+		// al empezar juego resetea vidas.
+		maxHealth();
 		break;
 
 	case _m_ROUND_START:
+		// al empezar ronda resetea posicion.
 		resetPacman();
 		break;
 
@@ -126,4 +130,9 @@ void PacManSystem::pacmanInput()
 			_pmTR->_vel = Vector2D(0.0f, 0.0f).rotate(_pmTR->_rot);
 		}
 	}
+}
+
+void PacManSystem::maxHealth()
+{
+	_pmHealth->_currentHealth = _pmHealth->MAX_HEALTH;
 }

@@ -3,6 +3,9 @@
 #include "GhostSystem.h"
 
 #include <algorithm>
+
+#include "PacManSystem.h"
+#include "../components/Health.h"
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
@@ -26,20 +29,7 @@ void GhostSystem::update() {
 	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
 	size_t n = ghosts.size();
 
-	// Anade fantasma cada 5 segundos si hay menos de 10
-	// Inicialmente empieza en 5 segundos.
-	Uint32 _timeBetweenEachSpawn = 5000;
-
-	VirtualTimer& vt = sdlutils().virtualTimer();
-
-
-	bool timer = vt.currTime() > _timeBetweenEachSpawn + _lastGhostAdded;
-	bool nGhosts = _currNumOfGhosts <= _ghostLimit;
-													   
-	if (timer && nGhosts){
-		addGhost(1);
-		_lastGhostAdded = vt.currTime();
-	}
+	generateGhostsByTime();
 }
 
 void GhostSystem::addGhost(unsigned int n) {
@@ -115,18 +105,76 @@ void GhostSystem::removeAllGhosts()
 	}
 }
 
+void GhostSystem::generateGhostsByTime()
+{
+	// Anade fantasma cada 5 segundos si hay menos de 10
+	// Inicialmente empieza en 5 segundos.
+	Uint32 _timeBetweenEachSpawn = 5000;
+
+	VirtualTimer& vt = sdlutils().virtualTimer();
+
+
+	bool timer = vt.currTime() > _timeBetweenEachSpawn + _lastGhostAdded;
+	bool nGhosts = _currNumOfGhosts <= _ghostLimit;
+
+	if (timer && nGhosts) {
+		addGhost(1);
+		_lastGhostAdded = vt.currTime();
+	}
+}
+
 void GhostSystem::recieve(const Message &m) {
+
+	Message mes;
+	
+
 	switch (m.id) {
-	case _m_GHOST_EATEN:
+	/*case _m_GHOST_EATEN:
 		onGhostEaten(m.ghost_eaten_data.e);
 		break;
 
 	case _m_CREATE_GHOSTS:
 		addGhost(m.create_ghost_data.n);
-		break;
+		break;*/
 
 	case _m_ROUND_OVER:
-		removeAllGhosts(); //Se quitan al salir de ronda. Al entrar se generan.
+		//Se quitan al salir de ronda. Al entrar se generan.
+		removeAllGhosts(); 
+		break;
+
+	case _m_PACMAN_GHOST_COLLISION:
+		if (_m_IMMUNITY_START)
+		{
+			// desaparece el fantasma.
+		}
+		else if (_m_IMMUNITY_END)
+		{
+			// muere el pacman.
+
+
+			Game::State s;
+			if (_mngr->getSystem<PacManSystem>()->getPacmanHealth() <= 0)
+			{
+				// envia mensaje de fin de partida y cambia estado.
+				mes.id = _m_GAME_OVER;
+				s = Game::NEWROUND;
+			}
+			else
+			{
+				// envia mensaje de fin de ronda y cambia estado.
+				mes.id = _m_ROUND_OVER;
+				s = Game::GAMEOVER;
+			}
+			Game::Instance()->getManager()->send(mes);
+			Game::Instance()->setState(s);
+
+		}
+		break;
+	case !_m_IMMUNITY_START:
+		generateGhostsByTime();
+		break;
+	case _m_IMMUNITY_START:
+		// CAMBIAR SPRITE FANTASMA.
 		break;
 	default:
 		break;

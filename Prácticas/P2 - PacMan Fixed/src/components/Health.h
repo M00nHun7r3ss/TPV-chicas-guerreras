@@ -15,8 +15,8 @@ struct Health : public ecs::Component
 
 	int getHealth() { return _currentHealth; }*/
 
+	int const MAX_HEALTH = 3;
 	int _currentHealth;
-	int _maxHealth;
 	Texture* _tex;
 };
 

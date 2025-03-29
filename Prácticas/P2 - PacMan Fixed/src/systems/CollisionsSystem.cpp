@@ -45,10 +45,10 @@ void CollisionsSystem::update() {
 					pTR->_pos, pTR->_width, pTR->_height, //
 					eTR->_pos, eTR->_width, eTR->_height)) {
 
-				Message m;
+				/*Message m;
 				m.id = _m_GHOST_EATEN;
 				m.ghost_eaten_data.e = e;
-				_mngr->send(m);
+				_mngr->send(m);*/
 
 			}
 		}

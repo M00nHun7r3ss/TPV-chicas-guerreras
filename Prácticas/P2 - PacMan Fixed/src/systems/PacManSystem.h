@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "../components/Health.h"
 #include "../ecs/System.h"
 
 struct Transform;
@@ -14,11 +15,15 @@ public:
 	void initSystem() override;
 	void update() override;
 	void recieve(const Message& m) override;
+
+	inline int getPacmanHealth() { return _pmHealth->_currentHealth; }
 private:
 	void resetPacman();
 	void stopOnBorders();
 	void pacmanInput();
+	void maxHealth();
 
 	Transform *_pmTR;
+	Health* _pmHealth;
 };
 
