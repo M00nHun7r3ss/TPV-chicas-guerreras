@@ -10,7 +10,6 @@ int main(int, char**) {
 		if (Game::Init()) { // con este Init llamas a init!!!
 			Game::Instance()->initGame();
 			Game::Instance()->start();
-
 		}
 		Game::Release();
 	} catch (const std::string &e) { // catch exceptions thrown as strings

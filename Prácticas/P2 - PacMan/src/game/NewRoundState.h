@@ -7,13 +7,13 @@
 
 #include "../ecs/messages.h"
 
+#include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
-
 
 class NewRoundState : public GameState
 {
 public:
-	NewRoundState();
+	NewRoundState() = default;
 	virtual ~NewRoundState() {}
 	void enter() override;
 	void leave() override {}
@@ -22,6 +22,4 @@ public:
 private:
 	Texture* _message;
 	SDL_Rect _dest;
-	ecs::Manager* _mngr;
-
 };

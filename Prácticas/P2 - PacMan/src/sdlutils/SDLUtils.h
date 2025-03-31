@@ -50,7 +50,7 @@ public:
 				return map_.at(key);
 			} catch (std::out_of_range &e) {
 				throw "Key '" + key + "' does not exists in '" + desc_ + "'" + //
-					desc_ + "'. Original error was: " + e.what();
+						desc_ + "'. Original error was: " + e.what();
 			} catch (std::exception &e) {
 				throw "Error when accessing key '" + key + "' of '" + //
 						desc_ + "'. Original error was: " + e.what();

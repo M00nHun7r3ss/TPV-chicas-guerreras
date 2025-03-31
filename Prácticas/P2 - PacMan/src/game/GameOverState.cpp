@@ -2,21 +2,19 @@
 
 #include "Game.h"
 
-GameOverState::GameOverState()
-{
-}
-
 void GameOverState::enter()
 {
+	_message = &sdlutils().msgs().at("gameover");
+
 	//if (_aUtils->getAsteroidNumber() == 0)
 	//{
 	//	// CHAMPION.
-	//	_message = &sdlutils().msgs().at("GameOverGood");
+		//_message = &sdlutils().msgs().at("gameovergood");
 	//}
 	//else
 	//{
 	//	// LOOSER.
-	//	_message = &sdlutils().msgs().at("GameOverBad");
+	//	_message = &sdlutils().msgs().at("gameoverbad");
 	//}
 }
 

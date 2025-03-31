@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../ecs/System.h"
+#include "../game/Game.h"
 
 class GhostSystem: public ecs::System {
 public:
@@ -10,13 +11,15 @@ public:
 	virtual ~GhostSystem();
 	void initSystem() override;
 	void update() override;
+	void recieve(const Message &m) override;
+private:
 	void addGhost(unsigned int n);
 	void onGhostEaten(ecs::entity_t e);
 	void removeAllGhosts();
-	void recieve(const Message &m) override;
-private:
+	void generateGhostsByTime();
+
 	unsigned int _ghostLimit;
-	unsigned int _currNumOfGhost;
+	unsigned int _currNumOfGhosts;
 	unsigned int _lastGhostAdded;
 };
 

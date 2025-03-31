@@ -1,9 +1,11 @@
 #include "PauseState.h"
 
+#include "Game.h"
+
 void PauseState::enter()
 {
 	sdlutils().virtualTimer().pause();
-	_message = &sdlutils().msgs().at("PauseState");
+	_message = &sdlutils().msgs().at("paused");
 
 }
 

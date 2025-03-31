@@ -1,8 +1,8 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
 
 #pragma once
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 /*
  * This is an attempt to have a single Singleton class that can be used
