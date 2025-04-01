@@ -44,17 +44,17 @@ Game::~Game() {
 
 	// delete states
 	delete _state;
-	//delete _running_state;
-	//delete _paused_state;
-	//delete _newgame_state;
-	//delete _newround_state;
-	//delete _gameover_state;
+	delete _running_state;
+	delete _paused_state;
+	delete _newgame_state;
+	delete _newround_state;
+	delete _gameover_state;
 }
 
 bool Game::init() {
 
 	// initialize the SDL singleton
-	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
+	if (!SDLUtils::Init("PacMan", 800, 600,
 			"resources/config/resources.json")) {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
@@ -81,7 +81,6 @@ void Game::initGame()
 	// add the systems
 	_pacmanSys = _mngr->addSystem<PacManSystem>();
 	_ghostSys = _mngr->addSystem<GhostSystem>();
-	//_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
 

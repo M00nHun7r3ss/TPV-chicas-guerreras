@@ -126,31 +126,29 @@ void GhostSystem::generateGhostsByTime()
 void GhostSystem::recieve(const Message &m) {
 
 	Message mes;
-	
 
-	switch (m.id) {
-	/*case _m_GHOST_EATEN:
-		onGhostEaten(m.ghost_eaten_data.e);
-		break;
-
-	case _m_CREATE_GHOSTS:
-		addGhost(m.create_ghost_data.n);
-		break;*/
-
-	case _m_ROUND_OVER:
+	if (m.id == _m_ROUND_OVER)
+	{
 		//Se quitan al salir de ronda. Al entrar se generan.
-		removeAllGhosts(); 
-		break;
+		removeAllGhosts();
+	}
+	else if (m.id == _m_IMMUNITY_START)
+	{
+		// TODO: cambia el sprite fantasma.
 
-	case _m_PACMAN_GHOST_COLLISION:
-		if (_m_IMMUNITY_START)
+		if (m.id == _m_PACMAN_GHOST_COLLISION)
 		{
-			// desaparece el fantasma.
+			// TODO: desaparece el fantasma.
 		}
-		else if (_m_IMMUNITY_END)
-		{
-			// muere el pacman.
+	}
+	else if (m.id == _m_IMMUNITY_END)
+	{
+		// cuando no hay inmunidad se generan fantasmas.
+		generateGhostsByTime();
 
+		if (m.id == _m_PACMAN_GHOST_COLLISION)
+		{
+			// TODO: muere el pacman.
 
 			Game::State s;
 			if (_mngr->getSystem<PacManSystem>()->getPacmanHealth() <= 0)
@@ -167,16 +165,6 @@ void GhostSystem::recieve(const Message &m) {
 			}
 			Game::Instance()->getManager()->send(mes);
 			Game::Instance()->setState(s);
-
 		}
-		break;
-	case !_m_IMMUNITY_START:
-		generateGhostsByTime();
-		break;
-	case _m_IMMUNITY_START:
-		// CAMBIAR SPRITE FANTASMA.
-		break;
-	default:
-		break;
 	}
 }
