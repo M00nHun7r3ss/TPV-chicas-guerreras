@@ -53,8 +53,8 @@ void CollisionsSystem::update() {
 
 	// Collisions P-F
 	std::vector<ecs::entity_t> fruit = _mngr->getEntities(ecs::grp::FRUITS);
-	size_t n = fruit.size();
-	for (unsigned i = 0u; i < n; i++) {
+	size_t k = fruit.size();
+	for (unsigned i = 0u; i < k; i++) {
 		ecs::entity_t e = fruit[i];
 		if (_mngr->isAlive(e)) { // if the fruit is active (it might have died in this frame)
 
@@ -67,9 +67,9 @@ void CollisionsSystem::update() {
 				pTR->_pos, pTR->_width, pTR->_height, //
 				eTR->_pos, eTR->_width, eTR->_height)) {
 
-				Message m;
-				m.id = _m_PACMAN_FOOD_COLLISION;
-				_mngr->send(m);
+				Message z;
+				z.id = _m_PACMAN_FOOD_COLLISION;
+				_mngr->send(z);
 
 			}
 		}
