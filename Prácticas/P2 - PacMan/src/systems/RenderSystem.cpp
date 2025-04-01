@@ -23,6 +23,8 @@ void RenderSystem::update() {
 	drawMsgs();
 	drawStars();
 	drawPacMan();
+	//drawHealth();
+	drawFruitGrid();
 }
 
 void RenderSystem::drawStars() {
@@ -74,7 +76,7 @@ void RenderSystem::drawHealth()
 		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
 		draw(tr, tex);
 		// vamos modificando la x y renderizando para que vayan en fila.
-		tr->_pos.setX(tr->_pos.getX()+45);
+		tr->_pos.setX(tr->_pos.getX()+55);
 	}
 
 	//// pos arriba izquierda.
@@ -85,6 +87,17 @@ void RenderSystem::drawHealth()
 
 	//	dest.x = dest.x + 45;
 	//}
+}
+
+void RenderSystem::drawFruitGrid()
+{
+	// draw fruits
+	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::FRUITS)) {
+
+		Transform* tr = _mngr->getComponent<Transform>(e);
+		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
+		draw(tr, tex);
+	}
 }
 
 void RenderSystem::draw(Transform *tr, Texture *tex) {

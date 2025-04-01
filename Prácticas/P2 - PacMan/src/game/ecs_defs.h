@@ -36,11 +36,13 @@ class RenderSystem;
 class PacManSystem;
 class GameCtrlSystem;
 class CollisionsSystem;
+class FoodSystem;
 
 #define _SYS_LIST_ \
     GhostSystem, \
 	RenderSystem, \
 	PacManSystem, \
 	GameCtrlSystem, \
-	CollisionsSystem
+	CollisionsSystem, \
+	FoodSystem
 

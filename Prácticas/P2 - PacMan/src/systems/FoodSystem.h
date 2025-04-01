@@ -12,14 +12,13 @@ public:
     void recieve(const Message& m) override;
 private:
     void generateFruitGrid();
-    void onGhostEaten(ecs::entity_t e);
-    void removeAllGhosts();
-    void generateGhostsByTime();
+    //void onFruitEaten(ecs::entity_t e);
+    //void checkNoFruit();
+    //void generateGhostsByTime();
 
-    unsigned int _ghostLimit;
-    unsigned int _currNumOfGhosts;
-    unsigned int _lastGhostAdded;
+    unsigned int _currNumOfFruit;
+    unsigned int _lastFruitAdded;
+    bool _fruitType; // F -> normal; T -> milagroso
 
     const int MAX_FRUIT_NUMBER = 40; // luego cambiar.
-    bool fruitType = false; // F -> normal; T -> milagroso
 };

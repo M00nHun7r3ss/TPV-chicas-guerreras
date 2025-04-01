@@ -71,6 +71,8 @@ public:
 	ecs::System* ghostSys() { return _ghostSys; }
 	ecs::System* renderSys() { return _renderSys; }
 	ecs::System* collisionSys() { return _collisionSys; }
+	ecs::System* foodSys() { return _foodSys; }
+	ecs::System* immunitySys() { return _immunitySys; }
 
 private:
 	//Privado porque es singleton
@@ -83,6 +85,8 @@ private:
 	ecs::System* _ghostSys;
 	ecs::System* _renderSys;
 	ecs::System* _collisionSys;
+	ecs::System* _foodSys;
+	ecs::System* _immunitySys;
 
 	//States
 	GameState* _state;

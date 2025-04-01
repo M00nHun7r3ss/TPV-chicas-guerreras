@@ -12,6 +12,8 @@
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/GhostSystem.h"
+#include "../systems/FoodSystem.h"
+#include "../systems/ImmunitySystem.h"
 //Scenes
 #include "GameState.h"
 #include "NewGameState.h"
@@ -27,7 +29,10 @@ Game::Game() :
 		_pacmanSys(), 
 		_ghostSys(), 
 		_renderSys(), 
-		_collisionSys() {
+		_collisionSys(),
+		_foodSys(),
+		_immunitySys()
+{
 
 }
 
@@ -81,9 +86,10 @@ void Game::initGame()
 	// add the systems
 	_pacmanSys = _mngr->addSystem<PacManSystem>();
 	_ghostSys = _mngr->addSystem<GhostSystem>();
-	//_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
+	_foodSys = _mngr->addSystem<FoodSystem>();
+	//_immunitySys = _mngr->addSystem<ImmunitySystem>();
 
 	// add the states
 	_running_state = new RunningState();

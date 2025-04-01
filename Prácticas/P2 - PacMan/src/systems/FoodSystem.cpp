@@ -3,13 +3,12 @@
 #include <algorithm>
 
 #include "PacManSystem.h"
-#include "../components/Health.h"
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 
-FoodSystem::FoodSystem()
+FoodSystem::FoodSystem() : _currNumOfFruit(0), _lastFruitAdded(0), _fruitType(false)
 {
 }
 
@@ -17,55 +16,62 @@ FoodSystem::~FoodSystem() {
 }
 
 void FoodSystem::initSystem() {
+    generateFruitGrid();
+}
+
+void FoodSystem::update()
+{
+
+}
+
+void FoodSystem::recieve(const Message& m)
+{
 }
 
 void FoodSystem::generateFruitGrid()
 {
-    // Always use the random number generator provided by SDLUtils
-    RandomNumberGenerator& rand = sdlutils().rand();
+    //posicion
+    int x = 50,
+        y = 50;
+    //tamano
+    int size = 50;
 
-    for (unsigned i = 0u; i < _ghostLimit; i++) {
+    for (unsigned i = 0u; i < MAX_FRUIT_NUMBER; i++) {
 
         // add an entity to the manager
-        ecs::entity_t e = _mngr->addEntity(ecs::grp::GHOSTS);
+        ecs::entity_t e = _mngr->addEntity(ecs::grp::FRUITS);
 
         // add a Transform component
         Transform* tr = _mngr->addComponent<Transform>(e);
+        tr->_pos.setX(x);
+        tr->_pos.setY(y);
 
-        int size = 30;
+        std::cout << "Fruit " << i << " x1:" << tr->_pos.getX() << " y1:" << tr->_pos.getY() << std::endl;
 
-        //Esquina por el que sale
-        //0 - arriba/izqd, 1 - abajo/izqd, 2 - abajo/dcha, 3 - arriba/dcha
-        int esquina = rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
-        int x, y;
-        switch (esquina) //Esto es asi porque el origen del sprite es arriba izquierda 
+		//inicializa la posicion
+    	//Cada fila tiene 8 frutas
+        for (int j = 0; j < MAX_FRUIT_NUMBER / 5; j++) 
         {
-        case 0: //arriba/izqd
-            x = 0;
-            y = 0;
-            break;
-        case 1: //abajo/izqd,
-            x = 0;
-            y = sdlutils().height() - size;
-            break;
-        case 2: //abajo/dcha
-            x = sdlutils().width() - size;
-            y = sdlutils().height() - size;
-            break;
-        case 3: //arriba/dcha
-            x = sdlutils().width() - size;
-            y = 0;
-            break;
-        default:
-            break;
+            // vamos modificando la x y renderizando para que vayan en diferentes columnas
+            tr->_pos.setX(tr->_pos.getX() + x);
+
+            // add an Image Component segun milagroso o no
+            if (_fruitType) { _mngr->addComponent<Image>(e, &sdlutils().images().at("tennis_ball")); }
+            else { _mngr->addComponent<Image>(e, &sdlutils().images().at("star")); }
+
+            _currNumOfFruit++;
         }
 
+        std::cout << "Fruit " << i << " x2:" << tr->_pos.getX() << " y2:" << tr->_pos.getY() << std::endl;
         //Inicializa transform
         tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
 
-        // add an Image Component
-        _mngr->addComponent<Image>(e, &sdlutils().images().at("star"));
+        // vamos modificando la y renderizando para que vayan en diferentes filas
+        tr->_pos.setY(tr->_pos.getY() + y);
+        //Reseteamos el valor x 
+        tr->_pos.setX(x);
 
-        _currNumOfGhosts++;
+        std::cout << "Fruit " << i << " x3:" << tr->_pos.getX() << " y3:" << tr->_pos.getY() << std::endl;
+
     }
 }

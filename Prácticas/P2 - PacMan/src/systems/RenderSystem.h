@@ -18,6 +18,7 @@ private:
 	void drawPacMan();
 	void drawMsgs();
 	void drawHealth();
+	void drawFruitGrid();
 	void draw(Transform *tr, Texture *tex);
 };
 

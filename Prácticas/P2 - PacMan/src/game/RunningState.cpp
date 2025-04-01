@@ -31,6 +31,8 @@ void RunningState::update()
 	Game::Instance()->ghostSys()->update();
 	Game::Instance()->pacmanSys()->update();
 	Game::Instance()->collisionSys()->update();
+	Game::Instance()->foodSys()->update();
+	//Game::Instance()->immunitySys()->update();
 
 	//Si no va aquí, llevar al game, cuando se llame al update de RunningState -> preguntar a Samir
 	sdlutils().clearRenderer();
