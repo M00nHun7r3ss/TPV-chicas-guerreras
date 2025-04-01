@@ -1,24 +1,19 @@
 #pragma once
+#include "GameState.h"
+
+#include "Game.h"
 
 #include <SDL_rect.h>
 
+#include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 
 #include "../ecs/messages.h"
 
-#include "Game.h"
-
-#include "GameState.h"
-
-namespace ecs
-{
-	class Manager;
-}
-
 class NewGameState : public GameState
 {
 public:
-	NewGameState();
+	NewGameState() = default;
 	virtual ~NewGameState() {}
 	void enter() override;
 	void leave() override {}
@@ -27,5 +22,4 @@ public:
 private:
 	Texture* _message;
 	SDL_Rect _dest;
-	ecs::Manager* _mngr;
 };

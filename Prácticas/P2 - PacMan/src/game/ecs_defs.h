@@ -8,20 +8,21 @@ struct Transform;
 struct Image;
 struct StarMotion;
 struct Points;
-//struct Health;
+struct Health;
 
 #define _CMPS_LIST_ \
 	Transform, \
 	Image, \
 	StarMotion, \
-	Points
-	//Health
+	Points, \
+	Health
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	STARS, \
 	GHOSTS, \
+	HEALTH, \
+	FRUITS
 
 // Handlers list - must have at least one element
 //
@@ -31,15 +32,15 @@ struct Points;
 // Systems list - must have at least one element
 //
 class GhostSystem;
-//class RenderSystem;
+class RenderSystem;
 class PacManSystem;
-//class GameCtrlSystem;
-//class CollisionsSystem;
+class GameCtrlSystem;
+class CollisionsSystem;
 
 #define _SYS_LIST_ \
     GhostSystem, \
-	PacManSystem
-	//RenderSystem, \
-	//GameCtrlSystem, \
-	//CollisionsSystem
+	RenderSystem, \
+	PacManSystem, \
+	GameCtrlSystem, \
+	CollisionsSystem
 

@@ -1,58 +1,79 @@
-//// This file is part of the course TPV2@UCM - Samir Genaim
-//
-//#include "CollisionsSystem.h"
-//
-//#include "../components/Transform.h"
-//#include "../ecs/Manager.h"
-//#include "../utils/Collisions.h"
-//#include "GhostSystem.h"
-//
-//CollisionsSystem::CollisionsSystem() {
-//	// TODO Auto-generated constructor stub
-//
-//}
-//
-//CollisionsSystem::~CollisionsSystem() {
-//	// TODO Auto-generated destructor stub
-//}
-//
-//void CollisionsSystem::initSystem() {
-//}
-//
-//void CollisionsSystem::update() {
-//
-//	// the PacMan's Transform
-//	//
-//	auto pm = _mngr->getHandler(ecs::hdlr::PACMAN);
-//	auto pTR = _mngr->getComponent<Transform>(pm);
-//
-//	// For safety, we traverse with a normal loop until the current size. In this
-//	// particular case we could use a for-each loop since the list stars is not
-//	// modified.
-//	//
-//	auto &stars = _mngr->getEntities(ecs::grp::STARS);
-//	auto n = stars.size();
-//	for (auto i = 0u; i < n; i++) {
-//		auto e = stars[i];
-//		if (_mngr->isAlive(e)) { // if the star is active (it might have died in this frame)
-//
-//			// the Star's Transform
-//			//
-//			auto eTR = _mngr->getComponent<Transform>(e);
-//
-//			// check if PacMan collides with the Star (i.e., eat it)
-//			if (Collisions::collides(			//
-//					pTR->_pos, pTR->_width, pTR->_height, //
-//					eTR->_pos, eTR->_width, eTR->_height)) {
-//
-//				Message m;
-//				m.id = _m_GHOST_EATEN;
-//				m.ghost_eaten_data.e = e;
-//				_mngr->send(m);
-//
-//			}
-//		}
-//	}
-//
-//}
-//
+// This file is part of the course TPV2@UCM - Samir Genaim
+
+#include "CollisionsSystem.h"
+
+#include "../components/Transform.h"
+#include "../ecs/Manager.h"
+#include "../utils/Collisions.h"
+#include "GhostSystem.h"
+
+#include <vector>
+
+CollisionsSystem::CollisionsSystem() {
+	// TODO Auto-generated constructor stub
+
+}
+
+CollisionsSystem::~CollisionsSystem() {
+	// TODO Auto-generated destructor stub
+}
+
+void CollisionsSystem::initSystem() {
+}
+
+void CollisionsSystem::update() {
+
+	// the Pacman's Transform
+	ecs::entity_t pm = _mngr->getHandler(ecs::hdlr::PACMAN);
+	Transform* pTR = _mngr->getComponent<Transform>(pm);
+
+	// Collisions P-G
+	std::vector<ecs::entity_t> ghost = _mngr->getEntities(ecs::grp::GHOSTS);
+	size_t n = ghost.size();
+	for (unsigned i = 0u; i < n; i++) {
+		ecs::entity_t e = ghost[i];
+		if (_mngr->isAlive(e)) { // if the ghost is active (it might have died in this frame)
+
+			// the ghost's Transform
+			//
+			auto eTR = _mngr->getComponent<Transform>(e);
+
+			// check if PacMan collides with the ghost (i.e., eat it)
+			if (Collisions::collides(			//
+					pTR->_pos, pTR->_width, pTR->_height, //
+					eTR->_pos, eTR->_width, eTR->_height)) {
+
+				Message m;
+				m.id = _m_PACMAN_GHOST_COLLISION;
+				_mngr->send(m);
+
+			}
+		}
+	}
+
+	// Collisions P-F
+	std::vector<ecs::entity_t> fruit = _mngr->getEntities(ecs::grp::FRUITS);
+	size_t n = fruit.size();
+	for (unsigned i = 0u; i < n; i++) {
+		ecs::entity_t e = fruit[i];
+		if (_mngr->isAlive(e)) { // if the fruit is active (it might have died in this frame)
+
+			// the fruit's Transform
+			//
+			auto eTR = _mngr->getComponent<Transform>(e);
+
+			// check if PacMan collides with the fruit (i.e., eat it)
+			if (Collisions::collides(			//
+				pTR->_pos, pTR->_width, pTR->_height, //
+				eTR->_pos, eTR->_width, eTR->_height)) {
+
+				Message m;
+				m.id = _m_PACMAN_FOOD_COLLISION;
+				_mngr->send(m);
+
+			}
+		}
+	}
+
+}
+

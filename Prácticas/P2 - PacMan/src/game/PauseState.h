@@ -1,8 +1,6 @@
 #pragma once
 #include "GameState.h"
 
-#include "Game.h"
-
 #include <SDL_rect.h>
 
 #include "../sdlutils/InputHandler.h"

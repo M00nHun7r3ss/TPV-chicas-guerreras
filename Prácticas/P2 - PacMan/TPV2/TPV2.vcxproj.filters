@@ -60,9 +60,6 @@
     <ClCompile Include="..\src\systems\CollisionsSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\systems\GameCtrlSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\systems\PacManSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,7 +69,7 @@
     <ClCompile Include="..\src\systems\GhostSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\components\Health.cpp">
+    <ClCompile Include="..\src\game\NewGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\game\NewRoundState.cpp">
@@ -87,7 +84,10 @@
     <ClCompile Include="..\src\game\GameOverState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\game\NewGameState.cpp">
+    <ClCompile Include="..\src\systems\FoodSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\systems\ImmunitySystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,16 +158,25 @@
     <ClInclude Include="..\SRC\utils\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\components\Transform.h">
+    <ClInclude Include="..\src\components\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\components\Image.h">
+    <ClInclude Include="..\src\components\Points.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\StarMotion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ecs\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ecs\ecs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ecs\ecs_defs_example.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ecs\Entity.h">
@@ -194,9 +203,6 @@
     <ClInclude Include="..\src\systems\CollisionsSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\systems\GameCtrlSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\systems\PacManSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -206,7 +212,13 @@
     <ClInclude Include="..\src\systems\GhostSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\components\Health.h">
+    <ClInclude Include="..\src\game\GameOverState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\NewGameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\NewRoundState.h">
@@ -218,13 +230,13 @@
     <ClInclude Include="..\src\game\RunningState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\game\GameOverState.h">
+    <ClInclude Include="..\src\systems\FoodSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\game\NewGameState.h">
+    <ClInclude Include="..\src\systems\ImmunitySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\game\GameState.h">
+    <ClInclude Include="..\src\components\Health.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

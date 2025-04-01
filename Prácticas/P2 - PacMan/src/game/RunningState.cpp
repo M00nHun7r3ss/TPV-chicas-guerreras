@@ -11,12 +11,6 @@
 
 #include "../components/Transform.h"
 
-#include "../systems/CollisionsSystem.h"
-#include "../systems/GameCtrlSystem.h"
-#include "../systems/GhostSystem.h"
-#include "../systems/PacManSystem.h"
-#include "../systems/RenderSystem.h"
-
 RunningState::RunningState()
 {
 }
@@ -29,11 +23,11 @@ void RunningState::update()
 	InputHandler& ihldr = ih();
 	if (ihldr.keyDownEvent() && ihldr.isKeyDown(SDLK_p) && !exit) {
 		Game::Instance()->setState(Game::PAUSED);
+		
 		exit = true;
 	}
 
 	// Update de cada sistema
-	Game::Instance()->gameCtrlSys()->update();
 	Game::Instance()->ghostSys()->update();
 	Game::Instance()->pacmanSys()->update();
 	Game::Instance()->collisionSys()->update();

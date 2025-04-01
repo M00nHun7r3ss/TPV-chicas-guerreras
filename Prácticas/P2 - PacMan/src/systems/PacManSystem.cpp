@@ -2,6 +2,7 @@
 
 #include "PacManSystem.h"
 
+#include "../components/Health.h"
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
@@ -9,7 +10,7 @@
 #include "../sdlutils/SDLUtils.h"
 
 PacManSystem::PacManSystem() :
-		_pmTR(nullptr) {
+		_pmTR(nullptr), _pmHealth(nullptr) {
 }
 
 PacManSystem::~PacManSystem() {
@@ -20,23 +21,20 @@ void PacManSystem::initSystem() {
 	ecs::entity_t pacman = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
 
-	// add components.
-	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
 	_pmTR = _mngr->addComponent<Transform>(pacman);
+	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+	_pmHealth = _mngr->addComponent<Health>(pacman, &sdlutils().images().at("heart"));
 
-	// pacman's initial position.
 	resetPacman();
 }
 
 void PacManSystem::update() {
 
-	// pacman's input.
 	pacmanInput();
 
 	// move the pacman
 	_pmTR->_pos = _pmTR->_pos + _pmTR->_vel;
 
-	// pacman stopping on borders
 	stopOnBorders();
 }
 
@@ -61,10 +59,12 @@ void PacManSystem::recieve(const Message& m)
 	switch (m.id)
 	{
 	case _m_NEW_GAME:
-		// cura la vida.
+		// al empezar juego resetea vidas.
+		maxHealth();
 		break;
 
 	case _m_ROUND_START:
+		// al empezar ronda resetea posicion.
 		resetPacman();
 		break;
 
@@ -132,3 +132,7 @@ void PacManSystem::pacmanInput()
 	}
 }
 
+void PacManSystem::maxHealth()
+{
+	_pmHealth->_currentHealth = _pmHealth->MAX_HEALTH;
+}

@@ -11,29 +11,27 @@
 	· En ImageWithFrames::render() solo renderizamos los frames. En ImageWithFrames::update() solo calculamos el frame a renderizar.
  */
 
-
 #pragma once
 
 #include "../utils/Singleton.h"
 
 #include <vector>
 
-#include "GameState.h"
 #include "../ecs/ecs.h"
 
-namespace ecs{
+#include "GameState.h"
+
+namespace ecs
+{
 	class Manager;
 }
 
 class Game : public Singleton<Game> {
-			friend Singleton;
+	friend Singleton;
 public:
 
 	enum State { RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER };
 
-	//enum System { PACMAN, GAMECTRL, GHOST, RENDER, COLLISIONS};
-
-	Game();
 	virtual ~Game();
 	bool init();
 	void initGame();
@@ -43,7 +41,9 @@ public:
 
 	inline void setState(State s) {
 
-		_state->leave();
+		if ( _state != nullptr)
+			_state->leave();
+
 		switch (s) {
 		case RUNNING:
 			_state = _running_state;
@@ -66,27 +66,25 @@ public:
 		_state->enter();
 	}
 
-	//Getters systems
+	//Getters Systems
 	ecs::System* pacmanSys() { return _pacmanSys; }
-	//ecs::System* gameCtrlSys() { return _gameCtrlSys; }
 	ecs::System* ghostSys() { return _ghostSys; }
-	//ecs::System* renderSys() { return _renderSys; }
-	//ecs::System* collisionSys() { return _collisionSys; }
+	ecs::System* renderSys() { return _renderSys; }
+	ecs::System* collisionSys() { return _collisionSys; }
 
 private:
-
-	//Game();
+	//Privado porque es singleton
+	Game();
 
 	ecs::Manager* _mngr;
 
-	// --- Systems.
-	ecs::System *_pacmanSys;
-	//ecs::System *_gameCtrlSys;
-	ecs::System *_ghostSys;
-	//ecs::System *_renderSys;
-	//ecs::System *_collisionSys;
+	//Systems
+	ecs::System* _pacmanSys;
+	ecs::System* _ghostSys;
+	ecs::System* _renderSys;
+	ecs::System* _collisionSys;
 
-	// --- States.
+	//States
 	GameState* _state;
 	GameState* _running_state;
 	GameState* _paused_state;
@@ -94,4 +92,5 @@ private:
 	GameState* _newround_state;
 	GameState* _gameover_state;
 };
+
 
