@@ -19,6 +19,7 @@ private:
 	void drawMsgs();
 	void drawHealth();
 	void drawFruitGrid();
+	void drawImageWithFrames(Transform* t, ImageWithFrames* img);
 	void draw(Transform *tr, Texture *tex);
 };
 

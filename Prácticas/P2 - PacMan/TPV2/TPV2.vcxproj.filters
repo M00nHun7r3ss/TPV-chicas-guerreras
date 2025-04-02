@@ -90,6 +90,9 @@
     <ClCompile Include="..\src\systems\ImmunitySystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\components\ImageWithFrames.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SRC\json\JSON.h">
@@ -237,6 +240,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\components\Health.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\ImageWithFrames.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

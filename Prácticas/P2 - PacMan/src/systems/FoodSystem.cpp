@@ -16,7 +16,6 @@ FoodSystem::~FoodSystem() {
 }
 
 void FoodSystem::initSystem() {
-    generateFruitGrid();
 }
 
 void FoodSystem::update()
@@ -26,6 +25,15 @@ void FoodSystem::update()
 
 void FoodSystem::recieve(const Message& m)
 {
+	switch (m.id)
+	{
+	case _m_ROUND_START: // PONER NEW GAME
+        generateFruitGrid();
+        break;
+
+	default:
+		break;
+	}
 }
 
 void FoodSystem::generateFruitGrid()
@@ -43,10 +51,10 @@ void FoodSystem::generateFruitGrid()
 
         // add a Transform component
         Transform* tr = _mngr->addComponent<Transform>(e);
-        tr->_pos.setX(x);
+        //tr->_pos.setX(x);
         tr->_pos.setY(y);
 
-        std::cout << "Fruit " << i << " x1:" << tr->_pos.getX() << " y1:" << tr->_pos.getY() << std::endl;
+        //std::cout << "Fruit " << i << " x1:" << tr->_pos.getX() << " y1:" << tr->_pos.getY() << std::endl;
 
 		//inicializa la posicion
     	//Cada fila tiene 8 frutas
@@ -62,7 +70,7 @@ void FoodSystem::generateFruitGrid()
             _currNumOfFruit++;
         }
 
-        std::cout << "Fruit " << i << " x2:" << tr->_pos.getX() << " y2:" << tr->_pos.getY() << std::endl;
+        //std::cout << "Fruit " << i << " x2:" << tr->_pos.getX() << " y2:" << tr->_pos.getY() << std::endl;
         //Inicializa transform
         tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
 
@@ -71,7 +79,7 @@ void FoodSystem::generateFruitGrid()
         //Reseteamos el valor x 
         tr->_pos.setX(x);
 
-        std::cout << "Fruit " << i << " x3:" << tr->_pos.getX() << " y3:" << tr->_pos.getY() << std::endl;
+        //std::cout << "Fruit " << i << " x3:" << tr->_pos.getX() << " y3:" << tr->_pos.getY() << std::endl;
 
     }
 }

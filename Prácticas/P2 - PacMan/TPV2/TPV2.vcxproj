@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\components\ImageWithFrames.cpp" />
     <ClCompile Include="..\src\ecs\Manager.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\game\GameOverState.cpp" />
@@ -48,6 +49,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
+    <ClInclude Include="..\src\components\ImageWithFrames.h" />
     <ClInclude Include="..\src\components\Points.h" />
     <ClInclude Include="..\src\components\StarMotion.h" />
     <ClInclude Include="..\src\components\Transform.h" />
