@@ -99,7 +99,7 @@ void Game::initGame()
 	_gameover_state = new GameOverState();
 
 	// inicia a estado NewGame
-	setState(RUNNING); //NEWGAME
+	setState(NEWGAME); //NEWGAME
 }
 
 void Game::start() {

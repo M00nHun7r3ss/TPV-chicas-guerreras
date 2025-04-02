@@ -57,18 +57,18 @@ void FoodSystem::generateFruitGrid()
         //std::cout << "Fruit " << i << " x1:" << tr->_pos.getX() << " y1:" << tr->_pos.getY() << std::endl;
 
 		//inicializa la posicion
-    	//Cada fila tiene 8 frutas
-        for (int j = 0; j < MAX_FRUIT_NUMBER / 5; j++) 
+		//Cada fila tiene 8 frutas (8 columnas)
+        tr->_pos.setX((int)(tr->_pos.getX() + 50) % (50 * 8)); //Contempla el salto de linea
+        if (tr->_pos.getX() == 50) //Al volver a la primera columna, cambia de fila
         {
-            // vamos modificando la x y renderizando para que vayan en diferentes columnas
-            tr->_pos.setX(tr->_pos.getX() + x);
-
-            // add an Image Component segun milagroso o no
-            if (_fruitType) { _mngr->addComponent<Image>(e, &sdlutils().images().at("tennis_ball")); }
-            else { _mngr->addComponent<Image>(e, &sdlutils().images().at("star")); }
-
-            _currNumOfFruit++;
+            tr->_pos.setY((int)(tr->_pos.getY() + 50) % (50 * 5)); //Contempla el salto de columna
         }
+
+        // add an Image Component segun milagroso o no
+        if (_fruitType) { _mngr->addComponent<Image>(e, &sdlutils().images().at("tennis_ball")); }
+        else { _mngr->addComponent<Image>(e, &sdlutils().images().at("star")); }
+
+        _currNumOfFruit++;
 
         //std::cout << "Fruit " << i << " x2:" << tr->_pos.getX() << " y2:" << tr->_pos.getY() << std::endl;
         //Inicializa transform
