@@ -10,6 +10,7 @@ struct StarMotion;
 struct Points;
 struct Health;
 struct ImageWithFrames;
+struct MiraculousComponent;
 
 #define _CMPS_LIST_ \
 	Transform, \
@@ -17,7 +18,8 @@ struct ImageWithFrames;
 	StarMotion, \
 	Points, \
 	Health, \
-	ImageWithFrames
+	ImageWithFrames, \
+	MiraculousComponent
 
 // Groups list - must have at least one element
 //

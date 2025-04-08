@@ -20,11 +20,8 @@ private:
     //void generateGhostsByTime();
 
     unsigned int _currNumOfFruit;
-    unsigned int _lastFruitAdded;
-    bool _fruitType; // F -> normal; T -> milagroso
 
-    float _N; // tiempo en normal.
-    float _M; // tiempo en milagroso.
+    bool _fruitType; // F -> normal; T -> milagroso (al crear la fruta)
 
     // random sdlutils generator.
     RandomNumberGenerator& _rand;
