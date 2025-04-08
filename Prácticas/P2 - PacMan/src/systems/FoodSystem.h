@@ -1,6 +1,9 @@
 #pragma once
 #include "../ecs/System.h"
 #include "../game/Game.h"
+#include "../sdlutils/SDLUtils.h"
+
+class RandomNumberGenerator;
 
 class FoodSystem : public ecs::System {
 public:
@@ -19,6 +22,12 @@ private:
     unsigned int _currNumOfFruit;
     unsigned int _lastFruitAdded;
     bool _fruitType; // F -> normal; T -> milagroso
+
+    float _N; // tiempo en normal.
+    float _M; // tiempo en milagroso.
+
+    // random sdlutils generator.
+    RandomNumberGenerator& _rand;
 
     const int MAX_FRUIT_NUMBER = 40; // luego cambiar.
 };

@@ -6,9 +6,14 @@
 #include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
-#include "../sdlutils/SDLUtils.h"
 
-FoodSystem::FoodSystem() : _currNumOfFruit(0), _lastFruitAdded(0), _fruitType(false)
+
+FoodSystem::FoodSystem()
+	: _currNumOfFruit(0),
+	  _lastFruitAdded(0),
+	  _fruitType(false),
+      _rand(sdlutils().rand()),
+	  _N(0), _M(0)
 {
 }
 
@@ -27,7 +32,7 @@ void FoodSystem::recieve(const Message& m)
 {
 	switch (m.id)
 	{
-	case _m_ROUND_START: // PONER NEW GAME
+	case _m_NEW_GAME: // PONER NEW GAME
         generateFruitGrid();
         break;
 
@@ -38,48 +43,29 @@ void FoodSystem::recieve(const Message& m)
 
 void FoodSystem::generateFruitGrid()
 {
-    //posicion
-    int x = 50,
-        y = 50;
     //tamano
     int size = 50;
 
-    for (unsigned i = 0u; i < MAX_FRUIT_NUMBER; i++) {
-
-        // add an entity to the manager
-        ecs::entity_t e = _mngr->addEntity(ecs::grp::FRUITS);
-
-        // add a Transform component
-        Transform* tr = _mngr->addComponent<Transform>(e);
-        //tr->_pos.setX(x);
-        tr->_pos.setY(y);
-
-        //std::cout << "Fruit " << i << " x1:" << tr->_pos.getX() << " y1:" << tr->_pos.getY() << std::endl;
-
-		//inicializa la posicion
-		//Cada fila tiene 8 frutas (8 columnas)
-        tr->_pos.setX((int)(tr->_pos.getX() + 50) % (50 * 8)); //Contempla el salto de linea
-        if (tr->_pos.getX() == 50) //Al volver a la primera columna, cambia de fila
+    for (unsigned i = 0u; i <= MAX_FRUIT_NUMBER/5; i++) {
+        for (unsigned j = 0u; j <= MAX_FRUIT_NUMBER/8; j++)
         {
-            tr->_pos.setY((int)(tr->_pos.getY() + 50) % (50 * 5)); //Contempla el salto de columna
+	        // add an entity to the manager
+	        ecs::entity_t e = _mngr->addEntity(ecs::grp::FRUITS);
+			_currNumOfFruit++;
+
+        	// add a Transform component
+	        Transform* tr = _mngr->addComponent<Transform>(e);
+	        
+	        // add an Image Component segun milagroso o no
+			int prob = _rand.nextInt(1, 11); // [1, 11).
+
+			if (prob == 1) _fruitType = true; // milagroso.
+			else _fruitType = false; // no milagroso.
+
+	        if (_fruitType) { _mngr->addComponent<Image>(e, &sdlutils().images().at("tennis_ball")); }
+	        else { _mngr->addComponent<Image>(e, &sdlutils().images().at("star")); }
+
+            tr->init(Vector2D((i*100)+20, (j * 100) + 20), Vector2D(), size, size, 0.0f);
         }
-
-        // add an Image Component segun milagroso o no
-        if (_fruitType) { _mngr->addComponent<Image>(e, &sdlutils().images().at("tennis_ball")); }
-        else { _mngr->addComponent<Image>(e, &sdlutils().images().at("star")); }
-
-        _currNumOfFruit++;
-
-        //std::cout << "Fruit " << i << " x2:" << tr->_pos.getX() << " y2:" << tr->_pos.getY() << std::endl;
-        //Inicializa transform
-        tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
-
-        // vamos modificando la y renderizando para que vayan en diferentes filas
-        tr->_pos.setY(tr->_pos.getY() + y);
-        //Reseteamos el valor x 
-        tr->_pos.setX(x);
-
-        //std::cout << "Fruit " << i << " x3:" << tr->_pos.getX() << " y3:" << tr->_pos.getY() << std::endl;
-
     }
 }

@@ -59,7 +59,7 @@ Game::~Game() {
 bool Game::init() {
 
 	// initialize the SDL singleton
-	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
+	if (!SDLUtils::Init("PacMan", 800, 600,
 			"resources/config/resources.json")) {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
