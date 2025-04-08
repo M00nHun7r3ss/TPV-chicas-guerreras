@@ -9,13 +9,15 @@ void MiraculousComponent::init()
 void MiraculousComponent::update()
 {
 	VirtualTimer& vt = sdlutils().virtualTimer();
+	Uint32 _timeBetweenEachSpawn;
 
-	//Si es milagrosa
-	if (_isMiraculous)
+	// Si no es milagroso...
+	if (!_isMiraculous)
 	{
+		// --- TIEMPO DURANTE NO MILAGROSO ---
 		//La fruta será normal un N random entre 10 y 20 s
-		int tiempo = _rand.nextInt(1, 6); //cambiar por 10 y 21
-		Uint32 _timeBetweenEachSpawn = tiempo * 1000;
+		_N = _rand.nextInt(1, 6); //cambiar por 10 y 21
+		_timeBetweenEachSpawn = _N * 1000;
 
 		//Pasado ese tiempo
 		if (vt.currTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
@@ -23,9 +25,15 @@ void MiraculousComponent::update()
 			_isMiraculous = true;
 			_lastFruitChanged = vt.currTime();
 		}
+		// -o-o-o-o-o-
+	}
+	else // cuando es milagroso...
+	{
+
+		// --- TIEMPO DURANTE MILAGROSO ---
 		//La fruta será milagrosa un M random entre 1 y 5 s
-		tiempo = _rand.nextInt(1, 6);
-		_timeBetweenEachSpawn = tiempo * 1000;
+		_M = _rand.nextInt(1, 6);
+		_timeBetweenEachSpawn = _M * 1000;
 
 		//Pasado ese tiempo
 		if (vt.currTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
@@ -33,5 +41,10 @@ void MiraculousComponent::update()
 			_isMiraculous = false;
 			_lastFruitChanged = vt.currTime();
 		}
+		// -o-o-o-o-o-
 	}
+
+	
+		
+	
 }

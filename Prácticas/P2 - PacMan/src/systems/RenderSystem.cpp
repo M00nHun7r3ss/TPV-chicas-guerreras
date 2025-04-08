@@ -94,8 +94,7 @@ void RenderSystem::drawFruitGrid()
 {
 	// draw fruits
 	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::FRUITS)) {
-		MiraculousComponent* a = _mngr->getComponent<MiraculousComponent>(e);
-		//a->_isMiraculous;
+		
 		Transform* tr = _mngr->getComponent<Transform>(e);
 		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
 		draw(tr, tex);

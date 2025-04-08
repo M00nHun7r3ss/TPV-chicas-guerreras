@@ -24,32 +24,34 @@ void FoodSystem::initSystem() {
 
 void FoodSystem::update()
 {
-	//VirtualTimer& vt = sdlutils().virtualTimer();
+	//Anadimos el componente de fruta milagrosa
 
-	////Si es milagrosa
-	//if (_fruitType)
-	//{
-	//	//La fruta será normal un N random entre 10 y 20 s
-	//	int tiempo = _rand.nextInt(1, 6); //cambiar por 10 y 21
-	//	Uint32 _timeBetweenEachSpawn = tiempo * 1000;
+	std::vector<ecs::entity_t> fruits = _mngr->getEntities(ecs::grp::FRUITS);
+	for (int i = 0; i < fruits.size(); i++)
+	{
+		// si lo tiene
+		if (_mngr->hasComponent<MiraculousComponent>(fruits[i]))
+		{
+			// lo coge.
+			MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(fruits[i]);
+			mc->update();
+			std::string sprite;
 
-	//	//Pasado ese tiempo
-	//	if (vt.currTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
-	//		//La fruta vuelve a ser milagrosa
-	//		_isMiraculous = true;
-	//		_lastFruitChanged = vt.currTime();
-	//	}
-	//	//La fruta será milagrosa un M random entre 1 y 5 s
-	//	tiempo = _rand.nextInt(1, 6);
-	//	_timeBetweenEachSpawn = tiempo * 1000;
+			// si es miraculous...
+			if (mc->_isMiraculous)
+			{
+				sprite = "tennis_ball";
+			}
+			else // si no lo es...
+			{
+				sprite = "star";
+			}
 
-	//	//Pasado ese tiempo
-	//	if (vt.currTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
-	//		//La fruta vuelve a ser normal
-	//		_isMiraculous = false;
-	//		_lastFruitChanged = vt.currTime();
-	//	}
-	//}
+			std::cout << mc->_isMiraculous;
+
+			_mngr->addComponent<Image>(fruits[i], &sdlutils().images().at(sprite));
+		}
+	}
 }
 
 void FoodSystem::recieve(const Message& m)
@@ -90,7 +92,7 @@ void FoodSystem::generateFruitGrid()
 			{ 
 				//Anadimos el componente de fruta milagrosa
 				_mngr->addComponent<MiraculousComponent>(e);
-				_mngr->addComponent<Image>(e, &sdlutils().images().at("tennis_ball"));
+				
 			}
 	        else { _mngr->addComponent<Image>(e, &sdlutils().images().at("star")); }
 
