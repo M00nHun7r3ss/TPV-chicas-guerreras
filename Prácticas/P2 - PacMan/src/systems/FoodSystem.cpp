@@ -34,20 +34,43 @@ void FoodSystem::update()
 		{
 			// lo coge.
 			MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(fruits[i]);
-			mc->update();
 			std::string sprite;
+
+
+			VirtualTimer& vt = sdlutils().virtualTimer();
+			Uint32 _timeBetweenEachSpawn;
 
 			// si es miraculous...
 			if (mc->_isMiraculous)
 			{
 				sprite = "tennis_ball";
+
+				_timeBetweenEachSpawn = mc->_M * 1000;
+
+				//Pasado ese tiempo
+				if (vt.currTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
+					_lastFruitChanged = vt.currTime();
+					mc->_isMiraculous = false;
+					mc->_N = _rand.nextInt(1, 6); //cambiar por 10 y 21
+				}
 			}
 			else // si no lo es...
 			{
 				sprite = "star";
+
+				_timeBetweenEachSpawn = mc->_N * 1000;
+
+				//Pasado ese tiempo
+				if (vt.currTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
+					_lastFruitChanged = vt.currTime();
+					mc->_isMiraculous = true;
+					mc->_M = _rand.nextInt(1, 6);
+				}
 			}
 
-			std::cout << mc->_isMiraculous;
+			std::cout << "N: " << mc->_N << std::endl;
+			std::cout << "M: " << mc->_M << std::endl;
+			std::cout << "Mirac: " << mc->_isMiraculous << std::endl;
 
 			_mngr->addComponent<Image>(fruits[i], &sdlutils().images().at(sprite));
 		}
@@ -91,7 +114,7 @@ void FoodSystem::generateFruitGrid()
 	        if (_fruitType) 
 			{ 
 				//Anadimos el componente de fruta milagrosa
-				_mngr->addComponent<MiraculousComponent>(e);
+				_mngr->addComponent<MiraculousComponent>(e, 0, 0);
 				
 			}
 	        else { _mngr->addComponent<Image>(e, &sdlutils().images().at("star")); }
@@ -99,4 +122,9 @@ void FoodSystem::generateFruitGrid()
             tr->init(Vector2D((i*100)+20, (j * 100) + 20), Vector2D(), size, size, 0.0f);
         }
     }
+}
+
+void FoodSystem::timeCounter(float& s)
+{
+	
 }

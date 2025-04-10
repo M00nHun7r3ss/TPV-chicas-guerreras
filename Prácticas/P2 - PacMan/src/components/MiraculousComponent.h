@@ -8,23 +8,15 @@ class RandomNumberGenerator;
 
 struct MiraculousComponent : public ecs::Component
 {
-	MiraculousComponent() : 
-		_lastFruitChanged(0),
+	MiraculousComponent(float n, float m) : 
 		_isMiraculous(false),
-		_rand(sdlutils().rand()),
-		_N(0), _M(0) {}
+		_N(n), _M(m) {}
 
 	virtual ~MiraculousComponent() {}
 
 	void init();
-	void update();
-
-	unsigned int _lastFruitChanged;
 
 	bool _isMiraculous; // define si es milagrosa o no en este momento
-
-	// random sdlutils generator.
-	RandomNumberGenerator& _rand;
 
 	float _N; // tiempo en normal.
 	float _M; // tiempo en milagroso.

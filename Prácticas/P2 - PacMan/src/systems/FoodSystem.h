@@ -15,6 +15,10 @@ public:
     void recieve(const Message& m) override;
 private:
     void generateFruitGrid();
+
+    void timeCounter(float& s); // contador de tiempo para ver si es miraculous o no.
+    unsigned int _lastFruitChanged;
+
     //void onFruitEaten(ecs::entity_t e);
     //void checkNoFruit();
     //void generateGhostsByTime();
