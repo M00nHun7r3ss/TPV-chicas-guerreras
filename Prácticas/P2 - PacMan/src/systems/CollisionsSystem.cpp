@@ -28,28 +28,28 @@ void CollisionsSystem::update() {
 	Transform* pTR = _mngr->getComponent<Transform>(pm);
 
 	// Collisions P-G
-	std::vector<ecs::entity_t> ghost = _mngr->getEntities(ecs::grp::GHOSTS);
-	size_t n = ghost.size();
-	for (unsigned i = 0u; i < n; i++) {
-		ecs::entity_t e = ghost[i];
-		if (_mngr->isAlive(e)) { // if the ghost is active (it might have died in this frame)
+	//std::vector<ecs::entity_t> ghost = _mngr->getEntities(ecs::grp::GHOSTS);
+	//size_t n = ghost.size();
+	//for (unsigned i = 0u; i < n; i++) {
+	//	ecs::entity_t e = ghost[i];
+	//	if (_mngr->isAlive(e)) { // if the ghost is active (it might have died in this frame)
 
-			// the ghost's Transform
-			//
-			auto eTR = _mngr->getComponent<Transform>(e);
+	//		// the ghost's Transform
+	//		//
+	//		auto eTR = _mngr->getComponent<Transform>(e);
 
-			// check if PacMan collides with the ghost (i.e., eat it)
-			if (Collisions::collides(			//
-					pTR->_pos, pTR->_width, pTR->_height, //
-					eTR->_pos, eTR->_width, eTR->_height)) {
+	//		// check if PacMan collides with the ghost (i.e., eat it)
+	//		if (Collisions::collides(			//
+	//				pTR->_pos, pTR->_width, pTR->_height, //
+	//				eTR->_pos, eTR->_width, eTR->_height)) {
 
-				Message m;
-				m.id = _m_PACMAN_GHOST_COLLISION;
-				_mngr->send(m);
+	//			Message m;
+	//			m.id = _m_PACMAN_GHOST_COLLISION;
+	//			_mngr->send(m);
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 
 	// Collisions P-F
 	std::vector<ecs::entity_t> fruit = _mngr->getEntities(ecs::grp::FRUITS);
@@ -69,6 +69,8 @@ void CollisionsSystem::update() {
 
 				Message z;
 				z.id = _m_PACMAN_FOOD_COLLISION;
+				//Le pasamos la fruta concreta
+				z.pacman_food_collision_data.e = e;
 				_mngr->send(z);
 
 			}

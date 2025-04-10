@@ -7,6 +7,7 @@
 #include "PacManSystem.h"
 #include "../components/Health.h"
 #include "../components/ImageWithFrames.h"
+#include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
@@ -79,8 +80,9 @@ void GhostSystem::addGhost(unsigned int n) {
 		tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
 
 		// add an Image Component
-		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 8, 8);
-
+		_mngr->addComponent<Image>(e, &sdlutils().images().at("sprites"));
+		//_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 8, 8);
+		
 		_currNumOfGhosts++;
 	}
 }
@@ -153,6 +155,7 @@ void GhostSystem::moveGhosts()
 
 			// move the ghost
 			eTR->_pos = eTR->_pos + eTR->_vel;
+			//Para en los bordes y se da la vuelta
 			stopOnBorders(e);
 		}
 	}
@@ -165,20 +168,24 @@ void GhostSystem::stopOnBorders(ecs::entity_t e)
 	// check left/right borders
 	if (eTR->_pos.getX() < 0) {
 		eTR->_pos.setX(0.0f);
+		//Change vel in x
 		eTR->_vel.set(-eTR->_vel.getX(), eTR->_vel.getY());
 	}
 	else if (eTR->_pos.getX() + eTR->_width > sdlutils().width()) {
 		eTR->_pos.setX(sdlutils().width() - eTR->_width);
+		//Change vel in x
 		eTR->_vel.set(-eTR->_vel.getX(), eTR->_vel.getY());
 	}
 
 	// check upper/lower borders
 	if (eTR->_pos.getY() < 0) {
 		eTR->_pos.setY(0.0f);
+		//Change vel in y
 		eTR->_vel.set(eTR->_vel.getX(), -eTR->_vel.getY());
 	}
 	else if (eTR->_pos.getY() + eTR->_height > sdlutils().height()) {
 		eTR->_pos.setY(sdlutils().height() - eTR->_height);
+		//Change vel in y
 		eTR->_vel.set(eTR->_vel.getX(), -eTR->_vel.getY());
 	}
 }

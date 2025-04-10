@@ -12,7 +12,8 @@
 FoodSystem::FoodSystem()
 	: _currNumOfFruit(0),
 	  _fruitType(false),
-      _rand(sdlutils().rand())
+      _rand(sdlutils().rand()),
+	  _lastFruitChanged(0)
 {
 }
 
@@ -80,6 +81,9 @@ void FoodSystem::recieve(const Message& m)
 	case _m_NEW_GAME: // PONER NEW GAME
         generateFruitGrid();
         break;
+	case _m_PACMAN_FOOD_COLLISION:
+		onFruitEaten(m.pacman_food_collision_data.e);
+		break;
 
 	default:
 		break;
@@ -120,7 +124,14 @@ void FoodSystem::generateFruitGrid()
     }
 }
 
-void FoodSystem::timeCounter(float& s)
+void FoodSystem::onFruitEaten(ecs::entity_t e)
 {
-	
+	_mngr->setAlive(e, false);
+	_currNumOfFruit--;
+
+	// play sound on channel 1 (if there is something playing there
+	// it will be cancelled
+	// VOLVER A ACTIVAR AL FINAL
+	//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+
 }

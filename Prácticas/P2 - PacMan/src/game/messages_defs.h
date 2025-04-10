@@ -31,5 +31,10 @@ struct Message {
 			unsigned int n;
 		} create_ghost_data;
 
+		//	_m_PACMAN_FOOD_COLLISION
+		struct {
+			ecs::entity_t e;
+		} pacman_food_collision_data;
+
 	};
 };

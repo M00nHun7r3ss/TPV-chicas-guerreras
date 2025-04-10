@@ -23,8 +23,8 @@ struct ImageWithFrames : public ecs::Component
 
 	//Datos de textura general
 	Texture* _tex;
-	int _width;
-	int _height;
+	const int WIDTH = 128;
+	const int HEIGHT = 128;
 	int _nCols;
 	int _nRows;
 

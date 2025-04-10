@@ -16,7 +16,6 @@ public:
 private:
 	void drawGhosts();
 	void drawPacMan();
-	void drawMsgs();
 	void drawHealth();
 	void drawFruitGrid();
 	void drawImageWithFrames(Transform* t, ImageWithFrames* img);
