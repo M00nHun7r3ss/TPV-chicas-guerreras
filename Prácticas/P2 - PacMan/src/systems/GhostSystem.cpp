@@ -25,9 +25,9 @@ void GhostSystem::initSystem() {
 
 void GhostSystem::update() {
 
-	uint32_t currTime = sdlutils().currRealTime();
+	/*uint32_t currTime = sdlutils().currRealTime();
 	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
-	size_t n = ghosts.size();
+	size_t n = ghosts.size();*/
 
 	generateGhostsByTime();
 }
@@ -37,7 +37,8 @@ void GhostSystem::addGhost(unsigned int n) {
 	// Always use the random number generator provided by SDLUtils
 	RandomNumberGenerator& rand = sdlutils().rand();
 
-	for (unsigned i = 0u; i < _ghostLimit; i++) {
+	//Genera el numero pedido de fantasmas
+	for (unsigned i = 0u; i < n; i++) {
 
 		// add an entity to the manager
 		ecs::entity_t e = _mngr->addEntity(ecs::grp::GHOSTS);
@@ -113,14 +114,14 @@ void GhostSystem::generateGhostsByTime()
 
 	VirtualTimer& vt = sdlutils().virtualTimer();
 
-
-	bool timer = vt.currTime() > _timeBetweenEachSpawn + _lastGhostAdded;
-	bool nGhosts = _currNumOfGhosts <= _ghostLimit;
-
-	if (timer && nGhosts) {
+	std::cout << "VT:Current " << vt.currRealTime() << std::endl;
+	if (vt.currRealTime() > _timeBetweenEachSpawn + _lastGhostAdded
+		&& _currNumOfGhosts <= _ghostLimit) {
 		addGhost(1);
-		_lastGhostAdded = vt.currTime();
+		std::cout << "_currNumOfGhosts " << _currNumOfGhosts << std::endl;
+		_lastGhostAdded = vt.currRealTime();
 	}
+
 }
 
 void GhostSystem::recieve(const Message& m) {

@@ -14,7 +14,7 @@ public:
 	void initSystem() override;
 	void update() override;
 private:
-	void drawStars();
+	void drawGhosts();
 	void drawPacMan();
 	void drawMsgs();
 	void drawHealth();

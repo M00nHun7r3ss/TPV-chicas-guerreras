@@ -22,13 +22,13 @@ void RenderSystem::initSystem() {
 
 void RenderSystem::update() {
 	drawMsgs();
-	drawStars();
+	drawGhosts();
 	drawPacMan();
 	//drawHealth();
 	drawFruitGrid();
 }
 
-void RenderSystem::drawStars() {
+void RenderSystem::drawGhosts() {
 	// draw ghosts
 	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::GHOSTS)) {
 
