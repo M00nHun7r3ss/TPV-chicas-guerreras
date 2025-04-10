@@ -17,9 +17,12 @@ private:
 	void onGhostEaten(ecs::entity_t e);
 	void removeAllGhosts();
 	void generateGhostsByTime();
+	void moveGhosts();
+	void stopOnBorders(ecs::entity_t e);
 
 	unsigned int _ghostLimit;
 	unsigned int _currNumOfGhosts;
 	unsigned int _lastGhostAdded;
+	bool _canMove;
 };
 

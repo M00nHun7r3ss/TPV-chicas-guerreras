@@ -25,7 +25,7 @@ void RenderSystem::update() {
 	drawGhosts();
 	drawPacMan();
 	//drawHealth();
-	drawFruitGrid();
+	//drawFruitGrid();
 }
 
 void RenderSystem::drawGhosts() {

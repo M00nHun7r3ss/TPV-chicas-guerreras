@@ -51,7 +51,7 @@ void FoodSystem::update()
 				if (vt.currRealTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
 					_lastFruitChanged = vt.currRealTime();
 					mc->_isMiraculous = false;
-					mc->_N = _rand.nextInt(1, 6); //cambiar por 10 y 21
+					mc->_N = _rand.nextInt(10, 21); //cambiar por 10 y 21
 				}
 			}
 			else // si no lo es...
@@ -67,10 +67,6 @@ void FoodSystem::update()
 					mc->_M = _rand.nextInt(1, 6);
 				}
 			}
-
-			//std::cout << "N: " << mc->_N << std::endl;
-			//std::cout << "M: " << mc->_M << std::endl;
-			//std::cout << "Mirac: " << mc->_isMiraculous << std::endl;
 
 			_mngr->addComponent<Image>(fruits[i], &sdlutils().images().at(sprite));
 		}

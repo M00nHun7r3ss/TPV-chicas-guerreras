@@ -14,7 +14,8 @@
 GhostSystem::GhostSystem()
 	: _ghostLimit(10),
 	_currNumOfGhosts(0),
-	_lastGhostAdded(0) {
+	_lastGhostAdded(0),
+	_canMove(false) {
 }
 
 GhostSystem::~GhostSystem() {
@@ -25,11 +26,11 @@ void GhostSystem::initSystem() {
 
 void GhostSystem::update() {
 
-	/*uint32_t currTime = sdlutils().currRealTime();
-	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
-	size_t n = ghosts.size();*/
-
+	//Comprobar que no este PM en estado inmune (si lo esta no aparecen nuevos)
 	generateGhostsByTime();
+
+	//Movemos los fantasmas
+	moveGhosts();
 }
 
 void GhostSystem::addGhost(unsigned int n) {
@@ -114,14 +115,73 @@ void GhostSystem::generateGhostsByTime()
 
 	VirtualTimer& vt = sdlutils().virtualTimer();
 
-	std::cout << "VT:Current " << vt.currRealTime() << std::endl;
 	if (vt.currRealTime() > _timeBetweenEachSpawn + _lastGhostAdded
 		&& _currNumOfGhosts <= _ghostLimit) {
 		addGhost(1);
-		std::cout << "_currNumOfGhosts " << _currNumOfGhosts << std::endl;
+		
 		_lastGhostAdded = vt.currRealTime();
 	}
+}
 
+void GhostSystem::moveGhosts()
+{
+	// the Pacman's Transform
+	ecs::entity_t pm = _mngr->getHandler(ecs::hdlr::PACMAN);
+	Transform* pTR = _mngr->getComponent<Transform>(pm);
+
+	// Movemos los fantasmas
+	std::vector<ecs::entity_t> ghost = _mngr->getEntities(ecs::grp::GHOSTS);
+	size_t n = ghost.size();
+	for (unsigned i = 0u; i < n; i++) {
+		ecs::entity_t e = ghost[i];
+		if (_mngr->isAlive(e)) { // if the ghost is active (it might have died in this frame)
+
+			// the ghost's Transform
+			Transform* eTR = _mngr->getComponent<Transform>(e);
+
+			RandomNumberGenerator& rand = sdlutils().rand();
+			int prob = rand.nextInt(1, 501); // [1, 501).
+
+			if (prob == 1) _canMove = true; // se movera.
+			else _canMove = false; // no se movera.
+
+			//Actualizamos su vector velocidad
+			if (_canMove)
+			{
+				eTR->_vel = (pTR->_pos - eTR->_pos).normalize() * 0.9f;
+			}
+
+			// move the ghost
+			eTR->_pos = eTR->_pos + eTR->_vel;
+		}
+	}
+
+
+}
+
+void GhostSystem::stopOnBorders(ecs::entity_t e)
+{
+	// the ghost's Transform
+	Transform* eTR = _mngr->getComponent<Transform>(e);
+	// check left/right borders
+	if (eTR->_pos.getX() < 0) {
+		eTR->_pos.setX(0.0f);
+		eTR->_vel.set(0.0f, 0.0f);
+	}
+	else if (eTR->_pos.getX() + eTR->_width > sdlutils().width()) {
+		eTR->_pos.setX(sdlutils().width() - eTR->_width);
+		eTR->_vel.set(0.0f, 0.0f);
+	}
+
+	// check upper/lower borders
+	if (eTR->_pos.getY() < 0) {
+		eTR->_pos.setY(0.0f);
+		eTR->_vel.set(0.0f, 0.0f);
+	}
+	else if (eTR->_pos.getY() + eTR->_height > sdlutils().height()) {
+		eTR->_pos.setY(sdlutils().height() - eTR->_height);
+		eTR->_vel.set(0.0f, 0.0f);
+	}
 }
 
 void GhostSystem::recieve(const Message& m) {
