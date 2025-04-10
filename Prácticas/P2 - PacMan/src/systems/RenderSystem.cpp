@@ -33,8 +33,8 @@ void RenderSystem::drawGhosts() {
 	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::GHOSTS)) {
 
 		Transform* tr = _mngr->getComponent<Transform>(e);
-		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
-		draw(tr, tex);
+		ImageWithFrames* imgwf = _mngr->getComponent<ImageWithFrames>(e);
+		drawImageWithFrames(tr, imgwf);
 	}
 }
 
