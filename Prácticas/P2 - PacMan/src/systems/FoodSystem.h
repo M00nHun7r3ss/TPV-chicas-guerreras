@@ -17,8 +17,7 @@ private:
     void generateFruitGrid();
 
     void onFruitEaten(ecs::entity_t e);
-    //void checkNoFruit();
-    //void generateGhostsByTime();
+    void checkNoFruit();
 
     unsigned int _lastFruitChanged;
 

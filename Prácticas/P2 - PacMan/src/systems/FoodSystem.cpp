@@ -72,6 +72,9 @@ void FoodSystem::update()
 			_mngr->addComponent<Image>(fruits[i], &sdlutils().images().at(sprite));
 		}
 	}
+
+	//Comprobamos si hemos llegado al final de juego
+	checkNoFruit();
 }
 
 void FoodSystem::recieve(const Message& m)
@@ -95,7 +98,7 @@ void FoodSystem::generateFruitGrid()
     //tamano
     int size = 50;
 
-    for (unsigned i = 0u; i <= MAX_FRUIT_NUMBER/5; i++) {
+    for (unsigned i = 0u; i < MAX_FRUIT_NUMBER/5; i++) {
         for (unsigned j = 0u; j <= MAX_FRUIT_NUMBER/8; j++)
         {
 	        // add an entity to the manager
@@ -131,7 +134,23 @@ void FoodSystem::onFruitEaten(ecs::entity_t e)
 
 	// play sound on channel 1 (if there is something playing there
 	// it will be cancelled
-	// VOLVER A ACTIVAR AL FINAL
+	// TODO: VOLVER A ACTIVAR AL FINAL
 	//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 
+}
+
+void FoodSystem::checkNoFruit()
+{
+	std::cout << _currNumOfFruit << std::endl;
+
+	if (_currNumOfFruit == 0)
+	{
+		//Envia mensaje de que ha acabado el juego
+		Message m;
+		m.id = _m_ROUND_START;
+		Game::Instance()->getManager()->send(m);
+
+		// !!! cambia a GameOverState (FINAL BUENO)
+		Game::Instance()->setState(Game::GAMEOVER);
+	}
 }

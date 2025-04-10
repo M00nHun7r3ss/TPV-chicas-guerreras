@@ -6,6 +6,7 @@ void GameOverState::enter()
 {
 	_message = &sdlutils().msgs().at("gameover");
 
+	//TODO: CAMBIAR A VARIOS FINALES
 	//if (_aUtils->getAsteroidNumber() == 0)
 	//{
 	//	// CHAMPION.
