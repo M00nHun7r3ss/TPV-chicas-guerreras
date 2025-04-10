@@ -153,10 +153,9 @@ void GhostSystem::moveGhosts()
 
 			// move the ghost
 			eTR->_pos = eTR->_pos + eTR->_vel;
+			stopOnBorders(e);
 		}
 	}
-
-
 }
 
 void GhostSystem::stopOnBorders(ecs::entity_t e)
@@ -166,21 +165,21 @@ void GhostSystem::stopOnBorders(ecs::entity_t e)
 	// check left/right borders
 	if (eTR->_pos.getX() < 0) {
 		eTR->_pos.setX(0.0f);
-		eTR->_vel.set(0.0f, 0.0f);
+		eTR->_vel.set(-eTR->_vel.getX(), eTR->_vel.getY());
 	}
 	else if (eTR->_pos.getX() + eTR->_width > sdlutils().width()) {
 		eTR->_pos.setX(sdlutils().width() - eTR->_width);
-		eTR->_vel.set(0.0f, 0.0f);
+		eTR->_vel.set(-eTR->_vel.getX(), eTR->_vel.getY());
 	}
 
 	// check upper/lower borders
 	if (eTR->_pos.getY() < 0) {
 		eTR->_pos.setY(0.0f);
-		eTR->_vel.set(0.0f, 0.0f);
+		eTR->_vel.set(eTR->_vel.getX(), -eTR->_vel.getY());
 	}
 	else if (eTR->_pos.getY() + eTR->_height > sdlutils().height()) {
 		eTR->_pos.setY(sdlutils().height() - eTR->_height);
-		eTR->_vel.set(0.0f, 0.0f);
+		eTR->_vel.set(eTR->_vel.getX(), -eTR->_vel.getY());
 	}
 }
 
