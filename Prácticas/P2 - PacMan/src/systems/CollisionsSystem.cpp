@@ -9,6 +9,8 @@
 
 #include <vector>
 
+#include "ImmunitySystem.h"
+
 CollisionsSystem::CollisionsSystem() {
 	// TODO Auto-generated constructor stub
 
@@ -41,11 +43,19 @@ void CollisionsSystem::update() {
 			if (Collisions::collides(			//
 					pTR->_pos, pTR->_width, pTR->_height, //
 					eTR->_pos, eTR->_width, eTR->_height)) {
+
 	
 				Message m;
-				m.id = _m_PACMAN_GHOST_COLLISION;
+				if (_mngr->getSystem<ImmunitySystem>()->isImmune())
+				{
+					m.id = _m_GHOST_COLLISION_IMMUNITY;
+				}
+				else
+				{
+					m.id = _m_GHOST_COLLISION_NO_IMMUNITY;
+				}
 				// pasamos el fantasma concreto.
-				m.pacman_ghost_collision_data.e = e;
+				m.pacman_ghost_collision_data.g = e;
 				_mngr->send(m);
 			}
 		}
@@ -70,7 +80,7 @@ void CollisionsSystem::update() {
 				Message z;
 				z.id = _m_PACMAN_FOOD_COLLISION;
 				//Le pasamos la fruta concreta
-				z.pacman_food_collision_data.e = e;
+				z.pacman_food_collision_data.f = e;
 				_mngr->send(z);
 			}
 		}

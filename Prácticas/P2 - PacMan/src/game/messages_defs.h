@@ -7,8 +7,9 @@
 using msgId_type = uint8_t;
 enum msgId : msgId_type {
 	_m_NEW_GAME, _m_ROUND_START, _m_ROUND_OVER, _m_GAME_OVER, //Estados de juego
-	_m_PACMAN_FOOD_COLLISION, _m_PACMAN_GHOST_COLLISION, //Colisiones
-	_m_IMMUNITY_START, _m_IMMUNITY_END //Inmunidad
+	_m_PACMAN_FOOD_COLLISION, //Colisiones
+	_m_IMMUNITY_START, _m_IMMUNITY_END, //Inmunidad
+	_m_GHOST_COLLISION_IMMUNITY, _m_GHOST_COLLISION_NO_IMMUNITY // Colisiones con ghosts segun immunity
 };
 
 
@@ -20,26 +21,17 @@ struct Message {
 	// every where.
 
 	union {
-
-		// _m_STAR_EATEN
-		struct {
-			ecs::entity_t e;
-		} ghost_eaten_data;
-
-		// _m_CREATE_STARS
-		struct {
-			unsigned int n;
-		} create_ghost_data;
-
 		//	_m_PACMAN_FOOD_COLLISION
 		struct {
-			ecs::entity_t e;
+			ecs::entity_t f;
 		} pacman_food_collision_data;
 
 		//	_m_PACMAN_GHOST_COLLISION
 		struct {
-			ecs::entity_t e;
+			ecs::entity_t g;
 		} pacman_ghost_collision_data;
-
 	};
+
+	
 };
+		

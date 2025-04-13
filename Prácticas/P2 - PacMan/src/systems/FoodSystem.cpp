@@ -84,7 +84,7 @@ void FoodSystem::recieve(const Message& m)
         generateFruitGrid();
         break;
 	case _m_PACMAN_FOOD_COLLISION:
-		deleteFruit(m.pacman_food_collision_data.e);
+		deleteFruit(m.pacman_food_collision_data.f);
 		break;
 
 	default:

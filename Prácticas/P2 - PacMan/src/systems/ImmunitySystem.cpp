@@ -61,7 +61,7 @@ void ImmunitySystem::recieve(const Message& m)
 	if (m.id == _m_PACMAN_FOOD_COLLISION)
 	{
 		// en caso de que la entidad fruta sea milagrosa.
-		ecs::entity_t e = m.pacman_food_collision_data.e;
+		ecs::entity_t e = m.pacman_food_collision_data.f;
 		//Comprueba si la fruta puede ser milagrosa
 		if (_mngr->hasComponent<MiraculousComponent>(e))
 		{

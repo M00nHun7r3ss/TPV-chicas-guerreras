@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include "PacManSystem.h"
+#include "ImmunitySystem.h"
 #include "../components/Health.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Image.h"
@@ -89,7 +90,7 @@ void GhostSystem::addGhost(unsigned int n) {
 
 void GhostSystem::deleteGhost(ecs::entity_t e) {
 	_mngr->setAlive(e, false);
-	_currNumOfGhosts--;
+	
 
 	// play sound on channel 1 (if there is something playing there
 	// it will be cancelled
@@ -191,53 +192,56 @@ void GhostSystem::recieve(const Message& m) {
 
 	Message mes;
 
-	if (m.id == _m_ROUND_OVER)
+	switch (m.id)
 	{
+	case _m_ROUND_OVER:
 		//Se quitan al salir de ronda. Al entrar se generan.
 		removeAllGhosts();
-	}
-	else if (m.id == _m_IMMUNITY_START)
-	{
-		std::cout << "Hola, pero soy inmune" << std::endl;
+		break;
+
+	case _m_IMMUNITY_START:
 		// TODO: cambia el sprite fantasma.
 
-		if (m.id == _m_PACMAN_GHOST_COLLISION)
-		{
-			std::cout << "Borra fantasma" << std::endl;
-			deleteGhost(m.pacman_ghost_collision_data.e);
-		}
-	}
-	else if (m.id == _m_IMMUNITY_END)
-	{
+	case _m_GHOST_COLLISION_IMMUNITY:
+		std::cout << "Borra fantasma" << std::endl;
+		deleteGhost(m.pacman_ghost_collision_data.g);
+		break;
+
+	case _m_IMMUNITY_END: // no esta en inmunidad, no es que haya acabado en si.
+
 		// cuando no hay inmunidad se generan fantasmas.
 		generateGhostsByTime();
+		break;
 
-		if (m.id == _m_PACMAN_GHOST_COLLISION)
+	case _m_GHOST_COLLISION_NO_IMMUNITY:
+		std::cout << "Hola" << std::endl;
+		std::cout << _mngr->getSystem<PacManSystem>()->getPacmanHealth() << std::endl;
+		// TODO: muere el pacman.
+
+		Game::State s;
+		//Si no tienes vidas
+		if (_mngr->getSystem<PacManSystem>()->getPacmanHealth() <= 0)
 		{
-			std::cout << "Hola" << std::endl;
-			std::cout << _mngr->getSystem<PacManSystem>()->getPacmanHealth() << std::endl;
-			// TODO: muere el pacman.
-
-			Game::State s;
-			//Si no tienes vidas
-			if (_mngr->getSystem<PacManSystem>()->getPacmanHealth() <= 0)
-			{
-				// envia mensaje de fin de partida y cambia estado.
-				mes.id = _m_GAME_OVER;
-				s = Game::GAMEOVER;
-			}
-			//Si te quedan vidas, reinicias la ronda
-			else
-			{
-				//Quita una vida
-				_mngr->getSystem<PacManSystem>()->setPacmanDamage(1);
-				// envia mensaje de fin de ronda y cambia estado.
-				mes.id = _m_ROUND_OVER;
-				s = Game::NEWROUND;
-			}
-			Game::Instance()->getManager()->send(mes);
-			Game::Instance()->setState(s);
+			// envia mensaje de fin de partida y cambia estado.
+			mes.id = _m_GAME_OVER;
+			s = Game::GAMEOVER;
 		}
+		//Si te quedan vidas, reinicias la ronda
+		else
+		{
+			//Quita una vida
+			_mngr->getSystem<PacManSystem>()->setPacmanDamage(1);
+			// envia mensaje de fin de ronda y cambia estado.
+			mes.id = _m_ROUND_OVER;
+			s = Game::NEWROUND;
+		}
+		Game::Instance()->getManager()->send(mes);
+		Game::Instance()->setState(s);
+		break;
+
+	default:
+		break;
 	}
+
 
 }

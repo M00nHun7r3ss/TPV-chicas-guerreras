@@ -24,5 +24,6 @@ private:
 	unsigned int _currNumOfGhosts;
 	unsigned int _lastGhostAdded;
 	bool _canMove;
+
 };
 

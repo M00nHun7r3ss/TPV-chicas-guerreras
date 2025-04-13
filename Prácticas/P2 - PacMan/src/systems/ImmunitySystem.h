@@ -10,6 +10,8 @@ public:
 	void update() override;
 	void recieve(const Message& m) override;
 
+	bool isImmune() { return _isImmune; }
+
 private:
 	bool _isImmune;
 	unsigned int _lastImmunityStarted;
