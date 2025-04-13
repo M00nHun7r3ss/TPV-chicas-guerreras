@@ -37,7 +37,6 @@ void FoodSystem::update()
 			MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(fruits[i]);
 			std::string sprite;
 
-
 			VirtualTimer& vt = sdlutils().virtualTimer();
 			Uint32 _timeBetweenEachSpawn;
 
@@ -141,8 +140,6 @@ void FoodSystem::deleteFruit(ecs::entity_t e)
 
 void FoodSystem::checkNoFruit()
 {
-	std::cout << _currNumOfFruit << std::endl;
-
 	if (_currNumOfFruit == 0)
 	{
 		//Envia mensaje de que ha acabado el juego

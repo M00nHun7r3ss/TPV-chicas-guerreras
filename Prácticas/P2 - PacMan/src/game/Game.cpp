@@ -89,7 +89,7 @@ void Game::initGame()
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
 	_foodSys = _mngr->addSystem<FoodSystem>();
-	//_immunitySys = _mngr->addSystem<ImmunitySystem>();
+	_immunitySys = _mngr->addSystem<ImmunitySystem>();
 
 	// add the states
 	_running_state = new RunningState();

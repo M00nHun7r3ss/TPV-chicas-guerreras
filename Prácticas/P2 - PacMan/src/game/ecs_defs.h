@@ -41,6 +41,7 @@ class PacManSystem;
 class GameCtrlSystem;
 class CollisionsSystem;
 class FoodSystem;
+class ImmunitySystem;
 
 #define _SYS_LIST_ \
     GhostSystem, \
@@ -48,5 +49,6 @@ class FoodSystem;
 	PacManSystem, \
 	GameCtrlSystem, \
 	CollisionsSystem, \
-	FoodSystem
+	FoodSystem, \
+	ImmunitySystem
 

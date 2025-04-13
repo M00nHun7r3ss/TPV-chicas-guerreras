@@ -34,28 +34,46 @@ void ImmunitySystem::update()
 
 		//Pasado ese tiempo
 		if (vt.currRealTime() > _timeInImmunity + _lastImmunityStarted) {
-			_lastImmunityStarted = vt.currRealTime();
+			
 			_isImmune = false; // pasados los 10s apaga la inmunidad.
 			mes.id = _m_IMMUNITY_END;
 			Game::Instance()->getManager()->send(mes);
+
 		}
 	}
+
 }
 
 void ImmunitySystem::recieve(const Message& m)
 {
 	// mensajes a enviar.
-	Message mes; 
+	Message mes;
+	VirtualTimer& vt = sdlutils().virtualTimer();
 
-	// en caso de que la entidad fruta sea milagrosa.
-	ecs::entity_t e = m.pacman_food_collision_data.e;
-	MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(e);
-	
-	// si pacman colisiona con una fruta milagrosa...
-	if (m.id == _m_PACMAN_FOOD_COLLISION && mc->_isMiraculous) {
-		// envia mensaje de que ha comenzado la inmunidad.
-		mes.id = _m_IMMUNITY_START;
-		Game::Instance()->getManager()->send(mes);
-		_isImmune = true;
+	//Si colisiona con una fruta
+	if (m.id == _m_PACMAN_FOOD_COLLISION)
+	{
+		// en caso de que la entidad fruta sea milagrosa.
+		ecs::entity_t e = m.pacman_food_collision_data.e;
+		//Comprueba si la fruta puede ser milagrosa
+		if (_mngr->hasComponent<MiraculousComponent>(e))
+		{
+			MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(e);
+
+			// si pacman colisiona con una fruta milagrosa...
+			if (mc->_isMiraculous) {
+				// envia mensaje de que ha comenzado la inmunidad.
+				mes.id = _m_IMMUNITY_START;
+				Game::Instance()->getManager()->send(mes);
+				_isImmune = true;
+
+				//Reseteamos el tiempo actual al coger la fruta para evitar que se modifique todo el rato
+				_lastImmunityStarted = vt.currRealTime();
+			}
+		}
 	}
+
+	
+	
+
 }
