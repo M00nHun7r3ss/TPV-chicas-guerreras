@@ -14,7 +14,7 @@ public:
 	void recieve(const Message &m) override;
 private:
 	void addGhost(unsigned int n);
-	void onGhostEaten(ecs::entity_t e);
+	void deleteGhost(ecs::entity_t e);
 	void removeAllGhosts();
 	void generateGhostsByTime();
 	void moveGhosts();

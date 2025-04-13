@@ -16,7 +16,7 @@ public:
 private:
     void generateFruitGrid();
 
-    void onFruitEaten(ecs::entity_t e);
+    void deleteFruit(ecs::entity_t e);
     void checkNoFruit();
 
     unsigned int _lastFruitChanged;

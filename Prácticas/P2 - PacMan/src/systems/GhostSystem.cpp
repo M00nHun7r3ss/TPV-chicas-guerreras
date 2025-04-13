@@ -87,7 +87,7 @@ void GhostSystem::addGhost(unsigned int n) {
 	}
 }
 
-void GhostSystem::onGhostEaten(ecs::entity_t e) {
+void GhostSystem::deleteGhost(ecs::entity_t e) {
 	_mngr->setAlive(e, false);
 	_currNumOfGhosts--;
 
@@ -98,14 +98,11 @@ void GhostSystem::onGhostEaten(ecs::entity_t e) {
 
 void GhostSystem::removeAllGhosts()
 {
-	// Cuando acaba una ronda quita todos los fantasmas actuales.
-	_currNumOfGhosts = 0;
-
 	// grupo GHOSTS.
 	const std::vector<ecs::entity_t>& ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
 	size_t n = ghosts.size();
 	for (int i = 0; i < n; i++) {
-		_mngr->setAlive(ghosts[i], false); // mata.
+		deleteGhost(ghosts[i]);
 	}
 }
 
@@ -205,7 +202,7 @@ void GhostSystem::recieve(const Message& m) {
 
 		if (m.id == _m_PACMAN_GHOST_COLLISION)
 		{
-			// TODO: desaparece el fantasma.
+			deleteGhost(m.pacman_ghost_collision_data.e);
 		}
 	}
 	else if (m.id == _m_IMMUNITY_END)

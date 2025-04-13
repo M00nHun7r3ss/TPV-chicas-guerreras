@@ -85,7 +85,7 @@ void FoodSystem::recieve(const Message& m)
         generateFruitGrid();
         break;
 	case _m_PACMAN_FOOD_COLLISION:
-		onFruitEaten(m.pacman_food_collision_data.e);
+		deleteFruit(m.pacman_food_collision_data.e);
 		break;
 
 	default:
@@ -127,7 +127,7 @@ void FoodSystem::generateFruitGrid()
     }
 }
 
-void FoodSystem::onFruitEaten(ecs::entity_t e)
+void FoodSystem::deleteFruit(ecs::entity_t e)
 {
 	_mngr->setAlive(e, false);
 	_currNumOfFruit--;
