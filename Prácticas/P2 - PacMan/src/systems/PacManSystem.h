@@ -16,7 +16,9 @@ public:
 	void update() override;
 	void recieve(const Message& m) override;
 
-	inline int getPacmanHealth() { return _pmHealth->_currentHealth; }
+	inline int getPacmanHealth() { return _pmHealth->getHealth(); }
+	inline void setPacmanDamage(int i) { _pmHealth->damage(i); }
+	
 private:
 	void resetPacman();
 	void stopOnBorders();
@@ -25,5 +27,6 @@ private:
 
 	Transform *_pmTR;
 	Health* _pmHealth;
+
 };
 

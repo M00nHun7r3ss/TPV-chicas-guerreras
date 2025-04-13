@@ -10,10 +10,10 @@ struct Health : public ecs::Component
 	Health(Texture* tex) : _tex(tex) {}
 	virtual ~Health() {}
 
-	/*void damage(int n);
-	void heal();
+	void damage(int n) { _currentHealth -= n; };
+	void heal() { _currentHealth = MAX_HEALTH; };
 
-	int getHealth() { return _currentHealth; }*/
+	int getHealth() { return _currentHealth; }
 
 	int const MAX_HEALTH = 3;
 	int _currentHealth;

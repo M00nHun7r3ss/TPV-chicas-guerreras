@@ -198,10 +198,12 @@ void GhostSystem::recieve(const Message& m) {
 	}
 	else if (m.id == _m_IMMUNITY_START)
 	{
+		std::cout << "Hola, pero soy inmune" << std::endl;
 		// TODO: cambia el sprite fantasma.
 
 		if (m.id == _m_PACMAN_GHOST_COLLISION)
 		{
+			std::cout << "Borra fantasma" << std::endl;
 			deleteGhost(m.pacman_ghost_collision_data.e);
 		}
 	}
@@ -212,20 +214,26 @@ void GhostSystem::recieve(const Message& m) {
 
 		if (m.id == _m_PACMAN_GHOST_COLLISION)
 		{
+			std::cout << "Hola" << std::endl;
+			std::cout << _mngr->getSystem<PacManSystem>()->getPacmanHealth() << std::endl;
 			// TODO: muere el pacman.
 
 			Game::State s;
+			//Si no tienes vidas
 			if (_mngr->getSystem<PacManSystem>()->getPacmanHealth() <= 0)
 			{
 				// envia mensaje de fin de partida y cambia estado.
 				mes.id = _m_GAME_OVER;
-				s = Game::NEWROUND;
+				s = Game::GAMEOVER;
 			}
+			//Si te quedan vidas, reinicias la ronda
 			else
 			{
+				//Quita una vida
+				_mngr->getSystem<PacManSystem>()->setPacmanDamage(1);
 				// envia mensaje de fin de ronda y cambia estado.
 				mes.id = _m_ROUND_OVER;
-				s = Game::GAMEOVER;
+				s = Game::NEWROUND;
 			}
 			Game::Instance()->getManager()->send(mes);
 			Game::Instance()->setState(s);

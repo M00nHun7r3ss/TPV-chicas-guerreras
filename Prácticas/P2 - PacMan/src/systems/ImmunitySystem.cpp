@@ -41,6 +41,13 @@ void ImmunitySystem::update()
 
 		}
 	}
+	//No es que se haya acabado la inmunidad, sino que esta desactivada,
+	//para tenerlo de serie y poder comprobar las colisiones con los fantasmas
+	else
+	{
+		mes.id = _m_IMMUNITY_END;
+		Game::Instance()->getManager()->send(mes);
+	}
 
 }
 

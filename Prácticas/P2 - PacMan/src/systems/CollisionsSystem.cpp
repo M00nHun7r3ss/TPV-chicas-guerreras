@@ -35,20 +35,18 @@ void CollisionsSystem::update() {
 		if (_mngr->isAlive(e)) { // if the ghost is active (it might have died in this frame)
 
 			// the ghost's Transform
-			//
 			auto eTR = _mngr->getComponent<Transform>(e);
 
 			// check if PacMan collides with the ghost (i.e., eat it)
 			if (Collisions::collides(			//
 					pTR->_pos, pTR->_width, pTR->_height, //
 					eTR->_pos, eTR->_width, eTR->_height)) {
-
+	
 				Message m;
 				m.id = _m_PACMAN_GHOST_COLLISION;
 				// pasamos el fantasma concreto.
 				m.pacman_ghost_collision_data.e = e;
 				_mngr->send(m);
-
 			}
 		}
 	}
@@ -74,7 +72,6 @@ void CollisionsSystem::update() {
 				//Le pasamos la fruta concreta
 				z.pacman_food_collision_data.e = e;
 				_mngr->send(z);
-
 			}
 		}
 	}

@@ -21,7 +21,7 @@ void RenderSystem::initSystem() {
 }
 
 void RenderSystem::update() {
-	//drawGhosts();
+	drawGhosts();
 	drawPacMan();
 	//drawHealth();
 	drawFruitGrid();
