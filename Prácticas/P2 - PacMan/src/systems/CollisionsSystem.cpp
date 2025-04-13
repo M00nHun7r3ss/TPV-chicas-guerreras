@@ -38,14 +38,12 @@ void CollisionsSystem::update() {
 
 			// the ghost's Transform
 			auto eTR = _mngr->getComponent<Transform>(e);
-
+			Message m;
 			// check if PacMan collides with the ghost (i.e., eat it)
 			if (Collisions::collides(			//
 					pTR->_pos, pTR->_width, pTR->_height, //
 					eTR->_pos, eTR->_width, eTR->_height)) {
 
-	
-				Message m;
 				if (_mngr->getSystem<ImmunitySystem>()->isImmune())
 				{
 					m.id = _m_GHOST_COLLISION_IMMUNITY;
@@ -58,6 +56,7 @@ void CollisionsSystem::update() {
 				m.pacman_ghost_collision_data.g = e;
 				_mngr->send(m);
 			}
+
 		}
 	}
 
@@ -72,12 +71,12 @@ void CollisionsSystem::update() {
 			//
 			auto eTR = _mngr->getComponent<Transform>(e);
 
+			Message z;
 			// check if PacMan collides with the fruit (i.e., eat it)
 			if (Collisions::collides(			//
 				pTR->_pos, pTR->_width, pTR->_height, //
 				eTR->_pos, eTR->_width, eTR->_height)) {
 
-				Message z;
 				z.id = _m_PACMAN_FOOD_COLLISION;
 				//Le pasamos la fruta concreta
 				z.pacman_food_collision_data.f = e;
