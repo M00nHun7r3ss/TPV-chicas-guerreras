@@ -56,16 +56,21 @@ void PacManSystem::resetPacman()
 
 void PacManSystem::recieve(const Message& m)
 {
+	VirtualTimer& vt = sdlutils().virtualTimer();
 	switch (m.id)
 	{
 	case _m_NEW_GAME:
 		// al empezar juego resetea vidas.
 		maxHealth();
+		//Reseteamos el tiempo
+		vt.resetTime();
 		break;
 
 	case _m_ROUND_START:
 		// al empezar ronda resetea posicion.
 		resetPacman();
+		//Reseteamos el tiempo
+		vt.resetTime();
 		break;
 
 	default:

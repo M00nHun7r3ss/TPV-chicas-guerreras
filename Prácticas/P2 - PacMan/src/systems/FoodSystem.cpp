@@ -78,11 +78,18 @@ void FoodSystem::update()
 
 void FoodSystem::recieve(const Message& m)
 {
+	//No reseteamos aqui el vt, porque lo hacemos en el pacman
 	switch (m.id)
 	{
 	case _m_NEW_GAME: // PONER NEW GAME
         generateFruitGrid();
+		//Reseteamos el contador de tiempo
+		_lastFruitChanged = 0;
         break;
+	case _m_ROUND_START:
+		//Reseteamos el contador de tiempo
+		_lastFruitChanged = 0;
+		break;
 	case _m_PACMAN_FOOD_COLLISION:
 		deleteFruit(m.pacman_food_collision_data.f);
 		break;

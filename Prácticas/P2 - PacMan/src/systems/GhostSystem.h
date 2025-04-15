@@ -16,7 +16,7 @@ private:
 	void addGhost(unsigned int n);
 	void deleteGhost(ecs::entity_t e);
 	void removeAllGhosts();
-	void generateGhostsByTime();
+	void generateGhostsByTime(bool immune);
 	void moveGhosts();
 	void stopOnBorders(ecs::entity_t e);
 
@@ -24,6 +24,7 @@ private:
 	unsigned int _currNumOfGhosts;
 	unsigned int _lastGhostAdded;
 	bool _canMove;
+	bool _pmImmune;
 
 };
 

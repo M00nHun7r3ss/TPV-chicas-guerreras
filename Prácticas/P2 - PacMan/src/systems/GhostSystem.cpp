@@ -17,7 +17,8 @@ GhostSystem::GhostSystem()
 	: _ghostLimit(10),
 	_currNumOfGhosts(0),
 	_lastGhostAdded(0),
-	_canMove(false) {
+	_canMove(false),
+	_pmImmune(false) {
 }
 
 GhostSystem::~GhostSystem() {
@@ -29,7 +30,7 @@ void GhostSystem::initSystem() {
 void GhostSystem::update() {
 
 	//Comprobar que no este PM en estado inmune (si lo esta no aparecen nuevos)
-	generateGhostsByTime();
+	generateGhostsByTime(_pmImmune);
 
 	//Movemos los fantasmas
 	moveGhosts();
@@ -90,11 +91,11 @@ void GhostSystem::addGhost(unsigned int n) {
 
 void GhostSystem::deleteGhost(ecs::entity_t e) {
 	_mngr->setAlive(e, false);
-	
 
 	// play sound on channel 1 (if there is something playing there
 	// it will be cancelled
-	sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+	//TODO: Activar el sonido
+	//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 }
 
 void GhostSystem::removeAllGhosts()
@@ -107,19 +108,23 @@ void GhostSystem::removeAllGhosts()
 	}
 }
 
-void GhostSystem::generateGhostsByTime()
+void GhostSystem::generateGhostsByTime(bool immune)
 {
-	// Anade fantasma cada 5 segundos si hay menos de 10
-	// Inicialmente empieza en 5 segundos.
-	Uint32 _timeBetweenEachSpawn = 5000;
+	//Si el pacman no es inmune, genera fantasmas
+	if (!immune)
+	{
+		// Anade fantasma cada 5 segundos si hay menos de 10
+		// Inicialmente empieza en 5 segundos.
+		Uint32 _timeBetweenEachSpawn = 5000;
 
-	VirtualTimer& vt = sdlutils().virtualTimer();
+		VirtualTimer& vt = sdlutils().virtualTimer();
 
-	if (vt.currRealTime() > _timeBetweenEachSpawn + _lastGhostAdded
-		&& _currNumOfGhosts <= _ghostLimit) {
-		addGhost(1);
-		
-		_lastGhostAdded = vt.currRealTime();
+		if (vt.currRealTime() > _timeBetweenEachSpawn + _lastGhostAdded
+			&& _currNumOfGhosts <= _ghostLimit) {
+			addGhost(1);
+
+			_lastGhostAdded = vt.currRealTime();
+		}
 	}
 }
 
@@ -190,6 +195,7 @@ void GhostSystem::stopOnBorders(ecs::entity_t e)
 
 void GhostSystem::recieve(const Message& m) {
 
+	//No reseteamos aqui el vt, porque lo hacemos en el pacman
 	Message mes;
 
 	switch (m.id)
@@ -199,29 +205,42 @@ void GhostSystem::recieve(const Message& m) {
 		removeAllGhosts();
 		break;
 
+	case _m_ROUND_START:
+		//Reseteamos el contador de tiempo
+		_lastGhostAdded = 0;
+		break;
+
+	case _m_GAME_OVER:
+		//Se quitan al salir de juego. Al entrar se generan.
+		removeAllGhosts();
+		break;
+
+	case _m_NEW_GAME:
+		//Reseteamos el contador de tiempo
+		_lastGhostAdded = 0;
+		break;
+
 	case _m_IMMUNITY_START:
 		// TODO: cambia el sprite fantasma.
+		// cuando hay inmunidad no se generan fantasmas.
+		_pmImmune = true;
 		break;
 
 	case _m_GHOST_COLLISION_IMMUNITY:
-		std::cout << "Borra fantasma" << std::endl;
 		deleteGhost(m.pacman_ghost_collision_data.g);
 		break;
 
 	case _m_IMMUNITY_END: // no esta en inmunidad, no es que haya acabado en si.
 
 		// cuando no hay inmunidad se generan fantasmas.
-		generateGhostsByTime();
+		_pmImmune = false;
 		break;
 
 	case _m_GHOST_COLLISION_NO_IMMUNITY:
-		std::cout << "Hola" << std::endl;
-		std::cout << _mngr->getSystem<PacManSystem>()->getPacmanHealth() << std::endl;
-		// TODO: muere el pacman.
 
 		Game::State s;
 		//Si no tienes vidas
-		if (_mngr->getSystem<PacManSystem>()->getPacmanHealth() <= 0)
+		if (_mngr->getSystem<PacManSystem>()->getPacmanHealth() == 0)
 		{
 			// envia mensaje de fin de partida y cambia estado.
 			mes.id = _m_GAME_OVER;
