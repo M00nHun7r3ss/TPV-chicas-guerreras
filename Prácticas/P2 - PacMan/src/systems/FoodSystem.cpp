@@ -41,27 +41,12 @@ void FoodSystem::update()
 			VirtualTimer& vt = sdlutils().virtualTimer();
 			Uint32 _timeBetweenEachSpawn;
 
-			// fil cols general
+			// fil cols general para renderizar
 			col = 4;
 			row = 1;
 
-			// si es miraculous...
-			if (mc->_isMiraculous)
-			{
-				// fil cols de milagrosa (pera).
-				col = 7;
-				row = 1;
-
-				_timeBetweenEachSpawn = mc->_M * 1000;
-
-				//Pasado ese tiempo
-				if (vt.currRealTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
-					_lastFruitChanged = vt.currRealTime();
-					mc->_isMiraculous = false;
-					mc->_N = _rand.nextInt(10, 21); //cambiar por 10 y 21
-				}
-			}
-			else // si no lo es...
+			// si no es miraculous...
+			if (!mc->_isMiraculous)
 			{
 				// fil cols de normal (cereza).
 				col = 4;
@@ -74,6 +59,21 @@ void FoodSystem::update()
 					_lastFruitChanged = vt.currRealTime();
 					mc->_isMiraculous = true;
 					mc->_M = _rand.nextInt(1, 6);
+				}
+			}
+			else // si lo es...
+			{
+				// fil cols de milagrosa (pera).
+				col = 7;
+				row = 1;
+
+				_timeBetweenEachSpawn = mc->_M * 1000;
+
+				//Pasado ese tiempo
+				if (vt.currRealTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
+					_lastFruitChanged = vt.currRealTime();
+					mc->_isMiraculous = false;
+					mc->_N = _rand.nextInt(10, 21); //cambiar por 10 y 21
 				}
 			}
 
@@ -133,6 +133,10 @@ void FoodSystem::generateFruitGrid()
 			{ 
 				//Anadimos el componente de fruta milagrosa
 				_mngr->addComponent<MiraculousComponent>(e, 0, 0);
+				// lo cogemos
+				MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(e);
+				//Inicialmente sera normal
+				mc->_isMiraculous = false;
 				
 			}
 	        else { _mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 4, 1); }

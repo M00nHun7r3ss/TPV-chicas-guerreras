@@ -32,6 +32,32 @@ void GhostSystem::update() {
 	//Comprobar que no este PM en estado inmune (si lo esta no aparecen nuevos)
 	generateGhostsByTime(_pmImmune);
 
+	// the Pacman's Immunity
+	ImmunitySystem* pImmune = _mngr->getSystem<ImmunitySystem>();
+
+	// fil cols general para renderizar
+	int col = 0;
+	int row = 4;
+
+	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
+	for (int i = 0; i < ghosts.size(); i++)
+	{
+		if (pImmune->isImmune())
+		{
+			// fil cols de immune (azul).
+			col = 0;
+			row = 6;
+		}
+		else
+		{
+			int col = 0;
+			int row = 4;
+		}
+
+		_mngr->removeComponent<ImageWithFrames>(ghosts[i]);
+		_mngr->addComponent<ImageWithFrames>(ghosts[i], &sdlutils().images().at("sprites"), col, row, 7);
+	}
+
 	//Movemos los fantasmas
 	moveGhosts();
 }
