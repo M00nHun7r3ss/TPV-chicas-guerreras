@@ -201,6 +201,7 @@ void GhostSystem::recieve(const Message& m) {
 
 	case _m_IMMUNITY_START:
 		// TODO: cambia el sprite fantasma.
+		break;
 
 	case _m_GHOST_COLLISION_IMMUNITY:
 		std::cout << "Borra fantasma" << std::endl;

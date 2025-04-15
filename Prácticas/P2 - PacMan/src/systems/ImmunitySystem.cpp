@@ -53,15 +53,10 @@ void ImmunitySystem::update()
 
 void ImmunitySystem::recieve(const Message& m)
 {
-	// mensajes a enviar.
-	Message mes;
-	VirtualTimer& vt = sdlutils().virtualTimer();
-
-	//Si colisiona con una fruta
-	if (m.id == _m_PACMAN_FOOD_COLLISION)
-	{
-		// en caso de que la entidad fruta sea milagrosa.
-		ecs::entity_t e = m.pacman_food_collision_data.f;
+	// en caso de que la entidad fruta sea milagrosa.
+	ecs::entity_t e = m.pacman_food_collision_data.f;
+	switch (m.id) {
+	case _m_PACMAN_FOOD_COLLISION:
 		//Comprueba si la fruta puede ser milagrosa
 		if (_mngr->hasComponent<MiraculousComponent>(e))
 		{
@@ -69,6 +64,9 @@ void ImmunitySystem::recieve(const Message& m)
 
 			// si pacman colisiona con una fruta milagrosa...
 			if (mc->_isMiraculous) {
+				// mensajes a enviar.
+				Message mes;
+				VirtualTimer& vt = sdlutils().virtualTimer();
 				// envia mensaje de que ha comenzado la inmunidad.
 				mes.id = _m_IMMUNITY_START;
 				Game::Instance()->getManager()->send(mes);
@@ -78,9 +76,9 @@ void ImmunitySystem::recieve(const Message& m)
 				_lastImmunityStarted = vt.currRealTime();
 			}
 		}
+		break;
+	default:
+		break;
 	}
-
-	
-	
 
 }
