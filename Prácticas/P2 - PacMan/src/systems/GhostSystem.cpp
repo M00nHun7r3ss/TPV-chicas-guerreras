@@ -82,8 +82,7 @@ void GhostSystem::addGhost(unsigned int n) {
 		tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
 
 		// add an Image Component
-		_mngr->addComponent<Image>(e, &sdlutils().images().at("sprites"));
-		//_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 8, 8);
+		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 0, 4, 7);
 		
 		_currNumOfGhosts++;
 	}

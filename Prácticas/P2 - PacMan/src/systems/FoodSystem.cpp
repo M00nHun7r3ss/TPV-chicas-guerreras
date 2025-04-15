@@ -4,6 +4,7 @@
 
 #include "PacManSystem.h"
 #include "../components/Image.h"
+#include "../components/ImageWithFrames.h"
 #include "../components/Transform.h"
 #include "../components/MiraculousComponent.h"
 #include "../ecs/Manager.h"
@@ -35,7 +36,7 @@ void FoodSystem::update()
 		{
 			// lo coge.
 			MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(fruits[i]);
-			std::string sprite;
+			int col, row;
 
 			VirtualTimer& vt = sdlutils().virtualTimer();
 			Uint32 _timeBetweenEachSpawn;
@@ -43,7 +44,9 @@ void FoodSystem::update()
 			// si es miraculous...
 			if (mc->_isMiraculous)
 			{
-				sprite = "tennis_ball";
+				// fil cols de milagrosa (pera).
+				col = 7;
+				row = 1;
 
 				_timeBetweenEachSpawn = mc->_M * 1000;
 
@@ -56,7 +59,9 @@ void FoodSystem::update()
 			}
 			else // si no lo es...
 			{
-				sprite = "star";
+				// fil cols de normal (cereza).
+				col = 4;
+				row = 1;
 
 				_timeBetweenEachSpawn = mc->_N * 1000;
 
@@ -68,7 +73,7 @@ void FoodSystem::update()
 				}
 			}
 
-			_mngr->addComponent<Image>(fruits[i], &sdlutils().images().at(sprite));
+			_mngr->addComponent<ImageWithFrames>(fruits[i], &sdlutils().images().at("sprites"), col, row, 1);
 		}
 	}
 
@@ -126,7 +131,7 @@ void FoodSystem::generateFruitGrid()
 				_mngr->addComponent<MiraculousComponent>(e, 0, 0);
 				
 			}
-	        else { _mngr->addComponent<Image>(e, &sdlutils().images().at("star")); }
+	        else { _mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 4, 1, 1); }
 
             tr->init(Vector2D((i*100)+20, (j * 100) + 20), Vector2D(), size, size, 0.0f);
         }

@@ -3,7 +3,7 @@
 #include "PacManSystem.h"
 
 #include "../components/Health.h"
-#include "../components/Image.h"
+#include "../components/ImageWithFrames.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
@@ -22,7 +22,7 @@ void PacManSystem::initSystem() {
 	_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
 
 	_pmTR = _mngr->addComponent<Transform>(pacman);
-	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+	_mngr->addComponent<ImageWithFrames>(pacman, &sdlutils().images().at("sprites"), 0, 0, 4);
 	_pmHealth = _mngr->addComponent<Health>(pacman, &sdlutils().images().at("heart"));
 
 	resetPacman();

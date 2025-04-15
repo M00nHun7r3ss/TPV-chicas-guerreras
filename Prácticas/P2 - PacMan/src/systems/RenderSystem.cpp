@@ -32,18 +32,16 @@ void RenderSystem::drawGhosts() {
 	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::GHOSTS)) {
 
 		Transform* tr = _mngr->getComponent<Transform>(e);
-		//ImageWithFrames* imgwf = _mngr->getComponent<ImageWithFrames>(e);
-		//drawImageWithFrames(tr, imgwf);
-		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
-		draw(tr, tex);
+		ImageWithFrames* imgwf = _mngr->getComponent<ImageWithFrames>(e);
+		drawImageWithFrames(tr, imgwf);
 	}
 }
 
 void RenderSystem::drawPacMan() {
 	ecs::entity_t e = _mngr->getHandler(ecs::hdlr::PACMAN);
 	Transform* tr = _mngr->getComponent<Transform>(e);
-	Texture* tex = _mngr->getComponent<Image>(e)->_tex;
-	draw(tr, tex);
+	ImageWithFrames* imgwf = _mngr->getComponent<ImageWithFrames>(e);
+	drawImageWithFrames(tr, imgwf);
 
 }
 
@@ -75,26 +73,22 @@ void RenderSystem::drawFruitGrid()
 	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::FRUITS)) {
 		
 		Transform* tr = _mngr->getComponent<Transform>(e);
-		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
-		draw(tr, tex);
+		ImageWithFrames* imgwf = _mngr->getComponent<ImageWithFrames>(e);
+		drawImageWithFrames(tr, imgwf);
 	}
 }
 
 void RenderSystem::drawImageWithFrames(Transform* t, ImageWithFrames* img)
 {
 	// Inicialmente empieza en 0.5 segundos.
-	Uint32 _timeBetweenEachSpawn = 50;
+	Uint32 _timeBetweenEachSpawn = 50; 
 
 	VirtualTimer& vt = sdlutils().virtualTimer();
 
 	//Gestion de frames
 	if (vt.currTime() > _timeBetweenEachSpawn + img->_lastFrame) {
-
-		img->_fCol = (img->_fCol + 1) % img->_nCols; //Contempla el salto de linea
-		if (img->_fCol == 0) //Al volver a la columna 0, cambia de fila
-		{
-			img->_fRow = (img->_fRow + 1) % img->_nRows; //Contempla el salto de columna
-		}
+		// va haciendo fcol++ y reinicia a 0 al llegar al final
+		img->_fCol = (img->_fCol + 1) % img->_nFrames; 
 
 		// Reinicia el contador
 		img->_lastFrame = vt.currTime();
@@ -102,10 +96,10 @@ void RenderSystem::drawImageWithFrames(Transform* t, ImageWithFrames* img)
 
 	// --- RECTANGULO SOURCE: gestion de la propia textura (como avanza, como se muestra, como se renderiza)
 	SDL_Rect src = build_sdlrect(
-		img->_fCol * (img->_tex->width() / img->_nCols),	// posX * (anchura de cada fila).
-		img->_fRow * (img->_tex->height() / img->_nRows),  // posY * (altura de cada fila).
-		img->_tex->width() / img->_nCols,				// anchura textura / columnas.
-		img->_tex->height() / img->_nRows				// altura textura / filas.
+		img->_fCol * (img->_tex->width() / img->COLS),	// posX * (anchura de cada fila).
+		img->_fRow * (img->_tex->height() / img->ROWS),  // posY * (altura de cada fila).
+		img->_tex->width() / img->COLS,				// anchura textura / columnas.
+		img->_tex->height() / img->ROWS				// altura textura / filas.
 	);
 
 	// --- RECTANGULO DESTINO: rectangulo del asteroide ingame y ya.

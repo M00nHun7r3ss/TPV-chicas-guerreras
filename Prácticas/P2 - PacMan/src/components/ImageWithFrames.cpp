@@ -6,9 +6,8 @@
 #include "../sdlutils/SDLUtils.h"
 #include "Transform.h"
 
-ImageWithFrames::ImageWithFrames(Texture* tex, int cols, int rows) :
-	_tex(tex), _nCols(cols), _nRows(rows)
-{
+ImageWithFrames::ImageWithFrames(Texture* tex, int startCol, int startRow, int frames) :
+	_tex(tex), _fCol(startCol), _fRow(startRow), _nFrames(frames) {
 }
 
 void ImageWithFrames::initComponent()
