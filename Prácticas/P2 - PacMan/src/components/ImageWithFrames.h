@@ -13,11 +13,13 @@ struct ImageWithFrames : public ecs::Component
 
 	ImageWithFrames() : _tex() {}
 	ImageWithFrames(Texture* tex, int startCol, int startRow, int frames);
+	ImageWithFrames(Texture* tex, int startCol, int startRow); //Frutas
 	virtual ~ImageWithFrames() {}
 
 	void setTexture(Texture* tex) { _tex = tex; }
+	void setStartCol(int col) { _fCol = col; }
+	void setStartRow(int row) { _fRow = row; }
 
-	
 
 	void initComponent() override;
 

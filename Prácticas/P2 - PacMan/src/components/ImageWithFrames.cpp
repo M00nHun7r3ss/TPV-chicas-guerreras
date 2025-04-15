@@ -7,7 +7,11 @@
 #include "Transform.h"
 
 ImageWithFrames::ImageWithFrames(Texture* tex, int startCol, int startRow, int frames) :
-	_tex(tex), _fCol(startCol), _fRow(startRow), _nFrames(frames) {
+	_tex(tex), _lastFrame(0), _fCol(startCol), _fRow(startRow), _nFrames(frames) {
+}
+
+ImageWithFrames::ImageWithFrames(Texture* tex, int startCol, int startRow) :
+	_tex(tex), _lastFrame(0), _fCol(startCol), _fRow(startRow), _nFrames(1) {
 }
 
 void ImageWithFrames::initComponent()

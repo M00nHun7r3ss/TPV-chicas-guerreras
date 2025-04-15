@@ -41,6 +41,10 @@ void FoodSystem::update()
 			VirtualTimer& vt = sdlutils().virtualTimer();
 			Uint32 _timeBetweenEachSpawn;
 
+			// fil cols general
+			col = 4;
+			row = 1;
+
 			// si es miraculous...
 			if (mc->_isMiraculous)
 			{
@@ -73,7 +77,7 @@ void FoodSystem::update()
 				}
 			}
 
-			_mngr->addComponent<ImageWithFrames>(fruits[i], &sdlutils().images().at("sprites"), col, row, 1);
+			_mngr->addComponent<ImageWithFrames>(fruits[i], &sdlutils().images().at("sprites"), col, row);
 		}
 	}
 
@@ -131,7 +135,7 @@ void FoodSystem::generateFruitGrid()
 				_mngr->addComponent<MiraculousComponent>(e, 0, 0);
 				
 			}
-	        else { _mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 4, 1, 1); }
+	        else { _mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 4, 1); }
 
             tr->init(Vector2D((i*100)+20, (j * 100) + 20), Vector2D(), size, size, 0.0f);
         }

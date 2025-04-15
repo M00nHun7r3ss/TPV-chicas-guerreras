@@ -86,12 +86,16 @@ void RenderSystem::drawImageWithFrames(Transform* t, ImageWithFrames* img)
 	VirtualTimer& vt = sdlutils().virtualTimer();
 
 	//Gestion de frames
-	if (vt.currTime() > _timeBetweenEachSpawn + img->_lastFrame) {
-		// va haciendo fcol++ y reinicia a 0 al llegar al final
-		img->_fCol = (img->_fCol + 1) % img->_nFrames; 
+	if (vt.currRealTime() > _timeBetweenEachSpawn + img->_lastFrame) {
+		//Si hay más de un frame, se anima
+		if (img->_nFrames > 1)
+		{
+			// va haciendo fcol++ y reinicia a 0 al llegar al final
+			img->_fCol = (img->_fCol + 1) % img->_nFrames;
+		}
 
 		// Reinicia el contador
-		img->_lastFrame = vt.currTime();
+		img->_lastFrame = vt.currRealTime();
 	}
 
 	// --- RECTANGULO SOURCE: gestion de la propia textura (como avanza, como se muestra, como se renderiza)
