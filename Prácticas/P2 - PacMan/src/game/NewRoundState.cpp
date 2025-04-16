@@ -5,6 +5,7 @@
 void NewRoundState::enter()
 {
 	_message = &sdlutils().msgs().at("newround");
+	sdlutils().musics().at("pacman_chomp").pauseMusic();
 
 }
 

@@ -1,9 +1,6 @@
 #include "FoodSystem.h"
 
-#include <algorithm>
-
 #include "PacManSystem.h"
-#include "../components/Image.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Transform.h"
 #include "../components/MiraculousComponent.h"
@@ -85,6 +82,10 @@ void FoodSystem::recieve(const Message& m)
 	switch (m.id)
 	{
 	case _m_NEW_GAME: // PONER NEW GAME
+		// borra todas las frutas en caso de haberlas.
+		deleteFruitGrid();
+
+		// genera.
         generateFruitGrid();
 		//Reseteamos el contador de tiempo
 		_lastFruitChanged = 0;
@@ -96,7 +97,6 @@ void FoodSystem::recieve(const Message& m)
 	case _m_PACMAN_FOOD_COLLISION:
 		deleteFruit(m.pacman_food_collision_data.f);
 		break;
-
 	default:
 		break;
 	}
@@ -148,22 +148,27 @@ void FoodSystem::deleteFruit(ecs::entity_t e)
 
 	// play sound on channel 1 (if there is something playing there
 	// it will be cancelled
-	//TODO: DESCOMENTAR
-	//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+	sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 
+}
+
+void FoodSystem::deleteFruitGrid()
+{
+	// grupo FRUITS.
+	const std::vector<ecs::entity_t>& fruits = _mngr->getEntities(ecs::grp::FRUITS);
+	size_t n = fruits.size();
+	for (int i = 0; i < n; i++) {
+		deleteFruit(fruits[i]);
+	}
 }
 
 void FoodSystem::checkNoFruit()
 {
 	if (_currNumOfFruit == 0)
 	{
-		//Sonido de ganar
-		//TODO: DESCOMENTAR
-		//sdlutils().soundEffects().at("pacman_won").play(0, 1);
-
 		//Envia mensaje de que ha acabado el juego
 		Message m;
-		m.id = _m_ROUND_START;
+		m.id = _m_GAME_OVER;
 		Game::Instance()->getManager()->send(m);
 
 		// !!! cambia a GameOverState (FINAL BUENO)

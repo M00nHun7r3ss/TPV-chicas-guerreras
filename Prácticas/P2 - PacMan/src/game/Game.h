@@ -15,8 +15,6 @@
 
 #include "../utils/Singleton.h"
 
-#include <vector>
-
 #include "../ecs/ecs.h"
 
 #include "GameState.h"

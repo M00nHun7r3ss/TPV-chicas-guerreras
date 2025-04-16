@@ -6,8 +6,6 @@
 //
 struct Transform;
 struct Image;
-struct StarMotion;
-struct Points;
 struct Health;
 struct ImageWithFrames;
 struct MiraculousComponent;
@@ -15,8 +13,6 @@ struct MiraculousComponent;
 #define _CMPS_LIST_ \
 	Transform, \
 	Image, \
-	StarMotion, \
-	Points, \
 	Health, \
 	ImageWithFrames, \
 	MiraculousComponent
@@ -25,7 +21,6 @@ struct MiraculousComponent;
 //
 #define _GRPS_LIST_ \
 	GHOSTS, \
-	HEALTH, \
 	FRUITS
 
 // Handlers list - must have at least one element
@@ -38,7 +33,6 @@ struct MiraculousComponent;
 class GhostSystem;
 class RenderSystem;
 class PacManSystem;
-class GameCtrlSystem;
 class CollisionsSystem;
 class FoodSystem;
 class ImmunitySystem;
@@ -47,7 +41,6 @@ class ImmunitySystem;
     GhostSystem, \
 	RenderSystem, \
 	PacManSystem, \
-	GameCtrlSystem, \
 	CollisionsSystem, \
 	FoodSystem, \
 	ImmunitySystem

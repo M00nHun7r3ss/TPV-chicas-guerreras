@@ -6,7 +6,6 @@
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Vector2D.h"
-#include "../utils/Collisions.h"
 //Systems
 #include "../systems/CollisionsSystem.h"
 #include "../systems/PacManSystem.h"

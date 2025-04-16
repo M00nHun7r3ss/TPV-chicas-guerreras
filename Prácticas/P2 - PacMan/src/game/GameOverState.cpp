@@ -7,20 +7,21 @@
 
 void GameOverState::enter()
 {
-	//_message = &sdlutils().msgs().at("gameover");
-
 	ecs::Manager* mngr = Game::Instance()->getManager();
+	sdlutils().musics().at("pacman_chomp").pauseMusic();
 
-	//TODO: CAMBIAR A VARIOS FINALES
 	if (mngr->getSystem<FoodSystem>()->getCurrentFruits() == 0)
 	{
 		// CHAMPION.
 		_message = &sdlutils().msgs().at("gameovergood");
+		sdlutils().soundEffects().at("pacman_won").play(0, 1);
 	}
 	else if (mngr->getSystem<PacManSystem>()->getPacmanHealth() == 0)
 	{
 		// LOOSER.
 		_message = &sdlutils().msgs().at("gameoverbad");
+		//Sonido pacman muerte
+		sdlutils().soundEffects().at("pacman_death").play(0, 1);
 	}
 }
 

@@ -19,6 +19,7 @@ private:
     void generateFruitGrid();
 
     void deleteFruit(ecs::entity_t e);
+    void deleteFruitGrid();
     void checkNoFruit();
 
     unsigned int _lastFruitChanged;

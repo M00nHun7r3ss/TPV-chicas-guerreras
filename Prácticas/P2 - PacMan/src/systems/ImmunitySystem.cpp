@@ -1,21 +1,15 @@
 #include "ImmunitySystem.h"
 
-#include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../components/MiraculousComponent.h"
-#include "../utils/Collisions.h"
 
-#include <vector>
 
 ImmunitySystem::ImmunitySystem()
 	: _isImmune(false),
-	  _lastImmunityStarted(0)
-{
-	// TODO Auto-generated constructor stub
+	  _lastImmunityStarted(0) {
 }
 
 ImmunitySystem::~ImmunitySystem(){
-	// TODO Auto-generated destructor stub
 }
 
 void ImmunitySystem::initSystem(){

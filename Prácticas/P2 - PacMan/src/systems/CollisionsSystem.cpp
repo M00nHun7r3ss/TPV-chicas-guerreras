@@ -5,19 +5,15 @@
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../utils/Collisions.h"
-#include "GhostSystem.h"
 
 #include <vector>
 
 #include "ImmunitySystem.h"
 
 CollisionsSystem::CollisionsSystem() {
-	// TODO Auto-generated constructor stub
-
 }
 
 CollisionsSystem::~CollisionsSystem() {
-	// TODO Auto-generated destructor stub
 }
 
 void CollisionsSystem::initSystem() {

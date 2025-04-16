@@ -4,6 +4,7 @@
 
 void PauseState::enter()
 {
+	sdlutils().musics().at("pacman_chomp").pauseMusic();
 	sdlutils().virtualTimer().pause();
 	_message = &sdlutils().msgs().at("paused");
 

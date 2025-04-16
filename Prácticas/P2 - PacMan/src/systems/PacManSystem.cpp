@@ -66,9 +66,14 @@ void PacManSystem::recieve(const Message& m)
 	case _m_ROUND_START:
 		// al empezar ronda resetea posicion.
 		resetPacman();
+
 		//Sonido de intro
-//TODO: DESCOMENTAR
-		//sdlutils().soundEffects().at("pacman_intro").play(0, 1);
+		sdlutils().soundEffects().at("pacman_intro").play(0, 1);
+		break;
+
+	case _m_ROUND_OVER:
+		//Sonido pacman muerte
+		sdlutils().soundEffects().at("pacman_death").play(0, 1);
 		break;
 
 	default:
@@ -103,7 +108,6 @@ void PacManSystem::pacmanInput()
 {
 	InputHandler& ihldr = ih();
 
-
 	if (ihldr.keyDownEvent()) {
 
 		if (ihldr.isKeyDown(SDL_SCANCODE_RIGHT)) { // rotate right
@@ -112,6 +116,7 @@ void PacManSystem::pacmanInput()
 
 			// y rotamos el vector de velocidad en 90.0f.
 			_pmTR->_vel = _pmTR->_vel.rotate(90.0f);
+			sdlutils().musics().at("pacman_chomp").resumeMusic();
 
 		}
 		else if (ihldr.isKeyDown(SDL_SCANCODE_LEFT)) { // rotate left
@@ -120,24 +125,25 @@ void PacManSystem::pacmanInput()
 
 			// y rotamos el vector de velocidad en -90.0f grados.
 			_pmTR->_vel = _pmTR->_vel.rotate(-90.0f);
+			sdlutils().musics().at("pacman_chomp").resumeMusic();
 
 		}
 		else if (ihldr.isKeyDown(SDL_SCANCODE_UP)) {
 
 			//ponemos la velocidad a 0.0f, -3.0f, con su rotacion actual
 			_pmTR->_vel = Vector2D(0.0f, -3.0f).rotate(_pmTR->_rot);
+
 			//Cuando se mueve pacman suena esto:
-//TODO: DESCOMENTAR
-			//sdlutils().musics().at("pacman_chomp").play(-1);
+			sdlutils().musics().at("pacman_chomp").play(-1);
 
 		}
 		else if (ihldr.isKeyDown(SDL_SCANCODE_DOWN)) {
 
 			//ponemos la velocidad a 0.0f, 0.0f, con su rotacion actual
 			_pmTR->_vel = Vector2D(0.0f, 0.0f).rotate(_pmTR->_rot);
+
 			//Cuando pacman para, deja de sonar
-//TODO: DESCOMENTAR
-			//sdlutils().musics().at("pacman_chomp").pauseMusic();
+			sdlutils().musics().at("pacman_chomp").pauseMusic();
 		}
 	}	
 }

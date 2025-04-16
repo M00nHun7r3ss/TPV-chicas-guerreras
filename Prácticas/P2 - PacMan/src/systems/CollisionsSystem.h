@@ -10,6 +10,5 @@ public:
 	virtual ~CollisionsSystem();
 	void initSystem() override;
 	void update() override;
-
 };
 

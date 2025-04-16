@@ -27,6 +27,5 @@ private:
 
 	Transform *_pmTR;
 	Health* _pmHealth;
-
 };
 

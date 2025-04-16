@@ -6,9 +6,7 @@
 
 #include "PacManSystem.h"
 #include "ImmunitySystem.h"
-#include "../components/Health.h"
 #include "../components/ImageWithFrames.h"
-#include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
@@ -39,18 +37,9 @@ void GhostSystem::update() {
 	for (int i = 0; i < ghosts.size(); i++)
 	{
 		ImageWithFrames* iwf = _mngr->getComponent<ImageWithFrames>(ghosts[i]);
-		if (pImmune->isImmune())
-		{
-			// fil cols de immune (azul).
-			iwf->setColRow(iwf->getCol(), 6);
-		}
-		else
-		{
-			iwf->setColRow(iwf->getCol(), 4);
-		}
-
+		if (pImmune->isImmune()) iwf->setColRow(iwf->getCol(), 6); // es azul
+		else iwf->setColRow(iwf->getCol(), 4); // es rojo.
 	}
-
 	//Movemos los fantasmas
 	moveGhosts();
 }
@@ -117,8 +106,7 @@ void GhostSystem::deleteGhost(ecs::entity_t e) {
 
 	// play sound on channel 1 (if there is something playing there
 	// it will be cancelled
-	//TODO: DESCOMENTAR
-	//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+	sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 }
 
 void GhostSystem::removeAllGhosts()
@@ -174,8 +162,7 @@ void GhostSystem::moveGhosts()
 			else _canMove = false; // no se movera.
 
 			//Actualizamos su vector velocidad
-			if (_canMove)
-			{
+			if (_canMove){
 				eTR->_vel = (pTR->_pos - eTR->_pos).normalize() * 0.9f;
 			}
 
@@ -230,13 +217,6 @@ void GhostSystem::recieve(const Message& m) {
 		_lastGhostAdded = 0;
 		break;
 
-	case _m_ROUND_START:
-		//Reseteamos el contador de tiempo y eliminamos los fantasmas, porque se generan aunque no debe
-		removeAllGhosts();
-		//Reseteamos el contador de tiempo
-		_lastGhostAdded = 0;
-		break;
-
 	case _m_GAME_OVER:
 		//Se quitan al salir de juego. Al entrar se generan.
 		removeAllGhosts();
@@ -244,11 +224,6 @@ void GhostSystem::recieve(const Message& m) {
 		_lastGhostAdded = 0;
 		break;
 
-	case _m_NEW_GAME:
-		//Reseteamos el contador de tiempo y eliminamos los fantasmas, porque se generan aunque no debe
-		removeAllGhosts();
-		_lastGhostAdded = 0;
-		break;
 
 	case _m_IMMUNITY_START:
 
@@ -267,11 +242,7 @@ void GhostSystem::recieve(const Message& m) {
 		break;
 
 	case _m_GHOST_COLLISION_NO_IMMUNITY:
-
-		//TODO: DESCOMENTAR
-		//Sonido pacman muerte
-		//sdlutils().soundEffects().at("pacman_death").play(0, 1);
-
+		
 		Game::State s;
 		//Si no tienes vidas
 		if (_mngr->getSystem<PacManSystem>()->getPacmanHealth() == 0)
@@ -292,6 +263,8 @@ void GhostSystem::recieve(const Message& m) {
 		Game::Instance()->getManager()->send(mes);
 		Game::Instance()->setState(s);
 		break;
+
+
 
 	default:
 		break;
