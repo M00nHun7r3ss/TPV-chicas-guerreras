@@ -105,7 +105,7 @@ void FoodSystem::recieve(const Message& m)
 void FoodSystem::generateFruitGrid()
 {
     //tamano
-    int size = 50;
+    int size = 30;
 
     for (unsigned i = 0u; i < MAX_FRUIT_NUMBER/5; i++) {
         for (unsigned j = 0u; j <= MAX_FRUIT_NUMBER/8; j++)
@@ -136,7 +136,7 @@ void FoodSystem::generateFruitGrid()
 			// inicialmente cereza.
 			_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 4, 1);
 
-            tr->init(Vector2D((i*100)+20, (j * 100) + 20), Vector2D(), size, size, 0.0f);
+            tr->init(Vector2D((i*100)+30, (j * 100) + 30), Vector2D(), size, size, 0.0f);
         }
     }
 }

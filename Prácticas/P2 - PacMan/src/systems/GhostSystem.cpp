@@ -234,7 +234,8 @@ void GhostSystem::recieve(const Message& m) {
 		break;
 
 	case _m_NEW_GAME:
-		//Reseteamos el contador de tiempo
+		//Reseteamos el contador de tiempo y eliminamos los fantasmas.
+		removeAllGhosts();
 		_lastGhostAdded = 0;
 		break;
 

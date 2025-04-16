@@ -3,6 +3,7 @@
 #include "RenderSystem.h"
 
 #include "../components/Image.h"
+#include "../components/Health.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
@@ -23,8 +24,8 @@ void RenderSystem::initSystem() {
 void RenderSystem::update() {
 	drawGhosts();
 	drawPacMan();
-	//drawHealth();
 	drawFruitGrid();
+	drawHealth();
 }
 
 void RenderSystem::drawGhosts() {
@@ -47,24 +48,22 @@ void RenderSystem::drawPacMan() {
 
 void RenderSystem::drawHealth()
 {
+	ecs::entity_t e = _mngr->getHandler(ecs::hdlr::PACMAN);
+	Health* pmHealth = _mngr->getComponent<Health>(e);
+	Vector2D pos = { 10.0f, 5.0f };
+	
 	// draw hearts
-	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::HEALTH)) {
+	for (int i = 0; i <= pmHealth->_currentHealth; i++) {
 
-		Transform* tr = _mngr->getComponent<Transform>(e);
-		Texture* tex = _mngr->getComponent<Image>(e)->_tex;
-		draw(tr, tex);
+		Texture* tex = pmHealth->getTexture();
 		// vamos modificando la x y renderizando para que vayan en fila.
-		tr->_pos.setX(tr->_pos.getX()+55);
+
+		pos.setX(pos.getX() + 35.0f);
+		SDL_Rect dest = build_sdlrect(pos, 30.0f, 30.0f);
+
+		assert(tex != nullptr);
+		tex->render(dest);
 	}
-
-	//// pos arriba izquierda.
-	//SDL_Rect dest = { 5, 10, 40, 40 };
-
-	//// vamos modificando la x y renderizando para que vayan en fila.
-	//for (int i = 0; i < _currentHealth; i++) {
-
-	//	dest.x = dest.x + 45;
-	//}
 }
 
 void RenderSystem::drawFruitGrid()
