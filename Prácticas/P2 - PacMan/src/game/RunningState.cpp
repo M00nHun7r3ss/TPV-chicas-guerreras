@@ -15,6 +15,10 @@ RunningState::RunningState()
 {
 }
 
+void RunningState::enter()
+{
+}
+
 void RunningState::update()
 {
 	bool exit = false;
@@ -26,6 +30,10 @@ void RunningState::update()
 		
 		exit = true;
 	}
+
+	// repite sonido
+		// Inicialmente empieza en 3 segundos.
+	Uint32 _timeBetweenEachSpawn = 3000;
 
 	// Update de cada sistema
 	Game::Instance()->ghostSys()->update();

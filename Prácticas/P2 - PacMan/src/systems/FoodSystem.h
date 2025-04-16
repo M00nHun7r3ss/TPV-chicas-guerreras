@@ -13,6 +13,8 @@ public:
     void initSystem() override;
     void update() override;
     void recieve(const Message& m) override;
+
+    unsigned int getCurrentFruits() { return _currNumOfFruit; }
 private:
     void generateFruitGrid();
 

@@ -5,6 +5,7 @@
 void NewRoundState::enter()
 {
 	_message = &sdlutils().msgs().at("newround");
+
 }
 
 void NewRoundState::update()

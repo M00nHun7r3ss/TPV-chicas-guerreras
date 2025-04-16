@@ -11,7 +11,7 @@ class RunningState : public GameState
 public:
 	RunningState();
 	virtual ~RunningState() {}
-	void enter() override {}
+	void enter() override;
 	void leave() override {}
 	void update() override;
 };

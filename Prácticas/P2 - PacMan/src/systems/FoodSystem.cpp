@@ -148,7 +148,7 @@ void FoodSystem::deleteFruit(ecs::entity_t e)
 
 	// play sound on channel 1 (if there is something playing there
 	// it will be cancelled
-	// TODO: VOLVER A ACTIVAR AL FINAL
+	//TODO: DESCOMENTAR
 	//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 
 }
@@ -157,6 +157,10 @@ void FoodSystem::checkNoFruit()
 {
 	if (_currNumOfFruit == 0)
 	{
+		//Sonido de ganar
+		//TODO: DESCOMENTAR
+		//sdlutils().soundEffects().at("pacman_won").play(0, 1);
+
 		//Envia mensaje de que ha acabado el juego
 		Message m;
 		m.id = _m_ROUND_START;

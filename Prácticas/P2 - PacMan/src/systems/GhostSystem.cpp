@@ -75,30 +75,35 @@ void GhostSystem::addGhost(unsigned int n) {
 		//0 - arriba/izqd, 1 - abajo/izqd, 2 - abajo/dcha, 3 - arriba/dcha
 		int esquina = rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
 		int x, y;
+		int velY; //Iniciamos la velocidad inicial como en la demo
 		switch (esquina) //Esto es asi porque el origen del sprite es arriba izquierda 
 		{
 		case 0: //arriba/izqd
 			x = 0;
 			y = 0;
+			velY = -1;
 			break;
 		case 1: //abajo/izqd,
 			x = 0;
 			y = sdlutils().height() - size;
+			velY = 1;
 			break;
 		case 2: //abajo/dcha
 			x = sdlutils().width() - size;
 			y = sdlutils().height() - size;
+			velY = 1;
 			break;
 		case 3: //arriba/dcha
 			x = sdlutils().width() - size;
 			y = 0;
+			velY = -1;
 			break;
 		default:
 			break;
 		}
 
 		//Inicializa transform
-		tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
+		tr->init(Vector2D(x, y), Vector2D(0, velY), size, size, 0.0f);
 
 		// add an Image Component
 		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 0, 4, 8);
@@ -112,7 +117,7 @@ void GhostSystem::deleteGhost(ecs::entity_t e) {
 
 	// play sound on channel 1 (if there is something playing there
 	// it will be cancelled
-	//TODO: Activar el sonido
+	//TODO: DESCOMENTAR
 	//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 }
 
@@ -221,9 +226,13 @@ void GhostSystem::recieve(const Message& m) {
 	case _m_ROUND_OVER:
 		//Se quitan al salir de ronda. Al entrar se generan.
 		removeAllGhosts();
+		//Reseteamos el contador de tiempo
+		_lastGhostAdded = 0;
 		break;
 
 	case _m_ROUND_START:
+		//Reseteamos el contador de tiempo y eliminamos los fantasmas, porque se generan aunque no debe
+		removeAllGhosts();
 		//Reseteamos el contador de tiempo
 		_lastGhostAdded = 0;
 		break;
@@ -231,16 +240,18 @@ void GhostSystem::recieve(const Message& m) {
 	case _m_GAME_OVER:
 		//Se quitan al salir de juego. Al entrar se generan.
 		removeAllGhosts();
+		//Reseteamos el contador de tiempo
+		_lastGhostAdded = 0;
 		break;
 
 	case _m_NEW_GAME:
-		//Reseteamos el contador de tiempo y eliminamos los fantasmas.
+		//Reseteamos el contador de tiempo y eliminamos los fantasmas, porque se generan aunque no debe
 		removeAllGhosts();
 		_lastGhostAdded = 0;
 		break;
 
 	case _m_IMMUNITY_START:
-		// TODO: cambia el sprite fantasma.
+
 		// cuando hay inmunidad no se generan fantasmas.
 		_pmImmune = true;
 		break;
@@ -256,6 +267,10 @@ void GhostSystem::recieve(const Message& m) {
 		break;
 
 	case _m_GHOST_COLLISION_NO_IMMUNITY:
+
+		//TODO: DESCOMENTAR
+		//Sonido pacman muerte
+		//sdlutils().soundEffects().at("pacman_death").play(0, 1);
 
 		Game::State s;
 		//Si no tienes vidas

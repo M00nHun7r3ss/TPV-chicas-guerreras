@@ -1,22 +1,27 @@
 #include "GameOverState.h"
 
 #include "Game.h"
+#include "../ecs/Manager.h"
+#include "../systems/FoodSystem.h"
+#include "../systems/PacManSystem.h"
 
 void GameOverState::enter()
 {
-	_message = &sdlutils().msgs().at("gameover");
+	//_message = &sdlutils().msgs().at("gameover");
+
+	ecs::Manager* mngr = Game::Instance()->getManager();
 
 	//TODO: CAMBIAR A VARIOS FINALES
-	//if (_aUtils->getAsteroidNumber() == 0)
-	//{
-	//	// CHAMPION.
-		//_message = &sdlutils().msgs().at("gameovergood");
-	//}
-	//else
-	//{
-	//	// LOOSER.
-	//	_message = &sdlutils().msgs().at("gameoverbad");
-	//}
+	if (mngr->getSystem<FoodSystem>()->getCurrentFruits() == 0)
+	{
+		// CHAMPION.
+		_message = &sdlutils().msgs().at("gameovergood");
+	}
+	else if (mngr->getSystem<PacManSystem>()->getPacmanHealth() == 0)
+	{
+		// LOOSER.
+		_message = &sdlutils().msgs().at("gameoverbad");
+	}
 }
 
 void GameOverState::update()
