@@ -16,12 +16,11 @@ struct ImageWithFrames : public ecs::Component
 	ImageWithFrames(Texture* tex, int startCol, int startRow); //Frutas
 	virtual ~ImageWithFrames() {}
 
-	void setTexture(Texture* tex) { _tex = tex; }
-	void setStartCol(int col) { _fCol = col; }
-	void setStartRow(int row) { _fRow = row; }
-
-
 	void initComponent() override;
+
+	void setColRow(int col, int row) { _fCol = col; _fRow = row; }
+	int getCol() { return _fCol; }
+	int getRow() { return _fRow; }
 
 	Transform* _tr;
 

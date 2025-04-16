@@ -35,27 +35,20 @@ void GhostSystem::update() {
 	// the Pacman's Immunity
 	ImmunitySystem* pImmune = _mngr->getSystem<ImmunitySystem>();
 
-	// fil cols general para renderizar
-	int col = 0;
-	int row = 4;
-
 	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
 	for (int i = 0; i < ghosts.size(); i++)
 	{
+		ImageWithFrames* iwf = _mngr->getComponent<ImageWithFrames>(ghosts[i]);
 		if (pImmune->isImmune())
 		{
 			// fil cols de immune (azul).
-			col = 0;
-			row = 6;
+			iwf->setColRow(iwf->getCol(), 6);
 		}
 		else
 		{
-			int col = 0;
-			int row = 4;
+			iwf->setColRow(iwf->getCol(), 4);
 		}
 
-		_mngr->removeComponent<ImageWithFrames>(ghosts[i]);
-		_mngr->addComponent<ImageWithFrames>(ghosts[i], &sdlutils().images().at("sprites"), col, row, 7);
 	}
 
 	//Movemos los fantasmas
@@ -108,7 +101,7 @@ void GhostSystem::addGhost(unsigned int n) {
 		tr->init(Vector2D(x, y), Vector2D(), size, size, 0.0f);
 
 		// add an Image Component
-		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 0, 4, 7);
+		_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 0, 4, 8);
 		
 		_currNumOfGhosts++;
 	}

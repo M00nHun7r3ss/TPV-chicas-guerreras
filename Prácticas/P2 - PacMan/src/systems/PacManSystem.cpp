@@ -69,8 +69,6 @@ void PacManSystem::recieve(const Message& m)
 	case _m_ROUND_START:
 		// al empezar ronda resetea posicion.
 		resetPacman();
-		//Reseteamos el tiempo
-		vt.resetTime();
 		break;
 
 	default:

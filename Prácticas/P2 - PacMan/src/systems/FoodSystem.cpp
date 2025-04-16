@@ -31,26 +31,21 @@ void FoodSystem::update()
 	std::vector<ecs::entity_t> fruits = _mngr->getEntities(ecs::grp::FRUITS);
 	for (int i = 0; i < fruits.size(); i++)
 	{
+		ImageWithFrames* iwf = _mngr->getComponent<ImageWithFrames>(fruits[i]);
 		// si lo tiene
 		if (_mngr->hasComponent<MiraculousComponent>(fruits[i]))
 		{
-			// lo coge.
+			// lo sustrae.
 			MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(fruits[i]);
-			int col, row;
 
 			VirtualTimer& vt = sdlutils().virtualTimer();
 			Uint32 _timeBetweenEachSpawn;
-
-			// fil cols general para renderizar
-			col = 4;
-			row = 1;
 
 			// si no es miraculous...
 			if (!mc->_isMiraculous)
 			{
 				// fil cols de normal (cereza).
-				col = 4;
-				row = 1;
+				iwf->setColRow(4, iwf->getRow());
 
 				_timeBetweenEachSpawn = mc->_N * 1000;
 
@@ -64,8 +59,7 @@ void FoodSystem::update()
 			else // si lo es...
 			{
 				// fil cols de milagrosa (pera).
-				col = 7;
-				row = 1;
+				iwf->setColRow(7, iwf->getRow());
 
 				_timeBetweenEachSpawn = mc->_M * 1000;
 
@@ -77,7 +71,7 @@ void FoodSystem::update()
 				}
 			}
 
-			_mngr->addComponent<ImageWithFrames>(fruits[i], &sdlutils().images().at("sprites"), col, row);
+			
 		}
 	}
 
@@ -137,9 +131,10 @@ void FoodSystem::generateFruitGrid()
 				MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(e);
 				//Inicialmente sera normal
 				mc->_isMiraculous = false;
-				
 			}
-	        else { _mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 4, 1); }
+
+			// inicialmente cereza.
+			_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 4, 1);
 
             tr->init(Vector2D((i*100)+20, (j * 100) + 20), Vector2D(), size, size, 0.0f);
         }
