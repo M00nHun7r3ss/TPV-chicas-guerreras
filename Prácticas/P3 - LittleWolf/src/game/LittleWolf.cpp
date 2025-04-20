@@ -13,7 +13,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 
-using std::__1::string;
+//using std::__1::string;
 LittleWolf::LittleWolf() :
 		_show_help(true), //
 		_xres(), //
