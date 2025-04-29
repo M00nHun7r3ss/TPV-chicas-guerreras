@@ -25,6 +25,9 @@ UDPServer::UDPServer(const Uint16 port, uint8_t max_clients) {
 	_max_clients = max_clients;
 	_clients = new ClientInfo[max_clients]();
 
+	for (int i = 0; i < _max_clients; i++)
+		_clients->connected = false;
+
 	_done = false;
 	_port = port;
 }

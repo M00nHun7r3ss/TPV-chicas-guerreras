@@ -21,6 +21,8 @@ Fighter::Fighter() :
 		_fighter_img(sdlutils().images().at("fighter")), //
 		_ihdlr(ih()), //
 		_show_help(true) {
+	for (int i = 0; i < _players.size(); i++)
+		_players[i].state = NOT_USED;
 }
 
 Fighter::~Fighter() {
