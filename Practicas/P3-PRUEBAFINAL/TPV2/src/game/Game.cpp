@@ -13,19 +13,18 @@
 #include "LittleWolf.h"
 
 Game::Game() :
-		bm_(nullptr), 
-		fighters_(nullptr), 
-		net_(nullptr),
+		//bm_(nullptr), 
+		//fighters_(nullptr), 
+		//net_(nullptr),
 
 		_little_wolf() {
 }
 
 Game::~Game() {
-	delete fighters_;
-	delete bm_;
-	delete net_;
+	//delete fighters_;
+	//delete bm_;
+	//delete net_;
 
-	delete _little_wolf;
 
 	// release InputHandler if the instance was created correctly.
 	if (InputHandler::HasInstance())
@@ -35,13 +34,14 @@ Game::~Game() {
 	if (SDLUtils::HasInstance())
 		SDLUtils::Release();
 
+	delete _little_wolf;
 }
 
 bool Game::init(const char* map) {
 
 	_little_wolf = new LittleWolf();
 
-	// load a map
+	// al ejecutar el juego se carga el mapa desde el JSON.
 	_little_wolf->load(map);
 
 	// initialize the SDL singleton
@@ -65,7 +65,7 @@ bool Game::init(const char* map) {
 
 	_little_wolf->init(sdlutils().window(), sdlutils().renderer());
 
-	// add some players
+	// se añaden 4 jugadores al juego
 	_little_wolf->addPlayer(0);
 	_little_wolf->addPlayer(1);
 	_little_wolf->addPlayer(2);
@@ -74,6 +74,7 @@ bool Game::init(const char* map) {
 	return true;
 }
 
+/*
 bool Game::initGame(char *host, Uint16 port) {
 
 	net_ = new Networking();
@@ -109,6 +110,7 @@ bool Game::initGame(char *host, Uint16 port) {
 
 	return true;
 }
+*/
 
 void Game::start() {
 	// a boolean to exit the loop
@@ -116,6 +118,7 @@ void Game::start() {
 
 	auto &ihdlr = ih();
 
+	/*
 	//Fighter
 	auto &vt = sdlutils().virtualTimer();
 	while (!exit) {
@@ -133,16 +136,16 @@ void Game::start() {
 
 		}
 
-		fighters_->update();
-		bm_->update();
-		net_->update();
+		//fighters_->update();
+		//bm_->update();
+		//net_->update();
 
-		check_collisions();
+		//check_collisions();
 
 		sdlutils().clearRenderer();
 
-		fighters_->render();
-		bm_->render();
+		//fighters_->render();
+		//bm_->render();
 
 		sdlutils().presentRenderer();
 
@@ -151,9 +154,10 @@ void Game::start() {
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
 	}
+	*/
 
 	//LittleWolf
-	/*
+	
 	 while (!exit) {
 		Uint32 startTime = sdlutils().currRealTime();
 
@@ -184,12 +188,17 @@ void Game::start() {
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
 	}
-	 */
 
-	net_->disconnect();
+	//net_->disconnect();
 
 }
 
+/*bool Game::init()
+{
+	return true;
+}*/
+
+/*
 void Game::check_collisions() {
 	if (!net_->is_master())
 		return;
@@ -208,3 +217,4 @@ void Game::check_collisions() {
 		}
 	}
 }
+*/

@@ -7,25 +7,27 @@
 
 #include "../utils/Singleton.h"
 
-class Fighter;
-class Bullets;
-class Networking;
+//class Fighter;
+//class Bullets;
+//class Networking;
 
 class LittleWolf;
 
-class Game: public Singleton<Game> {
-	friend Singleton<Game> ;
-	Game();
+class Game
+	//: public Singleton<Game>
+{
+	//friend Singleton<Game> ;
 public:
+	Game();
 	virtual ~Game();
 
-	bool initGame(char *host, Uint16 port);
+	//bool initGame(char *host, Uint16 port);
 
 	//LittleWolf
 	bool init(const char* map);
 
 	void start();
-
+	/*
 	Fighter& get_fighters() {
 		return *fighters_;
 	}
@@ -37,18 +39,20 @@ public:
 	Networking& get_networking() {
 		return *net_;
 	}
+	*/
+	
 
 
 
 private:
 
-	//bool init();
-	void check_collisions();
+	//bool init(); // TODO: ver que pasa con los init.
+	//void check_collisions();
 
 
-	Bullets *bm_;
-	Fighter *fighters_;
-	Networking *net_;
+	//Bullets *bm_;
+	//Fighter *fighters_;
+	//Networking *net_;
 
 	LittleWolf* _little_wolf;
 };

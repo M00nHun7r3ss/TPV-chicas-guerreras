@@ -12,6 +12,7 @@ void server(Uint16 port) {
 	s.listen();
 }
 
+/*
 void client(char *host, Uint16 port) {
 	if (Game::Init()) {
 		if (Game::Instance()->initGame(host, port)) {
@@ -20,7 +21,32 @@ void client(char *host, Uint16 port) {
 		Game::Release();
 	}
 }
+*/
 
+int main(int, char**) {
+
+	try {
+		Game g;
+		g.init("resources/maps/little_wolf/map_0.json");
+		g.start();
+	}
+	catch (const std::string& e) { // catch exceptions thrown as strings
+		std::cerr << e << std::endl;
+	}
+	catch (const char* e) { // catch exceptions thrown as char*
+		std::cerr << e << std::endl;
+	}
+	catch (const std::exception& e) { // catch exceptions thrown as a sub-type of std::exception
+		std::cerr << e.what();
+	}
+	catch (...) {
+		std::cerr << "Caught and exception of unknown type ...";
+	}
+
+	return 0;
+}
+
+/*
 void start(int argc, char **argv) {
 
 	SDLNetUtils::initSDLNet();
@@ -43,11 +69,17 @@ void start(int argc, char **argv) {
 	SDLNetUtils::closeSDLNet();
 
 }
+*/
 
-int main(int argc, char **argv) {
+/*
+int main(int, char **) {
 
 	try {
-		start(argc, argv);
+		if (Game::Init())
+		{
+			Game::Instance()->init("resources/maps/little_wolf/map_0.json");
+			Game::Instance()->start();
+		}
 
 	} catch (const std::string &e) { // catch exceptions thrown as strings
 		std::cerr << e << std::endl;
@@ -61,31 +93,5 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
-
-//Main Little Wolf
-//int main(int, char**) {
-//
-//	try {
-	/*if (Game::Init()) { // con este Init llamas a init!!!
-	Game::Instance()->init("resources/maps/little_wolf/map_0.json");
-	Game::Instance()->start();}*/
-//		Game g;
-//		g.init("resources/maps/little_wolf/map_0.json");
-//		g.start();
-//	}
-//	catch (const std::string& e) { // catch exceptions thrown as strings
-//		std::cerr << e << std::endl;
-//	}
-//	catch (const char* e) { // catch exceptions thrown as char*
-//		std::cerr << e << std::endl;
-//	}
-//	catch (const std::exception& e) { // catch exceptions thrown as a sub-type of std::exception
-//		std::cerr << e.what();
-//	}
-//	catch (...) {
-//		std::cerr << "Caught and exception of unknown type ...";
-//	}
-//
-//	return 0;
-//}
+*/
 
