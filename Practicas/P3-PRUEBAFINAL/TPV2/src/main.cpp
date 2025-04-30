@@ -62,3 +62,30 @@ int main(int argc, char **argv) {
 	return 0;
 }
 
+//Main Little Wolf
+//int main(int, char**) {
+//
+//	try {
+	/*if (Game::Init()) { // con este Init llamas a init!!!
+	Game::Instance()->init("resources/maps/little_wolf/map_0.json");
+	Game::Instance()->start();}*/
+//		Game g;
+//		g.init("resources/maps/little_wolf/map_0.json");
+//		g.start();
+//	}
+//	catch (const std::string& e) { // catch exceptions thrown as strings
+//		std::cerr << e << std::endl;
+//	}
+//	catch (const char* e) { // catch exceptions thrown as char*
+//		std::cerr << e << std::endl;
+//	}
+//	catch (const std::exception& e) { // catch exceptions thrown as a sub-type of std::exception
+//		std::cerr << e.what();
+//	}
+//	catch (...) {
+//		std::cerr << "Caught and exception of unknown type ...";
+//	}
+//
+//	return 0;
+//}
+

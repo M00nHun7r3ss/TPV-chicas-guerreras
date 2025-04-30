@@ -11,6 +11,8 @@ class Fighter;
 class Bullets;
 class Networking;
 
+class LittleWolf;
+
 class Game: public Singleton<Game> {
 	friend Singleton<Game> ;
 	Game();
@@ -18,6 +20,10 @@ public:
 	virtual ~Game();
 
 	bool initGame(char *host, Uint16 port);
+
+	//LittleWolf
+	bool init(const char* map);
+
 	void start();
 
 	Fighter& get_fighters() {
@@ -36,7 +42,7 @@ public:
 
 private:
 
-	bool init();
+	//bool init();
 	void check_collisions();
 
 
@@ -44,5 +50,6 @@ private:
 	Fighter *fighters_;
 	Networking *net_;
 
+	LittleWolf* _little_wolf;
 };
 

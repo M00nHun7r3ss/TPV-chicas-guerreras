@@ -1,0 +1,9 @@
+Server
+c:
+  cd c:\hlocal\TPV2 //La ruta de tu pc
+  bin\TPV2Debug.exe server 2000
+
+Client
+  c:
+  cd c:\hlocal\TPV2 //La ruta de tu pc
+  bin\TPV2Debug.exe client localhost 2000
