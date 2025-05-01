@@ -9,22 +9,21 @@
 
 //class Fighter;
 //class Bullets;
-//class Networking;
+class Networking;
 
 class LittleWolf;
 
 class Game
-	//: public Singleton<Game>
+	: public Singleton<Game>
 {
-	//friend Singleton<Game> ;
-public:
+	friend Singleton<Game>;
 	Game();
+public:
 	virtual ~Game();
 
-	//bool initGame(char *host, Uint16 port);
+	bool init(const char* map, char* host, Uint16 port);
 
-	//LittleWolf
-	bool init(const char* map);
+	void initGame();
 
 	void start();
 	/*
@@ -35,14 +34,16 @@ public:
 	Bullets& get_bullets() {
 		return *bm_;
 	}
+	*/
+
+	LittleWolf& get_littlewolf()
+	{
+		return *_little_wolf;
+	}
 
 	Networking& get_networking() {
 		return *net_;
 	}
-	*/
-	
-
-
 
 private:
 
@@ -52,7 +53,7 @@ private:
 
 	//Bullets *bm_;
 	//Fighter *fighters_;
-	//Networking *net_;
+	Networking *net_;
 
 	LittleWolf* _little_wolf;
 };

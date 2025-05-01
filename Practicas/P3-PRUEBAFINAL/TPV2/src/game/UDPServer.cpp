@@ -164,7 +164,7 @@ void UDPServer::listen() {
 }
 
 void UDPServer::send_packet_to_all_except(int ex_id) {
-	for (auto i = 0u; i < _max_clients; i++) {
+	for (unsigned i = 0u; i < _max_clients; i++) {
 		if (i != static_cast<Uint8>(ex_id) && _clients[i].connected) {
 			_p->address = _clients[i].address;
 			SDLNet_UDP_Send(_sock, -1, _p); // we just forward the whole packet, it is supposed to be ready
@@ -175,7 +175,7 @@ void UDPServer::send_packet_to_all_except(int ex_id) {
 int UDPServer::who_is_the_master() {
 
 	// the master is the client with the minimum identifier
-	for (auto i = 0u; i < _max_clients; i++) {
+	for (unsigned i = 0u; i < _max_clients; i++) {
 		if (_clients[i].connected)
 			return i;
 	}

@@ -17,7 +17,7 @@ Game::Game() :
 		//fighters_(nullptr), 
 		//net_(nullptr),
 
-		_little_wolf() {
+		_little_wolf(nullptr) {
 }
 
 Game::~Game() {
@@ -37,7 +37,15 @@ Game::~Game() {
 	delete _little_wolf;
 }
 
-bool Game::init(const char* map) {
+bool Game::init(const char* map, char* host, Uint16 port)
+{
+	net_ = new Networking();
+
+	if (!net_->init(host, port)) {
+		SDLNetUtils::print_SDLNet_error();
+		return false;
+	}
+	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
 
 	_little_wolf = new LittleWolf();
 
@@ -60,47 +68,30 @@ bool Game::init(const char* map) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 			<< std::endl;
 		return false;
-
 	}
+
+	return true;
+}
+void Game::initGame() {
 
 	_little_wolf->init(sdlutils().window(), sdlutils().renderer());
 
+	/*
 	// se añaden 4 jugadores al juego
 	_little_wolf->addPlayer(0);
 	_little_wolf->addPlayer(1);
 	_little_wolf->addPlayer(2);
 	_little_wolf->addPlayer(3);
+	*/
 
-	return true;
+	_little_wolf->addPlayer(net_->client_id());
 }
 
 /*
 bool Game::initGame(char *host, Uint16 port) {
 
-	net_ = new Networking();
 
-	if (!net_->init(host, port)) {
-		SDLNetUtils::print_SDLNet_error();
-		return false;
-	}
-	std::cout << "Connected as client " << (int) net_->client_id() << std::endl;
-
-	// initialize the SDL singleton
-	if (!SDLUtils::Init("SDLNet Game", 800, 600,
-			"resources/config/asteroids.multiplayer.resources.json")) {
-
-		std::cerr << "Something went wrong while initializing SDLUtils"
-				<< std::endl;
-		return false;
-	}
-
-	// initialize the InputHandler singleton
-	if (!InputHandler::Init()) {
-		std::cerr << "Something went wrong while initializing SDLHandler"
-				<< std::endl;
-		return false;
-
-	}
+	
 
 	bm_ = new Bullets();
 	fighters_ = new Fighter();
