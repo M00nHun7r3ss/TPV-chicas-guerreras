@@ -109,6 +109,8 @@ void UDPServer::listen() {
 									<< " connected from ";
 							SDLNetUtils::print_ip(_p->address, true);
 
+							std::cout << "Master: " << who_is_the_master() << std::endl;
+
 						} else {
 							// if not free slots, send a message to the client rejecting the connection
 							m0._type = _CONNECTION_REJECTED;

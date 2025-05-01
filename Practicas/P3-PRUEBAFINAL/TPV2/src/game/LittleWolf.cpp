@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "Game.h"
 #include "../json/JSONValue.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
@@ -220,12 +221,13 @@ void LittleWolf::load(std::string filename) {
 }
 
 bool LittleWolf::addPlayer(std::uint8_t id) {
+	//Initialize Player
 	assert(id < _max_player);
 
 	if (_players[id].state != NOT_USED)
 		return false;
 
-	auto &rand = sdlutils().rand();
+	RandomNumberGenerator& rand = sdlutils().rand();
 
 	// The search for an empty cell start at a random position (orow,ocol)
 	uint16_t orow = rand.nextInt(0, _map.walling_height);
@@ -261,9 +263,20 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	_map.walling[(int) p.where.y][(int) p.where.x] = player_to_tile(id);
 	_players[id] = p;
 
+	//Id
 	_curr_player_id = id;
 
 	return true;
+}
+
+void LittleWolf::removePlayer(std::uint8_t id)
+{
+	_players[id].state = NOT_USED;
+}
+
+void LittleWolf::killPlayer(std::uint8_t id)
+{
+	_players[id].state = DEAD;
 }
 
 void LittleWolf::render() {
@@ -597,6 +610,14 @@ void LittleWolf::switchToNextPlayer() {
 	// move to the next player view
 	_curr_player_id = j;
 
+}
+
+void LittleWolf::send_my_info()
+{
+	Player& p = _players[_curr_player_id];
+
+	//TODO: send info little wolf
+	//Game::Instance()->get_networking().send_my_info(p.where, p.theta, p.state);
 }
 
 void LittleWolf::bringAllToLife() {

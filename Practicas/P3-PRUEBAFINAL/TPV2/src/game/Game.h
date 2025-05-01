@@ -47,9 +47,7 @@ public:
 
 private:
 
-	//bool init(); // TODO: ver que pasa con los init.
 	//void check_collisions();
-
 
 	//Bullets *bm_;
 	//Fighter *fighters_;

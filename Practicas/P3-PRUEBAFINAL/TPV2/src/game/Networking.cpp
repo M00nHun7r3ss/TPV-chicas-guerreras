@@ -145,12 +145,15 @@ void Networking::update() {
 }
 
 void Networking::handle_new_client(Uint8 id) {
+	//TODO: New little wolf
 	//if (id != _clientId)
-		//Game::Instance()->get_fighters().send_my_info();
+		//Game::Instance()->get_littlewolf().send_my_info();
 }
 
 void Networking::handle_disconnet(Uint8 id) {
-	//Game::Instance()->get_fighters().removePlayer(id);
+	//TODO: remove little wolf
+	//Game::Instance()->get_littlewolf().removePlayer(id);
+
 }
 
 void Networking::send_state(const Vector2D &pos, float w, float h, float rot) {
@@ -166,9 +169,10 @@ void Networking::send_state(const Vector2D &pos, float w, float h, float rot) {
 }
 
 void Networking::handle_player_state(const PlayerStateMsg &m) {
+	//TODO: UPDATE STATE
 	/*
 	if (m._client_id != _clientId) {
-		Game::Instance()->get_fighters().update_player_state(m._client_id, m.x,
+		Game::Instance()->get_littlewolf().update_player_state(m._client_id, m.x,
 				m.y, m.w, m.h, m.rot);
 	}
 	*/
@@ -190,6 +194,7 @@ void Networking::send_shoot(Vector2D p, Vector2D v, int width, int height,
 }
 
 void Networking::handle_shoot(const ShootMsg &m) {
+	//TODO: SHOOT LITTLE WOLF
 	//Game::Instance()->get_bullets().shoot(Vector2D(m.x, m.y),
 			//Vector2D(m.vx, m.vy), m.w, m.h, m.rot);
 
@@ -203,7 +208,8 @@ void Networking::send_dead(Uint8 id) {
 }
 
 void Networking::handle_dead(const MsgWithId &m) {
-	//Game::Instance()->get_fighters().killPlayer(m._client_id);
+	//TODO: KILL LITTLE WOLF
+	//Game::Instance()->get_littlewolf().killPlayer(m._client_id);
 }
 
 void Networking::send_my_info(const Vector2D &pos, float w, float h, float rot,
@@ -221,8 +227,9 @@ void Networking::send_my_info(const Vector2D &pos, float w, float h, float rot,
 }
 
 void Networking::handle_player_info(const PlayerInfoMsg &m) {
+	//TODO: LITTLE WOLF INFO
 	/*if (m._client_id != _clientId) {
-		Game::Instance()->get_fighters().update_player_info(m._client_id, m.x,
+		Game::Instance()->get_littlewolf().update_player_info(m._client_id, m.x,
 				m.y, m.w, m.h, m.rot, m.state);
 	}*/
 }
@@ -234,6 +241,7 @@ void Networking::send_restart() {
 }
 
 void Networking::handle_restart() {
-	//Game::Instance()->get_fighters().bringAllToLife();
+	//TODO: LITTLE WOLF RESET
+	//Game::Instance()->get_littlewolf().bringAllToLife();
 
 }

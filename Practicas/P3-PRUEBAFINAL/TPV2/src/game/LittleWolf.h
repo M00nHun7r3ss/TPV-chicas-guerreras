@@ -10,13 +10,23 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <array>
 #include <string>
 #include <fstream>
 
 #include "../sdlutils/InputHandler.h"
+#include "../utils/Vector2D.h"
+
+class Texture;
+class InputHandler;
 
 class LittleWolf {
 public:
+
+	// the status of a player
+	enum PlayerState : uint8_t {
+		NOT_USED, ALIVE, DEAD
+	};
 
 	// a point in a 2D-plane
 	struct Point {
@@ -57,11 +67,6 @@ public:
 		int top;
 		int bot;
 		float size;
-	};
-
-	// the status of a player
-	enum PlayerState : uint8_t {
-		NOT_USED, ALIVE, DEAD
 	};
 
 	// player information
@@ -134,6 +139,12 @@ public:
 	// add a new player with identifier <id>, returns false if the id is already occupied
 	bool addPlayer(std::uint8_t id);
 
+	// remove player with identifier <id>
+	void removePlayer(std::uint8_t id);
+
+	// remove player with identifier <id>
+	void killPlayer(std::uint8_t id);
+
 	// initialize the SDL window information
 	void init(SDL_Window *window, SDL_Renderer *render);
 
@@ -152,6 +163,8 @@ public:
 	}
 
 private:
+
+	void send_my_info();
 
 	// mark all (used) player alive
 	void bringAllToLife();
@@ -367,7 +380,6 @@ private:
 	}
 
 	// Some fields defining all elements of the world, etc
-
 	bool _show_help;
 
 	// maximum number of player
