@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "Fighter.h"
 #include "Bullets.h"
+#include "LittleWolf.h"
 
 Networking::Networking() :
 		_sock(), //
@@ -152,7 +153,7 @@ void Networking::handle_new_client(Uint8 id) {
 
 void Networking::handle_disconnet(Uint8 id) {
 	//TODO: remove little wolf
-	//Game::Instance()->get_littlewolf().removePlayer(id);
+	Game::Instance()->get_littlewolf().removePlayer(id);
 
 }
 
@@ -209,7 +210,7 @@ void Networking::send_dead(Uint8 id) {
 
 void Networking::handle_dead(const MsgWithId &m) {
 	//TODO: KILL LITTLE WOLF
-	//Game::Instance()->get_littlewolf().killPlayer(m._client_id);
+	Game::Instance()->get_littlewolf().killPlayer(m._client_id);
 }
 
 void Networking::send_my_info(const Vector2D &pos, float w, float h, float rot,

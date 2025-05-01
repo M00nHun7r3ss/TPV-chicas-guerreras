@@ -14,6 +14,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 
+#pragma region NO TOCAR
 LittleWolf::LittleWolf() :
 		_show_help(true), //
 		_xres(), //
@@ -23,7 +24,9 @@ LittleWolf::LittleWolf() :
 		_shoot_distace(), // the shoot distance -- not that it's wrt to the walling size
 		_map(), //
 		_players(), //
-		_curr_player_id(0) { // we start with player 0
+		_curr_player_id(0), // we start with player 0
+		_isUpperView(false)
+{ 
 }
 
 LittleWolf::~LittleWolf() {
@@ -43,7 +46,7 @@ void LittleWolf::init(SDL_Window *window, SDL_Renderer *render) {
 
 void LittleWolf::update() {
 
-	auto &ihdlr = ih();
+	InputHandler &ihdlr = ih();
 
 	if (ihdlr.keyDownEvent()) {
 		// toggle help
@@ -219,6 +222,7 @@ void LittleWolf::load(std::string filename) {
 				}
 
 }
+#pragma endregion
 
 bool LittleWolf::addPlayer(std::uint8_t id) {
 	//Initialize Player
@@ -279,6 +283,7 @@ void LittleWolf::killPlayer(std::uint8_t id)
 	_players[id].state = DEAD;
 }
 
+#pragma region COSAS RENDER
 void LittleWolf::render() {
 
 	// if the player is dead we only render upper view, otherwise the normal view
@@ -416,55 +421,63 @@ void LittleWolf::render_map(Player &p) {
 
 void LittleWolf::render_upper_view() {
 
-	// lock texture
-	const Display display = lock(_gpu);
+	// TODO: hacerlo para cuando muera y para el jugador que le de a la tecla en especifico.
+	if (_isUpperView)
+	{
+		// lock texture
+		const Display display = lock(_gpu);
 
-	for (int x = 0; x < _gpu.xres; x++)
-		for (int y = 0; y < _gpu.yres; y++)
-			put(display, x, y, 0x00000000);
+		for (int x = 0; x < _gpu.xres; x++)
+			for (int y = 0; y < _gpu.yres; y++)
+				put(display, x, y, 0x00000000);
 
-	for (auto x = 0u; x < _map.walling_height; x++)
-		for (auto y = 0u; y < _map.walling_width; y++) {
+		for (auto x = 0u; x < _map.walling_height; x++)
+			for (auto y = 0u; y < _map.walling_width; y++) {
 
-			// each non empty position in the walling is drawn as a square in the window,
-			// because the walling size is smaller than the resolution by 'walling_size_factor'
-			if (_map.walling[x][y] != 0)
-				for (int i = 0; i < _walling_size_factor; i++)
-					for (int j = 0; j < _walling_size_factor; j++)
-						put(display, y * _walling_size_factor + i,
+				// each non empty position in the walling is drawn as a square in the window,
+				// because the walling size is smaller than the resolution by 'walling_size_factor'
+				if (_map.walling[x][y] != 0)
+					for (int i = 0; i < _walling_size_factor; i++)
+						for (int j = 0; j < _walling_size_factor; j++)
+							put(display, y * _walling_size_factor + i,
 								_gpu.yres - 1 - x * _walling_size_factor + j,
 								color(_map.walling[x][y]));
-		}
+			}
 
-	// unlock texture
-	unlock(_gpu);
+		// unlock texture
+		unlock(_gpu);
 
-	const SDL_Rect dst = { (_gpu.xres - _gpu.yres) / 2, (_gpu.yres - _gpu.xres)
-			/ 2, _gpu.yres, _gpu.xres, };
-	SDL_RenderCopyEx(_gpu.renderer, _gpu.texture, NULL, &dst, -90, NULL,
+		const SDL_Rect dst = { (_gpu.xres - _gpu.yres) / 2, (_gpu.yres - _gpu.xres)
+				/ 2, _gpu.yres, _gpu.xres, };
+		SDL_RenderCopyEx(_gpu.renderer, _gpu.texture, NULL, &dst, -90, NULL,
 			SDL_FLIP_NONE);
 
-	// add labels to each player, with corresponding rotation
-	for (int i = 0u; i < _max_player; i++) {
-		Player &p = _players[i];
-		if (p.state != NOT_USED) {
-			Texture info(sdlutils().renderer(), "P" + std::to_string(i),
+		// add labels to each player, with corresponding rotation
+		for (int i = 0u; i < _max_player; i++) {
+			Player& p = _players[i];
+			if (p.state != NOT_USED) {
+				Texture info(sdlutils().renderer(), "P" + std::to_string(i),
 					sdlutils().fonts().at("MFR12"),
 					build_sdlcolor(color_rgba(i + 10)));
 
-			int w = info.width();
-			int h = info.height();
+				int w = info.width();
+				int h = info.height();
 
-			SDL_Rect src = build_sdlrect(0.0f, 0.0f, w, h);
-			SDL_Rect dest = build_sdlrect(
+				SDL_Rect src = build_sdlrect(0.0f, 0.0f, w, h);
+				SDL_Rect dest = build_sdlrect(
 					p.where.x * _walling_size_factor - w / 2,
 					p.where.y * _walling_size_factor - h / 2, w, h);
 
-			info.render(src, dest, p.theta * _rd);
+				info.render(src, dest, p.theta * _rd);
 
+			}
 		}
 	}
+}
 
+void LittleWolf::toggle_upper_view()
+{
+	_isUpperView = !_isUpperView;
 }
 
 void LittleWolf::render_players_info() {
@@ -599,6 +612,8 @@ bool LittleWolf::shoot(Player &p) {
 	}
 	return false;
 }
+
+#pragma endregion
 
 void LittleWolf::switchToNextPlayer() {
 

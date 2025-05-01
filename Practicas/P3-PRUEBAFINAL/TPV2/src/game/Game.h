@@ -7,8 +7,6 @@
 
 #include "../utils/Singleton.h"
 
-//class Fighter;
-//class Bullets;
 class Networking;
 
 class LittleWolf;
@@ -26,15 +24,6 @@ public:
 	void initGame();
 
 	void start();
-	/*
-	Fighter& get_fighters() {
-		return *fighters_;
-	}
-
-	Bullets& get_bullets() {
-		return *bm_;
-	}
-	*/
 
 	LittleWolf& get_littlewolf()
 	{
@@ -49,8 +38,6 @@ private:
 
 	//void check_collisions();
 
-	//Bullets *bm_;
-	//Fighter *fighters_;
 	Networking *net_;
 
 	LittleWolf* _little_wolf;

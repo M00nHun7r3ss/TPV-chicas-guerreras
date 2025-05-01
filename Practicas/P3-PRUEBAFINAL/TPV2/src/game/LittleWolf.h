@@ -24,9 +24,9 @@ class LittleWolf {
 public:
 
 	// the status of a player
-	enum PlayerState : uint8_t {
-		NOT_USED, ALIVE, DEAD
-	};
+	enum PlayerState : uint8_t { NOT_USED, ALIVE, DEAD };
+
+#pragma region NO TOCAR
 
 	// a point in a 2D-plane
 	struct Point {
@@ -136,6 +136,17 @@ public:
 	// load a map from a file
 	void load(std::string filename);
 
+	// initialize the SDL window information
+	void init(SDL_Window *window, SDL_Renderer *render);
+
+	// render the walls, etc
+	void render();
+
+	// update the world, etc
+	void update();
+#pragma endregion
+
+
 	// add a new player with identifier <id>, returns false if the id is already occupied
 	bool addPlayer(std::uint8_t id);
 
@@ -145,14 +156,6 @@ public:
 	// remove player with identifier <id>
 	void killPlayer(std::uint8_t id);
 
-	// initialize the SDL window information
-	void init(SDL_Window *window, SDL_Renderer *render);
-
-	// render the walls, etc
-	void render();
-
-	// update the world, etc
-	void update();
 
 	int get_xres() {
 		return _xres;
@@ -162,9 +165,11 @@ public:
 		return _yres;
 	}
 
+	void send_my_info();
+
+	void toggle_upper_view(); // hola esto lo hemos hecho nosotras :)
 private:
 
-	void send_my_info();
 
 	// mark all (used) player alive
 	void bringAllToLife();
@@ -172,6 +177,7 @@ private:
 	// switch to the view of the next player
 	void switchToNextPlayer();
 
+#pragma region COSAS RENDER
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,
 			const Point corrected);
@@ -194,6 +200,8 @@ private:
 
 	// Renders the entire scene from the <current player> perspective given a <map> and a software <gpu>.
 	void render_upper_view();
+	bool _isUpperView;
+
 
 	// Render a list of current player
 	void render_players_info();
@@ -413,6 +421,6 @@ private:
 
 	// constant to convert from radians to degrees
 	static constexpr float _rd = 180 / 3.14159265358979323846264338327950288f;
-
+#pragma endregion
 };
 

@@ -13,19 +13,11 @@
 #include "LittleWolf.h"
 
 Game::Game() :
-		//bm_(nullptr), 
-		//fighters_(nullptr), 
-		//net_(nullptr),
-
+		net_(nullptr),
 		_little_wolf(nullptr) {
 }
 
 Game::~Game() {
-	//delete fighters_;
-	//delete bm_;
-	//delete net_;
-
-
 	// release InputHandler if the instance was created correctly.
 	if (InputHandler::HasInstance())
 		InputHandler::Release();
@@ -35,6 +27,7 @@ Game::~Game() {
 		SDLUtils::Release();
 
 	delete _little_wolf;
+	delete net_;
 }
 
 bool Game::init(const char* map, char* host, Uint16 port)
@@ -87,65 +80,11 @@ void Game::initGame() {
 	_little_wolf->addPlayer(net_->client_id());
 }
 
-/*
-bool Game::initGame(char *host, Uint16 port) {
-
-
-	
-
-	bm_ = new Bullets();
-	fighters_ = new Fighter();
-
-	// add some players
-	fighters_->addPlayer(net_->client_id());
-
-	return true;
-}
-*/
-
 void Game::start() {
 	// a boolean to exit the loop
 	bool exit = false;
 
-	auto &ihdlr = ih();
-
-	/*
-	//Fighter
-	auto &vt = sdlutils().virtualTimer();
-	while (!exit) {
-		Uint32 startTime = vt.regCurrTime();
-
-		// refresh the input handler
-		ihdlr.refresh();
-		if (ihdlr.keyDownEvent()) {
-
-			// ESC exists the game
-			if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
-				exit = true;
-				continue;
-			}
-
-		}
-
-		//fighters_->update();
-		//bm_->update();
-		//net_->update();
-
-		//check_collisions();
-
-		sdlutils().clearRenderer();
-
-		//fighters_->render();
-		//bm_->render();
-
-		sdlutils().presentRenderer();
-
-		Uint32 frameTime = vt.currRealTime() - startTime;
-
-		if (frameTime < 10)
-			SDL_Delay(10 - frameTime);
-	}
-	*/
+	InputHandler &ihdlr = ih();
 
 	//LittleWolf
 	
@@ -162,10 +101,14 @@ void Game::start() {
 				exit = true;
 				continue;
 			}
+		}
 
+		if (ihdlr.isKeyDown(SDL_SCANCODE_C)){ // c de cenital.
+			_little_wolf->toggle_upper_view();
 		}
 
 		_little_wolf->update();
+		net_->update();
 
 		// the clear is not necessary since the texture we copy to the window occupies the whole screen
 		// sdlutils().clearRenderer();
@@ -178,16 +121,11 @@ void Game::start() {
 
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
-	}
+	 }
 
-	//net_->disconnect();
+	net_->disconnect();
 
 }
-
-/*bool Game::init()
-{
-	return true;
-}*/
 
 /*
 void Game::check_collisions() {
