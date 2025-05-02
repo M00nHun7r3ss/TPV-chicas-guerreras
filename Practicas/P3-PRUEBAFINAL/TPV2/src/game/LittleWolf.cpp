@@ -16,6 +16,7 @@
 #include "../sdlutils/Texture.h"
 
 #pragma region NO TOCAR
+// DONE: actualizado con Fighter.
 LittleWolf::LittleWolf() :
 		_show_help(true), //
 		_xres(), //
@@ -30,11 +31,13 @@ LittleWolf::LittleWolf() :
 { 
 }
 
+// DONE: actualizado con Fighter.
 LittleWolf::~LittleWolf() {
 	// nothing to delete, the walling are delete in the Map's destructor
 }
 
-void LittleWolf::init(SDL_Window *window, SDL_Renderer *render) {
+// DONE: actualizado con Fighter.
+void LittleWolf::init(SDL_Window *window, SDL_Renderer *render){
 	// for some reason it is created with a rotation of 90 degrees -- must be easier to
 	// manipulate coordinates
 	SDL_Texture *const texture = SDL_CreateTexture(sdlutils().renderer(),
@@ -42,10 +45,10 @@ void LittleWolf::init(SDL_Window *window, SDL_Renderer *render) {
 			_xres);
 
 	_gpu = { window, render, texture, _xres, _yres };
-
 }
 
-void LittleWolf::update() {
+// DONE: actualizado con Fighter.
+void LittleWolf::update() { 
 
 	InputHandler &ihdlr = ih();
 
@@ -75,7 +78,9 @@ void LittleWolf::update() {
 	spin(p);  // handle spinning
 	move(p);  // handle moving
 	shoot(p); // handle shooting
-}
+
+	Game::Instance()->get_networking().send_state(p.where, p.theta);
+} 
 
 void LittleWolf::load(std::string filename) {
 
@@ -634,13 +639,16 @@ void LittleWolf::send_my_info()
 {
 	Player& p = _players[_curr_player_id];
 
-	//TODO: send info little wolf
-	//Game::Instance()->get_networking()->send_my_info(p.where, p.velocity, p.speed, p.theta);
+	Game::Instance()->get_networking().send_my_info(
+		p.where, 
+		p.theta, 
+		p.state
+	);
 }
 
 void LittleWolf::bringAllToLife() {
 	// bring all dead players to life -- all stay in the same position
-	for (auto i = 0u; i < _max_player; i++) {
+	for (unsigned i = 0u; i < _max_player; i++) {
 		if (_players[i].state == DEAD) {
 			_players[i].state = ALIVE;
 		}

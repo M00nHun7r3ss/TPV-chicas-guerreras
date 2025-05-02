@@ -47,6 +47,20 @@ void Fighter::initPlayer(std::uint8_t id) {
 }
 
 void Fighter::update() {
+	/*
+
+	if (_ihdlr.keyDownEvent()) {
+
+		// toggle help
+		if (_ihdlr.isKeyDown(SDL_SCANCODE_T)) {
+			_show_help = !_show_help;
+		}
+
+		// R brings deads to life
+		if (_ihdlr.isKeyDown(SDL_SCANCODE_R)) {
+			Game::Instance()->get_networking().send_restart();
+		}
+	}
 
 	Player &p = _players[_curr_player_id];
 
@@ -57,6 +71,7 @@ void Fighter::update() {
 	spin(p);  // handle spinning
 	move(p);  // handle moving
 	shoot(p); // handle shooting
+
 
 	// move
 	p.pos = p.pos + p.vel;
@@ -81,19 +96,7 @@ void Fighter::update() {
 
 	Game::Instance()->get_networking().send_state(p.pos, p.width, p.height,
 			p.rot);
-
-	if (_ihdlr.keyDownEvent()) {
-
-		// toggle help
-		if (_ihdlr.isKeyDown(SDL_SCANCODE_T)) {
-			_show_help = !_show_help;
-		}
-
-		// R brings deads to life
-		if (_ihdlr.isKeyDown(SDL_SCANCODE_R)) {
-			Game::Instance()->get_networking().send_restart();
-		}
-	}
+	*/
 }
 
 void Fighter::render() {

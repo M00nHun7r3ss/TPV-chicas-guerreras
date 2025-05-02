@@ -168,11 +168,10 @@ public:
 	void send_my_info();
 
 	void toggle_upper_view(); // hola esto lo hemos hecho nosotras :)
-private:
-
 
 	// mark all (used) player alive
 	void bringAllToLife();
+private:
 
 	// switch to the view of the next player
 	void switchToNextPlayer();
