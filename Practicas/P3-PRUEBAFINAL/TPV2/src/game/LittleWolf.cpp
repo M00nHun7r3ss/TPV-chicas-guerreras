@@ -58,14 +58,9 @@ void LittleWolf::update() {
 			_show_help = !_show_help;
 		}
 
-		// N switches to the next player view
-		if (ihdlr.isKeyDown(SDL_SCANCODE_N)) {
-			switchToNextPlayer();
-		}
-
-		// R brings deads to life
-		if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
-			bringAllToLife();
+		// C for cenital
+		if (ihdlr.isKeyDown(SDL_SCANCODE_C)) {
+			_isUpperView = !_isUpperView;
 		}
 	}
 
@@ -82,6 +77,7 @@ void LittleWolf::update() {
 	Game::Instance()->get_networking().send_state(p.where, p.theta);
 } 
 
+// Mapa
 void LittleWolf::load(std::string filename) {
 
 	// Load JSON walling file.
@@ -230,6 +226,7 @@ void LittleWolf::load(std::string filename) {
 }
 #pragma endregion
 
+// DONE: actualizado con Fighter.
 bool LittleWolf::addPlayer(std::uint8_t id) {
 	//Initialize Player
 	assert(id < _max_player);
@@ -276,27 +273,26 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	//Id
 	_curr_player_id = id;
 
-	////Envia informacion pertinente
-	//send_my_info();
+	//Envia informacion pertinente
+	send_my_info();
 
 	return true;
 }
 
-void LittleWolf::removePlayer(std::uint8_t id)
-{
-	_players[id].state = NOT_USED;
-}
+// DONE: actualizado con Fighter.
+void LittleWolf::removePlayer(std::uint8_t id) { _players[id].state = NOT_USED; }
 
-void LittleWolf::killPlayer(std::uint8_t id)
-{
-	_players[id].state = DEAD;
-}
+// DONE: actualizado con Fighter.
+void LittleWolf::killPlayer(std::uint8_t id) { _players[id].state = DEAD; }
+
+void LittleWolf::shootPlayer(std::uint8_t id) {	shoot(_players[id]); }
 
 #pragma region COSAS RENDER
+// DONE: actualizado con Fighter.
 void LittleWolf::render() {
 
-	// if the player is dead we only render upper view, otherwise the normal view
-	if (_players[_curr_player_id].state == DEAD)
+	// if the player is dead or we ask it, we render upper view, otherwise the normal view
+	if (_isUpperView || _players[_curr_player_id].state == DEAD)
 		render_upper_view();
 	else
 		render_map(_players[_curr_player_id]);
@@ -431,68 +427,62 @@ void LittleWolf::render_map(Player &p) {
 void LittleWolf::render_upper_view() {
 
 	// TODO: hacerlo para cuando muera y para el jugador que le de a la tecla en especifico.
-	if (_isUpperView)
-	{
-		// lock texture
-		const Display display = lock(_gpu);
 
-		for (int x = 0; x < _gpu.xres; x++)
-			for (int y = 0; y < _gpu.yres; y++)
-				put(display, x, y, 0x00000000);
+	// lock texture
+	const Display display = lock(_gpu);
 
-		for (auto x = 0u; x < _map.walling_height; x++)
-		for (auto y = 0u; y < _map.walling_width; y++) {
+	for (int x = 0; x < _gpu.xres; x++)
+		for (int y = 0; y < _gpu.yres; y++)
+			put(display, x, y, 0x00000000);
 
-			// each non empty position in the walling is drawn as a square in the window,
-			// because the walling size is smaller than the resolution by 'walling_size_factor'
-			if (_map.walling[x][y] != 0)
-				for (int i = 0; i < _walling_size_factor; i++)
-					for (int j = 0; j < _walling_size_factor; j++)
-						put(display, y * _walling_size_factor + i,
-							_gpu.yres - 1 - x * _walling_size_factor + j,
-							color(_map.walling[x][y]));
-		}
+	for (auto x = 0u; x < _map.walling_height; x++)
+	for (auto y = 0u; y < _map.walling_width; y++) {
 
-		// unlock texture
-		unlock(_gpu);
+		// each non empty position in the walling is drawn as a square in the window,
+		// because the walling size is smaller than the resolution by 'walling_size_factor'
+		if (_map.walling[x][y] != 0)
+			for (int i = 0; i < _walling_size_factor; i++)
+				for (int j = 0; j < _walling_size_factor; j++)
+					put(display, y * _walling_size_factor + i,
+						_gpu.yres - 1 - x * _walling_size_factor + j,
+						color(_map.walling[x][y]));
+	}
 
-		const SDL_Rect dst = { (_gpu.xres - _gpu.yres) / 2, (_gpu.yres - _gpu.xres)
-				/ 2, _gpu.yres, _gpu.xres, };
-		SDL_RenderCopyEx(_gpu.renderer, _gpu.texture, NULL, &dst, -90, NULL, SDL_FLIP_NONE);
+	// unlock texture
+	unlock(_gpu);
 
-		// add labels to each player, with corresponding rotation
-		for (int i = 0u; i < _max_player; i++) {
-			Player& p = _players[i];
-			if (p.state != NOT_USED) {
-				Texture info(sdlutils().renderer(), "P" + std::to_string(i),
-					sdlutils().fonts().at("MFR12"),
-					build_sdlcolor(color_rgba(i + 10)));
+	const SDL_Rect dst = { (_gpu.xres - _gpu.yres) / 2, (_gpu.yres - _gpu.xres)
+			/ 2, _gpu.yres, _gpu.xres, };
+	SDL_RenderCopyEx(_gpu.renderer, _gpu.texture, NULL, &dst, -90, NULL, SDL_FLIP_NONE);
 
-				int w = info.width();
-				int h = info.height();
+	// add labels to each player, with corresponding rotation
+	for (int i = 0u; i < _max_player; i++) {
+		Player& p = _players[i];
+		if (p.state != NOT_USED) {
+			Texture info(sdlutils().renderer(), "P" + std::to_string(i),
+				sdlutils().fonts().at("MFR12"),
+				build_sdlcolor(color_rgba(i + 10)));
 
-				SDL_Rect src = build_sdlrect(0.0f, 0.0f, w, h);
-				SDL_Rect dest = build_sdlrect(
-					p.where.x * _walling_size_factor - w / 2,
-					p.where.y * _walling_size_factor - h / 2, w, h);
+			int w = info.width();
+			int h = info.height();
 
-				info.render(src, dest, p.theta * _rd);
+			SDL_Rect src = build_sdlrect(0.0f, 0.0f, w, h);
+			SDL_Rect dest = build_sdlrect(
+				p.where.x * _walling_size_factor - w / 2,
+				p.where.y * _walling_size_factor - h / 2, w, h);
 
-			}
+			info.render(src, dest, p.theta * _rd);
+
 		}
 	}
-}
-
-void LittleWolf::toggle_upper_view()
-{
-	_isUpperView = !_isUpperView;
+	
 }
 
 void LittleWolf::render_players_info() {
 
 	uint_fast16_t y = 0;
 
-	for (auto i = 0u; i < _max_player; i++) {
+	for (unsigned i = 0u; i < _max_player; i++) {
 		PlayerState s = _players[i].state;
 
 		// render player info if it is used
@@ -623,18 +613,6 @@ bool LittleWolf::shoot(Player &p) {
 
 #pragma endregion
 
-void LittleWolf::switchToNextPlayer() {
-
-	// search the next player in the palyer's array
-	int j = (_curr_player_id + 1) % _max_player;
-	while (j != _curr_player_id && _players[j].state == NOT_USED)
-		j = (j + 1) % _max_player;
-
-	// move to the next player view
-	_curr_player_id = j;
-
-}
-
 void LittleWolf::send_my_info()
 {
 	Player& p = _players[_curr_player_id];
@@ -645,6 +623,28 @@ void LittleWolf::send_my_info()
 		p.state
 	);
 }
+
+void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot)
+{
+	Player& p = _players[id];
+
+	p.where.x = x;
+	p.where.y = y;
+	p.id = id;
+	p.theta = rot;
+}
+
+void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8_t state)
+{
+	Player& p = _players[id];
+
+	p.where.x = x;
+	p.where.y = y;
+	p.id = id;
+	p.theta = rot;
+	p.state = static_cast<PlayerState>(state);
+}
+
 
 void LittleWolf::bringAllToLife() {
 	// bring all dead players to life -- all stay in the same position

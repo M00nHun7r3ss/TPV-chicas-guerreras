@@ -212,8 +212,8 @@ void Fighter::shoot(Player &p) {
 		Vector2D bv = Vector2D(0, -1).rotate(p.rot)
 				* (p.vel.magnitude() + 5.0f);
 
-		Game::Instance()->get_networking().send_shoot(bp, bv, bwidth, bheight,
-				Vector2D(0, -1).angle(bv));
+		//Game::Instance()->get_networking().send_shoot(bp, bv, bwidth, bheight,
+				//Vector2D(0, -1).angle(bv));
 
 	}
 }
@@ -254,8 +254,8 @@ void Fighter::update_player_info(Uint8 id, float x, float y, float w, float h,
 void Fighter::send_my_info() {
 	Player &p = _players[_curr_player_id];
 
-	Game::Instance()->get_networking().send_my_info(p.pos, p.width, p.height,
-			p.rot, p.state);
+	//Game::Instance()->get_networking().send_my_info(p.pos, p.width, p.height,
+		//	p.rot, p.state);
 }
 
 void Fighter::bringAllToLife() {

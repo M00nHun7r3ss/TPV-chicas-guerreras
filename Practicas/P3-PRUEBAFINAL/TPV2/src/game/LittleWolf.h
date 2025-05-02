@@ -156,6 +156,8 @@ public:
 	// remove player with identifier <id>
 	void killPlayer(std::uint8_t id);
 
+	// shoot player with identifier <id>
+	void shootPlayer(std::uint8_t id);
 
 	int get_xres() {
 		return _xres;
@@ -165,16 +167,20 @@ public:
 		return _yres;
 	}
 
+	// sends player info
 	void send_my_info();
 
-	void toggle_upper_view(); // hola esto lo hemos hecho nosotras :)
+	// updates player state
+	void update_player_state(Uint8 id, float x, float y, float rot);
+
+	// updates player info
+	void update_player_info(Uint8 id, float x, float y, float rot, uint8_t state);
 
 	// mark all (used) player alive
 	void bringAllToLife();
-private:
 
-	// switch to the view of the next player
-	void switchToNextPlayer();
+
+private:
 
 #pragma region COSAS RENDER
 	// Calculates wall size using the <corrected> ray to the wall.
@@ -200,7 +206,6 @@ private:
 	// Renders the entire scene from the <current player> perspective given a <map> and a software <gpu>.
 	void render_upper_view();
 	bool _isUpperView;
-
 
 	// Render a list of current player
 	void render_players_info();

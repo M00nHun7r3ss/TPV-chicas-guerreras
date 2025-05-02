@@ -79,8 +79,8 @@ void Game::initGame() {
 
 	_little_wolf->addPlayer(net_->client_id());
 
-	//Envia informacion pertinente
-	_little_wolf->send_my_info();
+	////Envia informacion pertinente
+	//_little_wolf->send_my_info();
 }
 
 void Game::start() {
