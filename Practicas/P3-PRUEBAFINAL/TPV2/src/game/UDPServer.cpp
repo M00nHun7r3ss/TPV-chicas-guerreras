@@ -156,13 +156,10 @@ void UDPServer::listen() {
 						break;
 					}
 					}
-
 				}
 			}
 		}
-
 	}
-
 }
 
 void UDPServer::send_packet_to_all_except(int ex_id) {

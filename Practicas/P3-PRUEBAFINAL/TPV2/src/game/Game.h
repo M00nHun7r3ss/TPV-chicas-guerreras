@@ -8,7 +8,6 @@
 #include "../utils/Singleton.h"
 
 class Networking;
-
 class LittleWolf;
 
 class Game
@@ -20,9 +19,7 @@ public:
 	virtual ~Game();
 
 	bool init(const char* map, char* host, Uint16 port);
-
 	void initGame();
-
 	void start();
 
 	LittleWolf& get_littlewolf()
@@ -36,10 +33,7 @@ public:
 
 private:
 
-	//void check_collisions();
-
 	Networking *net_;
-
 	LittleWolf* _little_wolf;
 };
 

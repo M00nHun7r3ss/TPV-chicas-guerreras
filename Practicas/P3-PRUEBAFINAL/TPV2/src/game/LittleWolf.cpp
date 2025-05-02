@@ -9,6 +9,7 @@
 #include <string>
 
 #include "Game.h"
+#include "Networking.h"
 #include "../json/JSONValue.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
@@ -270,6 +271,9 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	//Id
 	_curr_player_id = id;
 
+	////Envia informacion pertinente
+	//send_my_info();
+
 	return true;
 }
 
@@ -432,25 +436,24 @@ void LittleWolf::render_upper_view() {
 				put(display, x, y, 0x00000000);
 
 		for (auto x = 0u; x < _map.walling_height; x++)
-			for (auto y = 0u; y < _map.walling_width; y++) {
+		for (auto y = 0u; y < _map.walling_width; y++) {
 
-				// each non empty position in the walling is drawn as a square in the window,
-				// because the walling size is smaller than the resolution by 'walling_size_factor'
-				if (_map.walling[x][y] != 0)
-					for (int i = 0; i < _walling_size_factor; i++)
-						for (int j = 0; j < _walling_size_factor; j++)
-							put(display, y * _walling_size_factor + i,
-								_gpu.yres - 1 - x * _walling_size_factor + j,
-								color(_map.walling[x][y]));
-			}
+			// each non empty position in the walling is drawn as a square in the window,
+			// because the walling size is smaller than the resolution by 'walling_size_factor'
+			if (_map.walling[x][y] != 0)
+				for (int i = 0; i < _walling_size_factor; i++)
+					for (int j = 0; j < _walling_size_factor; j++)
+						put(display, y * _walling_size_factor + i,
+							_gpu.yres - 1 - x * _walling_size_factor + j,
+							color(_map.walling[x][y]));
+		}
 
 		// unlock texture
 		unlock(_gpu);
 
 		const SDL_Rect dst = { (_gpu.xres - _gpu.yres) / 2, (_gpu.yres - _gpu.xres)
 				/ 2, _gpu.yres, _gpu.xres, };
-		SDL_RenderCopyEx(_gpu.renderer, _gpu.texture, NULL, &dst, -90, NULL,
-			SDL_FLIP_NONE);
+		SDL_RenderCopyEx(_gpu.renderer, _gpu.texture, NULL, &dst, -90, NULL, SDL_FLIP_NONE);
 
 		// add labels to each player, with corresponding rotation
 		for (int i = 0u; i < _max_player; i++) {
@@ -632,7 +635,7 @@ void LittleWolf::send_my_info()
 	Player& p = _players[_curr_player_id];
 
 	//TODO: send info little wolf
-	//Game::Instance()->get_networking().send_my_info(p.where, p.theta, p.state);
+	//Game::Instance()->get_networking()->send_my_info(p.where, p.velocity, p.speed, p.theta);
 }
 
 void LittleWolf::bringAllToLife() {

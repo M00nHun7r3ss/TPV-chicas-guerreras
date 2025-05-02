@@ -2,14 +2,11 @@
 
 #include "Game.h"
 
-#include "Bullets.h"
-#include "Fighter.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLNetUtils.h"
 #include "../sdlutils/SDLUtils.h"
-#include "../utils/Collisions.h"
-#include "Networking.h"
 
+#include "Networking.h"
 #include "LittleWolf.h"
 
 Game::Game() :
@@ -40,6 +37,7 @@ bool Game::init(const char* map, char* host, Uint16 port)
 	}
 	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
 
+	//Cada cliente crea su juego
 	_little_wolf = new LittleWolf();
 
 	// al ejecutar el juego se carga el mapa desde el JSON.
@@ -65,11 +63,13 @@ bool Game::init(const char* map, char* host, Uint16 port)
 
 	return true;
 }
+
 void Game::initGame() {
 
 	_little_wolf->init(sdlutils().window(), sdlutils().renderer());
 
 	/*
+	//Sin red
 	// se añaden 4 jugadores al juego
 	_little_wolf->addPlayer(0);
 	_little_wolf->addPlayer(1);
@@ -78,6 +78,9 @@ void Game::initGame() {
 	*/
 
 	_little_wolf->addPlayer(net_->client_id());
+
+	//Envia informacion pertinente
+	_little_wolf->send_my_info();
 }
 
 void Game::start() {
@@ -86,8 +89,6 @@ void Game::start() {
 
 	InputHandler &ihdlr = ih();
 
-	//LittleWolf
-	
 	 while (!exit) {
 		Uint32 startTime = sdlutils().currRealTime();
 
@@ -103,11 +104,11 @@ void Game::start() {
 			}
 		}
 
-		if (ihdlr.isKeyDown(SDL_SCANCODE_C)){ // c de cenital.
-			_little_wolf->toggle_upper_view();
-		}
-
 		_little_wolf->update();
+
+		//Envia informacion pertinente
+		_little_wolf->send_my_info();
+
 		net_->update();
 
 		// the clear is not necessary since the texture we copy to the window occupies the whole screen
@@ -123,6 +124,7 @@ void Game::start() {
 			SDL_Delay(10 - frameTime);
 	 }
 
+	//Si sale del bucle principal, se desconecta
 	net_->disconnect();
 
 }

@@ -213,8 +213,7 @@ void Networking::handle_dead(const MsgWithId &m) {
 	Game::Instance()->get_littlewolf().killPlayer(m._client_id);
 }
 
-void Networking::send_my_info(const Vector2D &pos, float w, float h, float rot,
-		Uint8 state) {
+void Networking::send_my_info(const Vector2D &pos, float w, float h, float rot, Uint8 state) {
 	PlayerInfoMsg m;
 	m._type = _PLAYER_INFO;
 	m._client_id = _clientId;
