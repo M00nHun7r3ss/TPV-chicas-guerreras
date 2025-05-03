@@ -626,12 +626,19 @@ void LittleWolf::send_my_info()
 
 void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot)
 {
+	// Actualizamos el player.
 	Player& p = _players[id];
+
+	//borra la posicion anterior del jugador
+	_map.walling[(int)p.where.y][(int)p.where.x] = 0;
 
 	p.where.x = x;
 	p.where.y = y;
 	p.id = id;
 	p.theta = rot;
+
+	// actualiza el nuevo estado.
+	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
 }
 
 void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8_t state)
@@ -643,6 +650,9 @@ void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8
 	p.id = id;
 	p.theta = rot;
 	p.state = static_cast<PlayerState>(state);
+
+	// actualiza la nueva info.
+	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
 }
 
 void LittleWolf::bringAllToLife() {
