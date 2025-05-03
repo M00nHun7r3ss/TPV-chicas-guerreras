@@ -1,8 +1,8 @@
-// This file is part of the course TPV2@UCM - Samir Genaim
+/*// This file is part of the course TPV2@UCM - Samir Genaim
 
 /*
  * The content of this class is based on https://glouw.com/2018/03/11/littlewolf.html
- */
+ 
 
 #pragma once
 
@@ -108,4 +108,5 @@ private:
 	bool _show_help;
 
 };
+`*/
 

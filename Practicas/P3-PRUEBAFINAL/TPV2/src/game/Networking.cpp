@@ -117,6 +117,11 @@ void Networking::update() {
 			handle_player_state(m2);
 			break;
 
+		case _DEAD:
+			m4.deserialize(_p->data);
+			handle_dead(m4);
+			break;
+
 		case _PLAYER_INFO:
 			m5.deserialize(_p->data);
 			handle_player_info(m5);
@@ -125,11 +130,6 @@ void Networking::update() {
 		case _SHOOT:
 			m3.deserialize(_p->data);
 			handle_shoot(m3);
-			break;
-
-		case _DEAD:
-			m4.deserialize(_p->data);
-			handle_dead(m4);
 			break;
 
 		case _RESTART:
@@ -144,7 +144,6 @@ void Networking::update() {
 
 #pragma region HANDLE
 void Networking::handle_new_client(Uint8 id) {
-	//TODO: New little wolf
 	if (id != _clientId)
 		Game::Instance()->get_littlewolf().send_my_info();
 }
@@ -152,8 +151,6 @@ void Networking::handle_new_client(Uint8 id) {
 void Networking::handle_disconnect(Uint8 id) { Game::Instance()->get_littlewolf().removePlayer(id); }
 
 void Networking::handle_player_state(const PlayerStateMsg &m) {
-	//TODO: UPDATE STATE
-	
 	if (m._client_id != _clientId) {
 		Game::Instance()->get_littlewolf().update_player_state(m._client_id, m.x, m.y, m.rot);
 	}
@@ -162,15 +159,12 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 void Networking::handle_dead(const MsgWithId &m) { Game::Instance()->get_littlewolf().killPlayer(m._client_id); }
 
 void Networking::handle_player_info(const PlayerInfoMsg &m) {
-	// TODO: HACER LUEGO PORFA.
-	
 	if (m._client_id != _clientId) {
 		Game::Instance()->get_littlewolf().update_player_info(m._client_id, m.x, m.y, m.rot, m.state);
 	}
 }
 
-void Networking::handle_shoot(const ShootMsg& m)
-{
+void Networking::handle_shoot(const ShootMsg& m){
 	if (is_master()) {
 		Game::Instance()->get_littlewolf().shootPlayer(m._client_id);
 	}

@@ -1,4 +1,4 @@
-// This file is part of the course TPV2@UCM - Samir Genaim
+/*// This file is part of the course TPV2@UCM - Samir Genaim
 
 #include "Fighter.h"
 
@@ -96,7 +96,7 @@ void Fighter::update() {
 
 	Game::Instance()->get_networking().send_state(p.pos, p.width, p.height,
 			p.rot);
-	*/
+	
 }
 
 void Fighter::render() {
@@ -267,3 +267,4 @@ void Fighter::bringAllToLife() {
 		}
 	}
 }
+*/

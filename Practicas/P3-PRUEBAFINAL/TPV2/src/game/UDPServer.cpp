@@ -174,7 +174,6 @@ void UDPServer::send_packet_to_all_except(int ex_id) {
 }
 
 int UDPServer::who_is_the_master() {
-
 	// the master is the client with the minimum identifier
 	for (unsigned i = 0u; i < _max_clients; i++) {
 		if (_clients[i].connected)

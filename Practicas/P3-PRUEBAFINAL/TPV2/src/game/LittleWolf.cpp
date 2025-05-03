@@ -305,7 +305,7 @@ void LittleWolf::render() {
 		int y = sdlutils().height();
 		for (const char *s : { "usage_1", "usage_2", "usage_3", "usage_4",
 				"usage_5" }) {
-			auto &t = sdlutils().msgs().at(s);
+			Texture &t = sdlutils().msgs().at(s);
 			y = y - t.height() - 10;
 			t.render(0, y);
 		}
@@ -505,7 +505,7 @@ void LittleWolf::render_players_info() {
 }
 
 void LittleWolf::move(Player &p) {
-	auto &ihdrl = ih();
+	InputHandler &ihdrl = ih();
 
 	// W forwards, S backwards, D right, L left
 
@@ -557,7 +557,7 @@ void LittleWolf::move(Player &p) {
 }
 
 void LittleWolf::spin(Player &p) {
-	auto &ihdlr = ih();
+	InputHandler &ihdlr = ih();
 
 	// L spin right, H spin left -- when left shift is held the player spins slowly
 
@@ -574,7 +574,7 @@ void LittleWolf::spin(Player &p) {
 }
 
 bool LittleWolf::shoot(Player &p) {
-	auto &ihdlr = ih();
+	InputHandler &ihdlr = ih();
 
 	// Space shoot -- we use keyDownEvent to force a complete press/release for each bullet
 	if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_SPACE)) {
@@ -644,7 +644,6 @@ void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8
 	p.theta = rot;
 	p.state = static_cast<PlayerState>(state);
 }
-
 
 void LittleWolf::bringAllToLife() {
 	// bring all dead players to life -- all stay in the same position
