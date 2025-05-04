@@ -195,6 +195,8 @@ private:
 	// Moves the player when w,a,s,d are held down. Handles collision detection for the walls.
 	bool shoot(Player &p);
 
+	void proximitySound(float x, float y, std::string sound);
+
 	// Spins the player when keys grid_h,l are held down. When left-shit is held down the move is slower
 	inline void spin(Player &p);
 

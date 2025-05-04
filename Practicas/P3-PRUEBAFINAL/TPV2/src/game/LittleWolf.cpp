@@ -347,12 +347,12 @@ void LittleWolf::render() {
 		}
 	}
 
-	////Si en el juego hay mas de dos jugadores, pero solo estan vivos 1 o ninguno
-	//if (_nPlayers >= 2 && _alivePlayers < 2)
-	//{
-	//	//Activa el timer de 5segundos
-	//	render_timer_info();
-	//}
+	//Si en el juego hay mas de dos jugadores, pero solo estan vivos 1 o ninguno
+	if (_nPlayers >= 2 && _alivePlayers < 2)
+	{
+		//Activa el timer de 5segundos
+		render_timer_info();
+	}
 }
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
@@ -549,18 +549,18 @@ void LittleWolf::render_players_info() {
 
 void LittleWolf::render_timer_info()
 {
-	////Mensaje con parametro de tiempo modificable
-	//std::string msg = ("The game will restart in ")
-	//	+ std::to_string((int)(_timer)) + (" seconds");
+	//Mensaje con parametro de tiempo modificable
+	std::string msg = ("The game will restart in ")
+		+ std::to_string((int)(_timer)) + (" seconds");
 
-	//Texture info(sdlutils().renderer(), msg,
-	//	sdlutils().fonts().at("MFR24"),
-	//	build_sdlcolor(0xffffffff));
+	Texture info(sdlutils().renderer(), msg,
+		sdlutils().fonts().at("MFR24"),
+		build_sdlcolor(0xffffffff));
 
-	////Se renderiza en el medio de la pantalla
-	//SDL_Rect dest = build_sdlrect(sdlutils().width()/2, sdlutils().height() / 2, info.width(), info.height());
+	//Se renderiza en el medio de la pantalla
+	SDL_Rect dest = build_sdlrect(sdlutils().width()/2, sdlutils().height() / 2, info.width(), info.height());
 
-	//info.render(dest);
+	info.render(dest);
 
 }
 
@@ -640,7 +640,7 @@ bool LittleWolf::shoot(Player &p) {
 	if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 		// play gun shot sound
-		sdlutils().soundEffects().at("gunshot").play();
+		proximitySound(p.where.x, p.where.y, "gunshot");
 
 		// we shoot in several directions, because with projection what you see is not exact
 		for (float d = -0.05; d <= 0.05; d += 0.005) {
@@ -664,12 +664,34 @@ bool LittleWolf::shoot(Player &p) {
 			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < _shoot_distace) {
 				uint8_t id = tile_to_player(hit.tile);
 				Game::Instance()->get_networking().send_dead(id);
-				sdlutils().soundEffects().at("pain").play();
+				proximitySound(p.where.x, p.where.y, "pain");
 				return true;
 			}
 		}
 	}
 	return false;
+}
+
+void LittleWolf::proximitySound(float x, float y, std::string sound)
+{
+	for (int i = 0; i < _nPlayers; i++)
+	{
+		// son los catetos, hay que imaginarlo visto desde arriba.
+		float distY = x - _players[i].where.x;
+		float distX = y - _players[i].where.y;
+
+		// calculo de la hipotenusa.
+		float h = sqrt(pow(distX, 2) + pow(distY, 2));
+
+		// a mas distancia menos volumen siendo el maximo 100.
+		float volumen = 100 - h;
+		if (volumen <= 0)
+			volumen = 0;
+
+		// con esto segun lo lejos que pille tiene un volumen u otro.
+		sdlutils().soundEffects().at(sound).setVolume(volumen);
+		sdlutils().soundEffects().at(sound).play();
+	}
 }
 
 #pragma endregion
