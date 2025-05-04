@@ -144,6 +144,7 @@ public:
 
 	// update the world, etc
 	void update();
+
 #pragma endregion
 
 
@@ -416,6 +417,7 @@ private:
 
 	// array of players
 	Player _players[_max_player];
+	int _alivePlayers;
 
 	// id of the current player, used since we allows switching between players
 	uint8_t _curr_player_id;

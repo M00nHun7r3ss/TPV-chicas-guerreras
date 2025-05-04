@@ -129,23 +129,3 @@ void Game::start() {
 
 }
 
-/*
-void Game::check_collisions() {
-	if (!net_->is_master())
-		return;
-
-	for (Bullets::Bullet &b : *bm_) {
-		if (b.used) {
-			for (Fighter::Player &p : *fighters_) {
-				if (p.state == Fighter::ALIVE) {
-					if (Collisions::collidesWithRotation(p.pos, p.width,
-							p.height, p.rot, b.pos, b.width, b.height, b.rot)) {
-						net_->send_dead(p.id);
-						continue;
-					}
-				}
-			}
-		}
-	}
-}
-*/

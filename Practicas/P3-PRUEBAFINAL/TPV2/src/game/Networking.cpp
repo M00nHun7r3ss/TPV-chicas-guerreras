@@ -164,7 +164,7 @@ void Networking::handle_player_info(const PlayerInfoMsg &m) {
 	}
 }
 
-void Networking::handle_shoot(const ShootMsg& m){
+void Networking::handle_shoot(const ShootMsg& m){ 
 	if (is_master()) {
 		Game::Instance()->get_littlewolf().shootPlayer(m._client_id);
 	}
