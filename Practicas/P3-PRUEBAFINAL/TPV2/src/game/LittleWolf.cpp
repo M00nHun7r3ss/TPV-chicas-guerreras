@@ -27,7 +27,11 @@ LittleWolf::LittleWolf() :
 		_map(), //
 		_players(), //
 		_curr_player_id(0), // we start with player 0
-		_isUpperView(false)
+		_isUpperView(false),
+		_alivePlayers(0),
+		_nPlayers(0)
+		//_timer(5.0f),
+		//_lastRestart(sdlutils().virtualTimer().currRealTime())
 { 
 }
 
@@ -51,6 +55,7 @@ void LittleWolf::init(SDL_Window *window, SDL_Renderer *render){
 void LittleWolf::update() { 
 
 	InputHandler &ihdlr = ih();
+	//VirtualTimer& vt = sdlutils().virtualTimer();
 
 	if (ihdlr.keyDownEvent()) {
 		// toggle help
@@ -72,11 +77,24 @@ void LittleWolf::update() {
 	if (p.state != ALIVE)
 		return;
 
-	if (_alivePlayers < 2)
-	{
-		
-	}
-	
+	////Inicia el temporizador
+	//if (_nPlayers >= 2 && _alivePlayers < 2)
+	//{
+	//	//Inicializamos a current time
+	//	_lastRestart = vt.currRealTime();
+
+	//	//Activa el temporizador
+	//	_timer -= (vt.currRealTime() - _lastRestart);
+
+	//	//El master llama a restart
+	//	if (Game::Instance()->get_networking().is_master() && _timer <= 0)
+	//	{
+	//		Game::Instance()->get_networking().send_restart();
+	//	}
+
+	//	//Lo resetea
+	//	_lastRestart = vt.currRealTime();
+	//}
 
 	spin(p);  // handle spinning
 	move(p);  // handle moving
@@ -279,6 +297,7 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	_map.walling[(int) p.where.y][(int) p.where.x] = player_to_tile(id);
 	_players[id] = p;
 	_alivePlayers++;
+	_nPlayers++;
 
 	//Id
 	_curr_player_id = id;
@@ -290,14 +309,17 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 }
 
 // DONE: actualizado con Fighter.
-void LittleWolf::removePlayer(std::uint8_t id) { _players[id].state = NOT_USED; }
+void LittleWolf::removePlayer(std::uint8_t id)
+{
+	_players[id].state = NOT_USED;
+	_nPlayers--;
+}
 
 // DONE: actualizado con Fighter.
 void LittleWolf::killPlayer(std::uint8_t id)
 {
 	_players[id].state = DEAD;
 	_alivePlayers--;
-
 }
 
 void LittleWolf::shootPlayer(std::uint8_t id) {	shoot(_players[id]); }
@@ -318,24 +340,19 @@ void LittleWolf::render() {
 	// show help
 	if (_show_help) {
 		int y = sdlutils().height();
-		for (const char *s : { "usage_1", "usage_2", "usage_3", "usage_4",
-				"usage_5" }) {
+		for (const char *s : { "usage_1", "usage_2", "usage_3", "usage_4", "usage_5" }) {
 			Texture &t = sdlutils().msgs().at(s);
 			y = y - t.height() - 10;
 			t.render(0, y);
 		}
 	}
 
-	if (_alivePlayers < 2)
-	{
-		int y = sdlutils().height() / 2;
-		for (const char* s : { "usage_1", "usage_2", "usage_3", "usage_4",
-				"usage_5" }) {
-			Texture& t = sdlutils().msgs().at(s);
-			y = y - t.height() - 10;
-			t.render(0, y);
-		}
-	}
+	////Si en el juego hay mas de dos jugadores, pero solo estan vivos 1 o ninguno
+	//if (_nPlayers >= 2 && _alivePlayers < 2)
+	//{
+	//	//Activa el timer de 5segundos
+	//	render_timer_info();
+	//}
 }
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
@@ -528,6 +545,23 @@ void LittleWolf::render_players_info() {
 
 		}
 	}
+}
+
+void LittleWolf::render_timer_info()
+{
+	////Mensaje con parametro de tiempo modificable
+	//std::string msg = ("The game will restart in ")
+	//	+ std::to_string((int)(_timer)) + (" seconds");
+
+	//Texture info(sdlutils().renderer(), msg,
+	//	sdlutils().fonts().at("MFR24"),
+	//	build_sdlcolor(0xffffffff));
+
+	////Se renderiza en el medio de la pantalla
+	//SDL_Rect dest = build_sdlrect(sdlutils().width()/2, sdlutils().height() / 2, info.width(), info.height());
+
+	//info.render(dest);
+
 }
 
 void LittleWolf::move(Player &p) {

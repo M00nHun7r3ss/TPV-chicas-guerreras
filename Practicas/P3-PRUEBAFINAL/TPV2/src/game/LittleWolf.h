@@ -211,6 +211,9 @@ private:
 	// Render a list of current player
 	void render_players_info();
 
+	// Render message related to reset game
+	void render_timer_info();
+
 	// These are auxiliary function for vectors, colors, etc. All are from original littlewolf.
 
 	// Changes the field of view. A focal value of 1.0 is 90 degrees.
@@ -417,6 +420,7 @@ private:
 
 	// array of players
 	Player _players[_max_player];
+	int _nPlayers;
 	int _alivePlayers;
 
 	// id of the current player, used since we allows switching between players
@@ -424,6 +428,10 @@ private:
 
 	// the GPU structure with all the needed elements to draw the world
 	Gpu _gpu;
+
+	// Timer for restart
+	float _timer;
+	float _lastRestart;
 
 	// constant to convert from radians to degrees
 	static constexpr float _rd = 180 / 3.14159265358979323846264338327950288f;
