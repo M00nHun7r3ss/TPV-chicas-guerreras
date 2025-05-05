@@ -29,8 +29,8 @@ LittleWolf::LittleWolf() :
 		_curr_player_id(0), // we start with player 0
 		_isUpperView(false),
 		_alivePlayers(0),
-		_nPlayers(0)
-		//_timer(5.0f),
+		_nPlayers(0),
+		_timer(5.0f)
 		//_lastRestart(sdlutils().virtualTimer().currRealTime())
 { 
 }
@@ -63,12 +63,12 @@ void LittleWolf::update() {
 			_show_help = !_show_help;
 		}
 
-		/*
-		// C for cenital
-		if (ihdlr.isKeyDown(SDL_SCANCODE_C)) {
-			_isUpperView = !_isUpperView;
-		}
-		*/
+		
+		//// C for cenital
+		//if (ihdlr.isKeyDown(SDL_SCANCODE_C)) {
+		//	_isUpperView = !_isUpperView;
+		//}
+		//
 	}
 
 	Player &p = _players[_curr_player_id];
@@ -347,13 +347,14 @@ void LittleWolf::render() {
 		}
 	}
 
-	/*
-	//Si en el juego hay mas de dos jugadores, pero solo estan vivos 1 o ninguno
-	if (_nPlayers >= 2 && _alivePlayers < 2)
-	{
-		//Activa el timer de 5segundos
-		render_timer_info();
-	}*/
+	render_timer_info();
+
+	////Si en el juego hay mas de dos jugadores, pero solo estan vivos 1 o ninguno
+	//if (_nPlayers >= 2 && _alivePlayers < 2)
+	//{
+	//	//Activa el timer de 5segundos
+	//	render_timer_info();
+	//}
 }
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
@@ -470,8 +471,6 @@ void LittleWolf::render_map(Player &p) {
 
 void LittleWolf::render_upper_view() {
 
-	// TODO: hacerlo para cuando muera y para el jugador que le de a la tecla en especifico.
-
 	// lock texture
 	const Display display = lock(_gpu);
 
@@ -551,15 +550,14 @@ void LittleWolf::render_players_info() {
 void LittleWolf::render_timer_info()
 {
 	//Mensaje con parametro de tiempo modificable
-	std::string msg = ("The game will restart in ")
-		+ std::to_string((int)(_timer)) + (" seconds");
+	std::string msg = ("The game will restart in ") + std::to_string((int)(_timer)) + (" seconds");
 
 	Texture info(sdlutils().renderer(), msg,
 		sdlutils().fonts().at("MFR24"),
 		build_sdlcolor(0xffffffff));
 
 	//Se renderiza en el medio de la pantalla
-	SDL_Rect dest = build_sdlrect(sdlutils().width()/2, sdlutils().height() / 2, info.width(), info.height());
+	SDL_Rect dest = build_sdlrect(sdlutils().width()/5, sdlutils().height() / 2, info.width(), info.height());
 
 	info.render(dest);
 
@@ -641,7 +639,7 @@ bool LittleWolf::shoot(Player &p) {
 	if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 		// play gun shot sound
-		//proximitySound(p.where.x, p.where.y, "gunshot");
+		proximitySound(p.where.x, p.where.y, "gunshot");
 
 		// we shoot in several directions, because with projection what you see is not exact
 		for (float d = -0.05; d <= 0.05; d += 0.005) {
@@ -665,7 +663,7 @@ bool LittleWolf::shoot(Player &p) {
 			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < _shoot_distace) {
 				uint8_t id = tile_to_player(hit.tile);
 				Game::Instance()->get_networking().send_dead(id);
-				//proximitySound(p.where.x, p.where.y, "pain");
+				proximitySound(p.where.x, p.where.y, "pain");
 				return true;
 			}
 		}
@@ -684,10 +682,21 @@ void LittleWolf::proximitySound(float x, float y, std::string sound)
 		// calculo de la hipotenusa.
 		float h = sqrt(pow(distX, 2) + pow(distY, 2));
 
-		// a mas distancia menos volumen siendo el maximo 100.
-		float volumen = 100 - h;
-		if (volumen <= 0)
-			volumen = 0;
+		//a mas distancia menos volumen siendo el maximo 100.
+		//el 100 del volumen se divide entre la distancia max del mapa
+		//y se multiplica por la diferencia entre la maxima y
+		//la distancia en la que esta ahora el jugador.
+
+		//el volumen inicialmente es 100
+		float volumen = 100;
+
+		//calculo de la distancia maxima del mapa (hipotenusa entre map_height y map_width).
+		float distMax = sqrt(pow(_map.walling_width, 2) + pow(_map.walling_height, 2));
+
+		volumen = (100 / distMax) * (distMax - h);
+
+		//Si se diese el caso de que es menos que cero, se queda en 0
+		if (volumen <= 0) volumen = 0;
 
 		// con esto segun lo lejos que pille tiene un volumen u otro.
 		sdlutils().soundEffects().at(sound).setVolume(volumen);
