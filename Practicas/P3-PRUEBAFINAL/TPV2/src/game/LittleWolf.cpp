@@ -230,7 +230,7 @@ void LittleWolf::load(std::string filename) {
 	_map.walling = new uint8_t*[_walling_height];
 	_map.walling_height = _walling_height;
 	_map.walling_width = _walling_width;
-	for (auto i = 0u; i < _walling_height; i++) {
+	for (unsigned i = 0u; i < _walling_height; i++) {
 		_map.walling[i] = new uint8_t[_walling_width];
 		for (auto j = 0u; j < _walling_width; j++)
 			_map.walling[i][j] = 1;
@@ -347,12 +347,13 @@ void LittleWolf::render() {
 		}
 	}
 
+	/*
 	//Si en el juego hay mas de dos jugadores, pero solo estan vivos 1 o ninguno
 	if (_nPlayers >= 2 && _alivePlayers < 2)
 	{
 		//Activa el timer de 5segundos
 		render_timer_info();
-	}
+	}*/
 }
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
@@ -640,7 +641,7 @@ bool LittleWolf::shoot(Player &p) {
 	if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 		// play gun shot sound
-		proximitySound(p.where.x, p.where.y, "gunshot");
+		//proximitySound(p.where.x, p.where.y, "gunshot");
 
 		// we shoot in several directions, because with projection what you see is not exact
 		for (float d = -0.05; d <= 0.05; d += 0.005) {
@@ -664,7 +665,7 @@ bool LittleWolf::shoot(Player &p) {
 			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < _shoot_distace) {
 				uint8_t id = tile_to_player(hit.tile);
 				Game::Instance()->get_networking().send_dead(id);
-				proximitySound(p.where.x, p.where.y, "pain");
+				//proximitySound(p.where.x, p.where.y, "pain");
 				return true;
 			}
 		}
