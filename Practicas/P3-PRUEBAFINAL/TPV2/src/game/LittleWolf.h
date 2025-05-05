@@ -181,6 +181,10 @@ public:
 	void bringAllToLife();
 
 
+	// reset players position after death
+	void playerResetPos(Player& p);
+	void searchRandomPosition(uint16_t& row, uint16_t& col);
+
 private:
 
 #pragma region COSAS RENDER

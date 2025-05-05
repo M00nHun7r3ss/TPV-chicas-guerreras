@@ -30,8 +30,8 @@ LittleWolf::LittleWolf() :
 		_isUpperView(false),
 		_alivePlayers(0),
 		_nPlayers(0),
-		_timer(5.0f)
-		//_lastRestart(sdlutils().virtualTimer().currRealTime())
+		_timer(5.0f),
+		_lastRestart(0)
 { 
 }
 
@@ -86,11 +86,15 @@ void LittleWolf::update() {
 		//Activa el temporizador
 		_timer -= (vt.currRealTime() - _lastRestart);
 
+		std::cout << "Timer: " << _timer
+			<< " Last Restart: " << _lastRestart << std::endl;
+
 		//El master llama a restart
 		if (Game::Instance()->get_networking().is_master() && _timer <= 0)
 		{
 			Game::Instance()->get_networking().send_restart();
 		}
+
 
 		//Lo resetea
 		_lastRestart = vt.currRealTime();
@@ -261,20 +265,8 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	if (_players[id].state != NOT_USED)
 		return false;
 
-	RandomNumberGenerator& rand = sdlutils().rand();
-
-	// The search for an empty cell start at a random position (orow,ocol)
-	uint16_t orow = rand.nextInt(0, _map.walling_height);
-	uint16_t ocol = rand.nextInt(0, _map.walling_width);
-
-	// search for an empty cell
-	uint16_t row = orow;
-	uint16_t col = (ocol + 1) % _map.walling_width;
-	while (!((orow == row) && (ocol == col)) && _map.walling[row][col] != 0) {
-		col = (col + 1) % _map.walling_width;
-		if (col == 0)
-			row = (row + 1) % _map.walling_height;
-	}
+	uint16_t row, col;
+	searchRandomPosition(row, col);
 
 	// handle the case where the search is failed, which in principle should never
 	// happen unless we start with map with few empty cells
@@ -751,6 +743,39 @@ void LittleWolf::bringAllToLife() {
 	for (unsigned i = 0u; i < _max_player; i++) {
 		if (_players[i].state == DEAD) {
 			_players[i].state = ALIVE;
+			playerResetPos(_players[i]); // resetea en posiciones aleatorias a todos los jugadores.
+			_timer = 5; // resetea para la prox vez que haya que hacer la cuenta atras
 		}
+	}
+}
+
+void LittleWolf::playerResetPos(Player& p)
+{
+	uint16_t row, col;
+	searchRandomPosition(row, col);
+
+	//actualizar posicion jugador
+	p.where.x = col + 0.5f;
+	p.where.y = row + 0.5f;
+
+	//actualizar posicion jugador en el mapa
+	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(p.id);
+}
+
+void LittleWolf::searchRandomPosition(uint16_t& row, uint16_t& col)
+{
+	RandomNumberGenerator& rand = sdlutils().rand();
+
+	// The search for an empty cell start at a random position (orow,ocol)
+	uint16_t orow = rand.nextInt(0, _map.walling_height);
+	uint16_t ocol = rand.nextInt(0, _map.walling_width);
+
+	// search for an empty cell
+	row = orow;
+	col = (ocol + 1) % _map.walling_width;
+	while (!((orow == row) && (ocol == col)) && _map.walling[row][col] != 0) {
+		col = (col + 1) % _map.walling_width;
+		if (col == 0)
+			row = (row + 1) % _map.walling_height;
 	}
 }
