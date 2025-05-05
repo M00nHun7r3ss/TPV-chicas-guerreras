@@ -55,7 +55,7 @@ void LittleWolf::init(SDL_Window *window, SDL_Renderer *render){
 void LittleWolf::update() { 
 
 	InputHandler &ihdlr = ih();
-	//VirtualTimer& vt = sdlutils().virtualTimer();
+	VirtualTimer& vt = sdlutils().virtualTimer();
 
 	if (ihdlr.keyDownEvent()) {
 		// toggle help
@@ -64,11 +64,11 @@ void LittleWolf::update() {
 		}
 
 		
-		//// C for cenital
-		//if (ihdlr.isKeyDown(SDL_SCANCODE_C)) {
-		//	_isUpperView = !_isUpperView;
-		//}
-		//
+		// C for cenital
+		if (ihdlr.isKeyDown(SDL_SCANCODE_C)) {
+			_isUpperView = !_isUpperView;
+		}
+		
 	}
 
 	Player &p = _players[_curr_player_id];
@@ -77,24 +77,24 @@ void LittleWolf::update() {
 	if (p.state != ALIVE)
 		return;
 
-	////Inicia el temporizador
-	//if (_nPlayers >= 2 && _alivePlayers < 2)
-	//{
-	//	//Inicializamos a current time
-	//	_lastRestart = vt.currRealTime();
+	//Inicia el temporizador
+	if (_nPlayers >= 2 && _alivePlayers < 2)
+	{
+		//Inicializamos a current time
+		_lastRestart = vt.currRealTime();
 
-	//	//Activa el temporizador
-	//	_timer -= (vt.currRealTime() - _lastRestart);
+		//Activa el temporizador
+		_timer -= (vt.currRealTime() - _lastRestart);
 
-	//	//El master llama a restart
-	//	if (Game::Instance()->get_networking().is_master() && _timer <= 0)
-	//	{
-	//		Game::Instance()->get_networking().send_restart();
-	//	}
+		//El master llama a restart
+		if (Game::Instance()->get_networking().is_master() && _timer <= 0)
+		{
+			Game::Instance()->get_networking().send_restart();
+		}
 
-	//	//Lo resetea
-	//	_lastRestart = vt.currRealTime();
-	//}
+		//Lo resetea
+		_lastRestart = vt.currRealTime();
+	}
 
 	spin(p);  // handle spinning
 	move(p);  // handle moving
@@ -177,7 +177,7 @@ void LittleWolf::load(std::string filename) {
 
 	// rows of the user walling
 	uint8_t **walling = new uint8_t*[uh];
-	for (auto i = 0u; i < uh; i++) {
+	for (unsigned i = 0u; i < uh; i++) {
 		std::string row = json_walling[i]->AsString();
 
 		if (row.size() != uw)
@@ -189,7 +189,7 @@ void LittleWolf::load(std::string filename) {
 
 		// create and initialize the row
 		walling[i] = new uint8_t[uw];
-		for (auto j = 0u; j < uw; j++) {
+		for (unsigned j = 0u; j < uw; j++) {
 			char tile = buffer[j];
 			if (tile < 48 | tile > 57) {
 				throw "Invalid value for tile (" + std::to_string(i) + ","
@@ -210,8 +210,8 @@ void LittleWolf::load(std::string filename) {
 	std::cout << "Loaded the following user walling (" << uw << "x" << uh << ")"
 			<< std::endl;
 	std::cout << std::endl;
-	for (auto i = 0u; i < uh; i++) {
-		for (auto j = 0u; j < uw; j++) {
+	for (unsigned i = 0u; i < uh; i++) {
+		for (unsigned j = 0u; j < uw; j++) {
 			std::cout << (int) walling[i][j];
 		}
 		std::cout << std::endl;
@@ -232,7 +232,7 @@ void LittleWolf::load(std::string filename) {
 	_map.walling_width = _walling_width;
 	for (unsigned i = 0u; i < _walling_height; i++) {
 		_map.walling[i] = new uint8_t[_walling_width];
-		for (auto j = 0u; j < _walling_width; j++)
+		for (unsigned j = 0u; j < _walling_width; j++)
 			_map.walling[i][j] = 1;
 	}
 
@@ -347,14 +347,12 @@ void LittleWolf::render() {
 		}
 	}
 
-	render_timer_info();
-
-	////Si en el juego hay mas de dos jugadores, pero solo estan vivos 1 o ninguno
-	//if (_nPlayers >= 2 && _alivePlayers < 2)
-	//{
-	//	//Activa el timer de 5segundos
-	//	render_timer_info();
-	//}
+	//Si en el juego hay mas de dos jugadores, pero solo estan vivos 1 o ninguno
+	if (_nPlayers >= 2 && _alivePlayers < 2)
+	{
+		//Activa el timer de 5segundos
+		render_timer_info();
+	}
 }
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
@@ -478,8 +476,8 @@ void LittleWolf::render_upper_view() {
 		for (int y = 0; y < _gpu.yres; y++)
 			put(display, x, y, 0x00000000);
 
-	for (auto x = 0u; x < _map.walling_height; x++)
-	for (auto y = 0u; y < _map.walling_width; y++) {
+	for (unsigned x = 0u; x < _map.walling_height; x++)
+	for (unsigned y = 0u; y < _map.walling_width; y++) {
 
 		// each non empty position in the walling is drawn as a square in the window,
 		// because the walling size is smaller than the resolution by 'walling_size_factor'
@@ -557,7 +555,7 @@ void LittleWolf::render_timer_info()
 		build_sdlcolor(0xffffffff));
 
 	//Se renderiza en el medio de la pantalla
-	SDL_Rect dest = build_sdlrect(sdlutils().width()/5, sdlutils().height() / 2, info.width(), info.height());
+	SDL_Rect dest = build_sdlrect(sdlutils().width()/6, sdlutils().height() / 3, info.width(), info.height());
 
 	info.render(dest);
 
