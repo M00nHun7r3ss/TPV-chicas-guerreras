@@ -7,9 +7,8 @@
 using msgId_type = uint8_t;
 enum msgId : msgId_type {
 	_m_NEW_GAME, _m_ROUND_START, _m_ROUND_OVER, _m_GAME_OVER, //Estados de juego
-	_m_PACMAN_FOOD_COLLISION, //Colisiones
-	_m_IMMUNITY_START, _m_IMMUNITY_END, //Inmunidad
-	_m_GHOST_COLLISION_IMMUNITY, _m_GHOST_COLLISION_NO_IMMUNITY // Colisiones con ghosts segun immunity
+	_m_PACMAN_FOOD_COLLISION, _m_PACMAN_GHOST_COLLISION, //Colisiones
+	_m_IMMUNITY_START, _m_IMMUNITY_END //Inmunidad
 };
 
 

@@ -46,13 +46,13 @@ Game::~Game() {
 	if (SDLUtils::HasInstance())
 		SDLUtils::Release();
 
-	// delete states
-	delete _state;
-	delete _running_state;
-	delete _paused_state;
-	delete _newgame_state;
-	delete _newround_state;
+	// delete states. do not delete _state.
+	// delete in inverse order.
 	delete _gameover_state;
+	delete _newround_state;
+	delete _newgame_state;
+	delete _paused_state;
+	delete _running_state;
 }
 
 bool Game::init() {

@@ -21,5 +21,7 @@ struct MiraculousComponent : public ecs::Component
 	float _N; // tiempo en normal.
 	float _M; // tiempo en milagroso.
 
+	unsigned int _lastFruitChanged; // para el tiempo de cada fruta.
+
 };
 

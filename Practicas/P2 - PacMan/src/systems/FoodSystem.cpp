@@ -10,8 +10,7 @@
 FoodSystem::FoodSystem()
 	: _currNumOfFruit(0),
 	  _fruitType(false),
-      _rand(sdlutils().rand()),
-	  _lastFruitChanged(0)
+      _rand(sdlutils().rand())
 {
 }
 
@@ -47,8 +46,8 @@ void FoodSystem::update()
 				_timeBetweenEachSpawn = mc->_N * 1000;
 
 				//Pasado ese tiempo
-				if (vt.currRealTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
-					_lastFruitChanged = vt.currRealTime();
+				if (vt.currRealTime() > _timeBetweenEachSpawn + mc->_lastFruitChanged) {
+					mc->_lastFruitChanged = vt.currRealTime();
 					mc->_isMiraculous = true;
 					mc->_M = _rand.nextInt(1, 6);
 				}
@@ -61,14 +60,12 @@ void FoodSystem::update()
 				_timeBetweenEachSpawn = mc->_M * 1000;
 
 				//Pasado ese tiempo
-				if (vt.currRealTime() > _timeBetweenEachSpawn + _lastFruitChanged) {
-					_lastFruitChanged = vt.currRealTime();
+				if (vt.currRealTime() > _timeBetweenEachSpawn + mc->_lastFruitChanged) {
+					mc->_lastFruitChanged = vt.currRealTime();
 					mc->_isMiraculous = false;
 					mc->_N = _rand.nextInt(10, 21); //cambiar por 10 y 21
 				}
 			}
-
-			
 		}
 	}
 
@@ -88,11 +85,11 @@ void FoodSystem::recieve(const Message& m)
 		// genera.
         generateFruitGrid();
 		//Reseteamos el contador de tiempo
-		_lastFruitChanged = 0;
+		resetMiraculousTimer();
         break;
 	case _m_ROUND_START:
 		//Reseteamos el contador de tiempo
-		_lastFruitChanged = 0;
+		resetMiraculousTimer();
 		break;
 	case _m_PACMAN_FOOD_COLLISION:
 		deleteFruit(m.pacman_food_collision_data.f);
@@ -173,5 +170,18 @@ void FoodSystem::checkNoFruit()
 
 		// !!! cambia a GameOverState (FINAL BUENO)
 		Game::Instance()->setState(Game::GAMEOVER);
+	}
+}
+
+void FoodSystem::resetMiraculousTimer()
+{
+	std::vector<ecs::entity_t> fruits = _mngr->getEntities(ecs::grp::FRUITS);
+	for (int i = 0; i < fruits.size(); i++)
+	{
+		if (_mngr->hasComponent<MiraculousComponent>(fruits[i]))
+		{
+			MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(fruits[i]);
+			mc->_lastFruitChanged = 0;
+		}
 	}
 }

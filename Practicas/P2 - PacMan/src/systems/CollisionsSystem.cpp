@@ -40,15 +40,8 @@ void CollisionsSystem::update() {
 					pTR->_pos, pTR->_width, pTR->_height, //
 					eTR->_pos, eTR->_width, eTR->_height)) {
 
-				if (_mngr->getSystem<ImmunitySystem>()->isImmune())
-				{
-					m.id = _m_GHOST_COLLISION_IMMUNITY;
-				}
-				else
-				{
-					m.id = _m_GHOST_COLLISION_NO_IMMUNITY;
-				}
 				// pasamos el fantasma concreto.
+				m.id = _m_PACMAN_GHOST_COLLISION;
 				m.pacman_ghost_collision_data.g = e;
 				_mngr->send(m);
 			}
