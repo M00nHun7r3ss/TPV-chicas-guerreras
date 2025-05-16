@@ -181,7 +181,10 @@ void FoodSystem::resetMiraculousTimer()
 		if (_mngr->hasComponent<MiraculousComponent>(fruits[i]))
 		{
 			MiraculousComponent* mc = _mngr->getComponent<MiraculousComponent>(fruits[i]);
+			mc->_isMiraculous = false;
 			mc->_lastFruitChanged = 0;
+			mc->_N = 0;
+			mc->_M = 0;
 		}
 	}
 }
