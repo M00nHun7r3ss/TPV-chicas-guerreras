@@ -8,7 +8,10 @@
 #include "../sdlutils/Texture.h"
 
 Ninja::Ninja() :
-		_img(&sdlutils().images().at("ninja_standing")), _speed(), _charge() {
+		_img(&sdlutils().images().at("ninja_standing")),
+	    _speed(), 
+	    _charge() 
+{
 	_width = 100;
 	_height = 100;
 	float x = (sdlutils().width() - _width) / 2;

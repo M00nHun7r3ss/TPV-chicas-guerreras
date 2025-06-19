@@ -16,9 +16,18 @@ public:
 	void setImageRect(Texture *t, int rows, int cols, int row, int col);
 private:
 	Texture *_img;
+
+	//Lo de antes
+	/*
 	bool _walking;
 	bool _spinning;
-	bool _still;
+	bool _still;*/
+
+	//En vez de mirar con booleans en que estado esta, tenemos un enum
+	enum State {
+		WALKING, SPINNING, STILL
+	};
+	State _state;
 
 	float _deg;
 
