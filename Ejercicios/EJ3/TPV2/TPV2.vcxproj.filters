@@ -63,6 +63,12 @@
     <ClCompile Include="..\src\game\WalkingState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\StillState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\SpinningState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SRC\json\JSON.h">
@@ -143,13 +149,16 @@
     <ClInclude Include="..\src\game\PacmanWS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PacmanState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\game\PacmanState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\WalkingState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\StillState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\SpinningState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
