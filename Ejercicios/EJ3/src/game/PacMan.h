@@ -15,7 +15,7 @@ public:
 	void handleInput() override;
 	void setImageRect(Texture *t, int rows, int cols, int row, int col);
 private:
-	Texture *_img;
+	/*Texture *_img;*/
 
 	//Lo de antes
 	/*
@@ -31,6 +31,6 @@ private:
 
 	float _deg;
 
-	SDL_Rect _src;
+	/*SDL_Rect _src;*/
 };
 

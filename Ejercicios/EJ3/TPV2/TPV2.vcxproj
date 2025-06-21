@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\game\PacMan.cpp" />
+    <ClCompile Include="..\src\game\PacmanWS.cpp" />
+    <ClCompile Include="..\src\game\WalkingState.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
     <ClCompile Include="..\SRC\json\JSONValue.cpp" />
     <ClCompile Include="..\SRC\json\json_demo.cpp" />
@@ -38,6 +40,9 @@
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\game\GameObject.h" />
     <ClInclude Include="..\src\game\PacMan.h" />
+    <ClInclude Include="..\src\game\PacmanState.h" />
+    <ClInclude Include="..\src\game\PacmanWS.h" />
+    <ClInclude Include="..\src\game\WalkingState.h" />
     <ClInclude Include="..\SRC\json\JSON.h" />
     <ClInclude Include="..\SRC\json\JSONValue.h" />
     <ClInclude Include="..\SRC\json\json_demo.h" />
@@ -60,6 +65,7 @@
     <ClInclude Include="..\SRC\utils\ptr_iterator.h" />
     <ClInclude Include="..\SRC\utils\Singleton.h" />
     <ClInclude Include="..\SRC\utils\Vector2D.h" />
+    <ClInclude Include="PacmanState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

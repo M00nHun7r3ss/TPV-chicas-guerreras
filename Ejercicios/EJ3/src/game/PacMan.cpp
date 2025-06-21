@@ -8,12 +8,12 @@
 #include "../sdlutils/Texture.h"
 
 PacMan::PacMan() :
-		_img(nullptr), //
+		/*_img(nullptr),*/ //
 		/*_walking(false), //
 		_spinning(false), //
 		_still(true), //*/
-		_deg(0.0), //
-		_src() //
+		_deg(0.0) //
+		/*_src() *///
 {
 	_width = 50;
 	_height = 50;
@@ -51,13 +51,13 @@ void PacMan::update() {
 	if (_spinning) {
 		_rot += _deg;
 	}
+	auto p = _pos;
 	*/
-
 	switch (_state) {
 	case STILL:
 		break;
 	case WALKING:
-		auto p = _pos;
+		/*
 		_pos = _pos + _vel;
 
 		if (_pos.getY() < 0 || _pos.getY() + _height > sdlutils().height()
@@ -68,6 +68,7 @@ void PacMan::update() {
 			_vel.set(0.0f, 0.0f);
 			setImageRect(&sdlutils().images().at("sprites"), 8, 8, 0, 1);
 		}
+		*/
 		break;
 	case SPINNING:
 		_rot += _deg;
@@ -76,14 +77,14 @@ void PacMan::update() {
 
 }
 
-void PacMan::render() {
-	SDL_Rect rect = build_sdlrect(_pos, _width, _height);
-
-	_img->render(_src, rect, _rot);
-}
+//void PacMan::render() {
+//	SDL_Rect rect = build_sdlrect(_pos, _width, _height);
+//
+//	_img->render(_src, rect, _rot);
+//}
 
 void PacMan::handleInput() {
-	auto &ihdlr = ih();
+	/*auto &ihdlr = ih();*/
 	switch (_state) {
 	case STILL:
 		if (ihdlr.isKeyDown(SDL_SCANCODE_UP)) 
@@ -158,9 +159,9 @@ void PacMan::handleInput() {
 
 }
 
-void PacMan::setImageRect(Texture *t, int rows, int cols, int row, int col) {
-	_img = t;
-	int w = _img->width() / rows;
-	int h = _img->height() / cols;
-	_src = { col * w, row * h, w, h };
-}
+//void PacMan::setImageRect(Texture *t, int rows, int cols, int row, int col) {
+//	_img = t;
+//	int w = _img->width() / rows;
+//	int h = _img->height() / cols;
+//	_src = { col * w, row * h, w, h };
+//}
