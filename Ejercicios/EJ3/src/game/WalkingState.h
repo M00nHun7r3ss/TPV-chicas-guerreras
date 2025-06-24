@@ -1,9 +1,10 @@
 #pragma once
+#include "../utils/Vector2D.h"
 #include "PacmanState.h"
 
 class WalkingState : public PacmanState {
 public:
-	WalkingState(Vector2D pos, Vector2D vel, float width, float height) : _pos(pos), _vel(vel), _width(width), _height(height) {}
+	WalkingState() : _pos(), _vel(), _width(), _height() {}
 	virtual ~WalkingState() {}
 	void enter(PacmanWS& o) override;
 	void handleInput(PacmanWS& o) override;

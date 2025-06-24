@@ -3,7 +3,7 @@
 
 class SpinningState : public PacmanState {
 public:
-	SpinningState(float rot, float deg): _rot(rot), _deg(deg) {}
+	SpinningState(): _rot(), _deg() {}
 	virtual ~SpinningState() {}
 	void enter(PacmanWS& o) override;
 	void handleInput(PacmanWS& o) override;

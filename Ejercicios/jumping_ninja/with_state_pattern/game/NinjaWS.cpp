@@ -1,16 +1,4 @@
-// This file is part of the course TPV2@UCM - Samir Genaim
 
-#include "../game/NinjaWS.h"
-
-#include "../sdlutils/InputHandler.h"
-#include "../sdlutils/macros.h"
-#include "../sdlutils/SDLUtils.h"
-#include "../sdlutils/Texture.h"
-#include "AttackingState.h"
-#include "DuckingState.h"
-#include "JumpingState.h"
-#include "StandingState.h"
-#include "WalkingState.h"
 
 NinjaWS::NinjaWS() :
 		_img(), //
@@ -39,21 +27,6 @@ NinjaWS::NinjaWS() :
 	_state->enter(*this);
 }
 
-NinjaWS::~NinjaWS() {
-}
 
-void NinjaWS::update() {
-	_state->update(*this);
-}
 
-void NinjaWS::handleInput() {
-	_state->handleInput(*this);
-}
-
-void NinjaWS::render() {
-	SDL_Rect rect = build_sdlrect(_pos, _width, _height);
-
-	_img->render(rect);
-
-}
 

@@ -1,6 +1,4 @@
 #pragma once
-#include "../utils/Vector2D.h"
-
 class PacmanWS;
 
 class PacmanState {

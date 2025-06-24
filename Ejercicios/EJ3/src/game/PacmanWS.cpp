@@ -23,9 +23,9 @@ PacmanWS::PacmanWS() :
 	float y = sdlutils().height() - _height;
 	_pos.set(x, y);
 	
-	_spinning_state = new SpinningState(_rot, 0.0);
-	_still_state = new StillState(_vel, _rot);
-	_walking_state = new WalkingState(_pos, _vel, _width, _height);
+	_spinning_state = new SpinningState();
+	_still_state = new StillState();
+	_walking_state = new WalkingState();
 
 	_state = _still_state;
 	_state->enter(*this);
