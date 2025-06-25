@@ -17,7 +17,9 @@ GhostSystem::GhostSystem()
 	_currNumOfGhosts(0),
 	_lastGhostAdded(0),
 	_canMove(false),
-	_pmImmune(false) {
+	_pmImmune(false),
+	_rand(sdlutils().rand())
+{
 }
 
 GhostSystem::~GhostSystem() {
@@ -37,18 +39,24 @@ void GhostSystem::update() {
 	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
 	for (int i = 0; i < ghosts.size(); i++)
 	{
+		// --- IMAGE WITH FRAMES
 		ImageWithFrames* iwf = _mngr->getComponent<ImageWithFrames>(ghosts[i]);
 		if (pImmune->isImmune()) iwf->setColRow(iwf->getCol(), 6); // es azul
 		else iwf->setColRow(iwf->getCol(), 4); // es rojo.
+
+		// --- CLONABLE COMPONENT
+		if (_mngr->hasComponent<ClonableGhostComponent>(ghosts[i]))
+		{
+			iwf->setColRow(iwf->getCol(), 7); // es morado
+			manageClonableGhosts(ghosts[i]);
+		}
+		
 	}
 	//Movemos los fantasmas
 	moveGhosts();
 }
 
-void GhostSystem::addGhost(unsigned int n) {
-
-	// Always use the random number generator provided by SDLUtils
-	RandomNumberGenerator& rand = sdlutils().rand();
+void GhostSystem::addGhosts(unsigned int n) {
 
 	//Genera el numero pedido de fantasmas
 	for (unsigned i = 0u; i < n; i++) {
@@ -59,31 +67,27 @@ void GhostSystem::addGhost(unsigned int n) {
 		// add a Transform component
 		Transform* tr = _mngr->addComponent<Transform>(e);
 
-		// clonable
-		  // add an Image Component segun milagroso o no
-		int prob = rand.nextInt(1, 11); // [1, 11).
+		// clonable 10% prob
+		int prob = _rand.nextInt(1, 2); // [1, 11).
 
-		if (prob == 1) _ghostType = true; // clonable.
+		if (prob == 1) _ghostType = true; // clonable 
 		else _ghostType = false; // no clonable.
 
 		if (_ghostType)
 		{
-			//Anadimos el componente de fruta milagrosa
-			_mngr->addComponent<ClonableGhostComponent>(e, 0, 0);
-			// lo cogemos
-			ClonableGhostComponent* cc = _mngr->getComponent<ClonableGhostComponent>(e);
-			//Inicialmente sera normal
-			cc->_isClonable = false;
+			//Anadimos el componente de fruta milagrosa con _N (_M vendra luego)
+			float n = _rand.nextInt(1, 6); // [1, 6).
+			_mngr->addComponent<ClonableGhostComponent>(e, n, 0); // inicialmente
 		}
-
 
 		int size = 30;
 
-		//Esquina por el que sale
-		//0 - arriba/izqd, 1 - abajo/izqd, 2 - abajo/dcha, 3 - arriba/dcha
-		int esquina = rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
 		int x, y;
 		int velY; //Iniciamos la velocidad inicial como en la demo
+		
+		//Esquina por el que sale
+			//0 - arriba/izqd, 1 - abajo/izqd, 2 - abajo/dcha, 3 - arriba/dcha
+		int esquina = _rand.nextInt(0, 4); //Hasta max + 1, como el Rnd.Next de C#
 		switch (esquina) //Esto es asi porque el origen del sprite es arriba izquierda 
 		{
 		case 0: //arriba/izqd
@@ -120,6 +124,27 @@ void GhostSystem::addGhost(unsigned int n) {
 	}
 }
 
+void GhostSystem::addClone(ecs::entity_t father)
+{
+	// add an entity to the manager
+	ecs::entity_t e = _mngr->addEntity(ecs::grp::GHOSTS);
+
+	// add a Transform component
+	Transform* tr = _mngr->addComponent<Transform>(e);
+
+	int size = 30;
+
+	Transform* f_tf = _mngr->getComponent<Transform>(father);
+
+	//Inicializa transform
+	tr->init(Vector2D(f_tf->_pos.getX(), f_tf->_pos.getY()), Vector2D(0, 0), size, size, 0.0f);
+
+	// add an Image Component
+	_mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 0, 4, 8);
+
+	_currNumOfGhosts++;
+}
+
 void GhostSystem::deleteGhost(ecs::entity_t e) {
 	_mngr->setAlive(e, false);
 
@@ -151,7 +176,7 @@ void GhostSystem::generateGhostsByTime(bool immune)
 
 		if (vt.currRealTime() > _timeBetweenEachSpawn + _lastGhostAdded
 			&& _currNumOfGhosts <= _ghostLimit) {
-			addGhost(1);
+			addGhosts(1);
 
 			_lastGhostAdded = vt.currRealTime();
 		}
@@ -190,6 +215,27 @@ void GhostSystem::moveGhosts()
 			//Para en los bordes y se da la vuelta
 			stopOnBorders(e);
 		}
+	}
+}
+
+void GhostSystem::manageClonableGhosts(ecs::entity_t ghost)
+{
+	// lo sustrae.
+	ClonableGhostComponent* cc = _mngr->getComponent<ClonableGhostComponent>(ghost);
+
+	VirtualTimer& vt = sdlutils().virtualTimer();
+	Uint32 _timeBetweenEachSpawn;
+
+	cc->setM(_rand.nextInt(1000, 10001)); // [1000, 10001).
+	_timeBetweenEachSpawn = cc->_M;
+
+
+	if ((vt.currRealTime() > _timeBetweenEachSpawn + cc->_lastGhostCloned) // tiempo transcurriendo...
+		&& cc->_N > 0) { // mientras N sea mayor que 0 sigue generando
+		// pasado el tiempo:
+		cc->_lastGhostCloned = vt.currRealTime();
+		addClone(ghost); // crea un fantasma nacido de clonacion.
+		cc->releaseN(); // reduce en 1 las clonaciones restantes
 	}
 }
 

@@ -9,7 +9,6 @@ class RandomNumberGenerator;
 struct ClonableGhostComponent : public ecs::Component
 {
 	ClonableGhostComponent(float n, float m) :
-		_isClonable(false),
 		_N(n), _M(m) {
 	}
 
@@ -17,10 +16,12 @@ struct ClonableGhostComponent : public ecs::Component
 
 	void init();
 
-	bool _isClonable; // define si es clonable o no 
+	float _N; // veces que se puede clonar (cantidad de fantasmas que clona)
+	float _M; // tiempo entre clones
 
-	const float _N; // veces que se puede clonar (cantidad de fantasmas que clona)
-	const float _M; // tiempo entre clones
+	void releaseN() { _N--; }
+
+	void setM(float m) { _M = m; }
 
 	unsigned int _lastGhostCloned; // para el tiempo de cada clon.
 

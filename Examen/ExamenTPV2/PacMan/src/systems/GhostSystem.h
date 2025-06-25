@@ -16,11 +16,13 @@ public:
 	void update() override;
 	void recieve(const Message &m) override;
 private:
-	void addGhost(unsigned int n);
+	void addGhosts(unsigned int n);
+	void addClone(ecs::entity_t father);
 	void deleteGhost(ecs::entity_t e);
 	void removeAllGhosts();
 	void generateGhostsByTime(bool immune);
 	void moveGhosts();
+	void manageClonableGhosts(ecs::entity_t ghost);
 	void stopOnBorders(ecs::entity_t e);
 
 	unsigned int _ghostLimit;
@@ -31,6 +33,8 @@ private:
 
 
 	bool _ghostType; // F -> normal; T -> clonable (al crear el fantasma)
+
+	RandomNumberGenerator& _rand;
 
 };
 
