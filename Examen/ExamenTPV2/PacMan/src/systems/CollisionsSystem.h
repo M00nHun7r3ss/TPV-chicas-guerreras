@@ -10,5 +10,10 @@ public:
 	virtual ~CollisionsSystem();
 	void initSystem() override;
 	void update() override;
+
+private:
+	void collisionPacmanGhosts(Transform* ptf);
+	void collisionPacmanFruits(Transform* ptf);
+	void collisionWithShield();
 };
 

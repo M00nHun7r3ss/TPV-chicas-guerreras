@@ -26,6 +26,15 @@ void CollisionsSystem::update() {
 	Transform* pTR = _mngr->getComponent<Transform>(pm);
 
 	// Collisions P-G
+	collisionPacmanGhosts(pTR);
+	// Collisions P-F
+	collisionPacmanFruits(pTR);
+	// Collisions Shield
+	collisionWithShield();
+}
+
+void CollisionsSystem::collisionPacmanGhosts(Transform* ptf)
+{
 	std::vector<ecs::entity_t> ghost = _mngr->getEntities(ecs::grp::GHOSTS);
 	size_t n = ghost.size();
 	for (unsigned i = 0u; i < n; i++) {
@@ -37,8 +46,8 @@ void CollisionsSystem::update() {
 			Message m;
 			// check if PacMan collides with the ghost (i.e., eat it)
 			if (Collisions::collides(			//
-					pTR->_pos, pTR->_width, pTR->_height, //
-					eTR->_pos, eTR->_width, eTR->_height)) {
+				ptf->_pos, ptf->_width, ptf->_height, //
+				eTR->_pos, eTR->_width, eTR->_height)) {
 
 				// pasamos el fantasma concreto.
 				m.id = _m_PACMAN_GHOST_COLLISION;
@@ -48,8 +57,10 @@ void CollisionsSystem::update() {
 
 		}
 	}
+}
 
-	// Collisions P-F
+void CollisionsSystem::collisionPacmanFruits(Transform* ptf)
+{
 	std::vector<ecs::entity_t> fruit = _mngr->getEntities(ecs::grp::FRUITS);
 	size_t k = fruit.size();
 	for (unsigned i = 0u; i < k; i++) {
@@ -63,7 +74,7 @@ void CollisionsSystem::update() {
 			Message z;
 			// check if PacMan collides with the fruit (i.e., eat it)
 			if (Collisions::collides(			//
-				pTR->_pos, pTR->_width, pTR->_height, //
+				ptf->_pos, ptf->_width, ptf->_height, //
 				eTR->_pos, eTR->_width, eTR->_height)) {
 
 				z.id = _m_PACMAN_FOOD_COLLISION;
@@ -73,6 +84,9 @@ void CollisionsSystem::update() {
 			}
 		}
 	}
+}
 
+void CollisionsSystem::collisionWithShield()
+{
 }
 

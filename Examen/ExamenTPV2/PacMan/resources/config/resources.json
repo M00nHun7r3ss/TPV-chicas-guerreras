@@ -26,6 +26,10 @@
         {
             "id": "heart",
             "file": "resources/images/heart.png"
+        },
+        {
+            "id": "star",
+            "file": "resources/images/star.png"
         }
     ],
 

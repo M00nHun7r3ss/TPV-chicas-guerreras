@@ -18,6 +18,8 @@ struct Image: public ecs::Component {
 	virtual ~Image() {
 	}
 
+	Texture* getTexture() { return _tex; }
+
 	Texture *_tex;
 };
 

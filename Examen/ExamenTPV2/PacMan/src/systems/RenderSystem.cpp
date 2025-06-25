@@ -4,7 +4,9 @@
 
 #include "../components/Health.h"
 #include "../components/ImageWithFrames.h"
+#include "../components/Image.h"
 #include "../components/Transform.h"
+#include "../systems/ShieldSystem.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
@@ -30,6 +32,16 @@ void RenderSystem::update() {
 
 void RenderSystem::drawShield()
 {
+	ShieldSystem* ss = _mngr->getSystem<ShieldSystem>();
+	for (ecs::entity_t e : _mngr->getEntities(ecs::grp::SHIELDS)) {
+
+		Transform* tr = _mngr->getComponent<Transform>(e);
+		Image* img = _mngr->getComponent<Image>(e);
+		if (ss->isShieldOn())
+		{
+			draw(tr, img->getTexture());
+		}
+	}
 }
 
 void RenderSystem::drawGhosts() {
@@ -120,9 +132,9 @@ void RenderSystem::drawImageWithFrames(Transform* t, ImageWithFrames* img)
 	img->_tex->render(src, dest, t->_rot);
 }
 
-//void RenderSystem::draw(Transform *tr, Texture *tex) {
-//	SDL_Rect dest = build_sdlrect(tr->_pos, tr->_width, tr->_height);
-//
-//	assert(tex != nullptr);
-//	tex->render(dest, tr->_rot);
-//}
+void RenderSystem::draw(Transform *tr, Texture *tex) {
+	SDL_Rect dest = build_sdlrect(tr->_pos, tr->_width, tr->_height);
+
+	assert(tex != nullptr);
+	tex->render(dest, tr->_rot);
+}

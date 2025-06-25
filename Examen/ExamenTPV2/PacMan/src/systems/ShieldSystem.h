@@ -13,6 +13,7 @@ public:
 
 	bool isShieldOn() { return _isShieldOn; }
 
+
 private:
 	bool _isShieldOn;
 	unsigned int _lastShieldStarted;
@@ -21,5 +22,11 @@ private:
 	float _M; //Milisegundos en los que tiene que comerse la fruta
 	float _X; //Espacio con respecto de pacman
 	float _T; //Milisegundos de escudo activo
+
+	const int SHIELD_STARS = 4;
+
+	void createShield();
+	void endShield();
+	void moveShield();
 };
 
