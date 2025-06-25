@@ -14,6 +14,7 @@ public:
 	void initSystem() override;
 	void update() override;
 private:
+	void drawShield();
 	void drawGhosts();
 	void drawPacMan();
 	void drawHealth();

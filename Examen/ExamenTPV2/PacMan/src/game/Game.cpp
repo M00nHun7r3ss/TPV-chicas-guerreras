@@ -13,6 +13,7 @@
 #include "../systems/GhostSystem.h"
 #include "../systems/FoodSystem.h"
 #include "../systems/ImmunitySystem.h"
+#include "../systems/ShieldSystem.h"
 //Scenes
 #include "GameState.h"
 #include "NewGameState.h"
@@ -30,7 +31,8 @@ Game::Game() :
 		_renderSys(), 
 		_collisionSys(),
 		_foodSys(),
-		_immunitySys()
+		_immunitySys(),
+		_shieldSys()
 {
 
 }
@@ -89,6 +91,7 @@ void Game::initGame()
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
 	_foodSys = _mngr->addSystem<FoodSystem>();
 	_immunitySys = _mngr->addSystem<ImmunitySystem>();
+	_shieldSys = _mngr->addSystem<ShieldSystem>();
 
 	// add the states
 	_running_state = new RunningState();

@@ -23,7 +23,8 @@ struct ClonableGhostComponent;
 //
 #define _GRPS_LIST_ \
 	GHOSTS, \
-	FRUITS
+	FRUITS, \
+	SHIELDS
 
 // Handlers list - must have at least one element
 //
@@ -38,6 +39,7 @@ class PacManSystem;
 class CollisionsSystem;
 class FoodSystem;
 class ImmunitySystem;
+class ShieldSystem;
 
 #define _SYS_LIST_ \
     GhostSystem, \
@@ -45,5 +47,6 @@ class ImmunitySystem;
 	PacManSystem, \
 	CollisionsSystem, \
 	FoodSystem, \
-	ImmunitySystem
+	ImmunitySystem, \
+	ShieldSystem
 

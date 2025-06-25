@@ -45,6 +45,7 @@
     <ClCompile Include="..\src\systems\PacManSystem.cpp" />
     <ClCompile Include="..\src\systems\RenderSystem.cpp" />
     <ClCompile Include="..\src\systems\GhostSystem.cpp" />
+    <ClCompile Include="..\src\systems\ShieldSystem.cpp" />
     <ClCompile Include="..\SRC\utils\Collisions.cpp" />
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
@@ -90,6 +91,7 @@
     <ClInclude Include="..\src\systems\PacManSystem.h" />
     <ClInclude Include="..\src\systems\RenderSystem.h" />
     <ClInclude Include="..\src\systems\GhostSystem.h" />
+    <ClInclude Include="..\src\systems\ShieldSystem.h" />
     <ClInclude Include="..\SRC\utils\Collisions.h" />
     <ClInclude Include="..\SRC\utils\DynamicBitSet.h" />
     <ClInclude Include="..\SRC\utils\GenID.h" />

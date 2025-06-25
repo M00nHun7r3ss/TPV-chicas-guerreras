@@ -71,6 +71,7 @@ public:
 	ecs::System* collisionSys() { return _collisionSys; }
 	ecs::System* foodSys() { return _foodSys; }
 	ecs::System* immunitySys() { return _immunitySys; }
+	ecs::System* shieldSys() { return _shieldSys; }
 
 private:
 	//Privado porque es singleton
@@ -85,6 +86,7 @@ private:
 	ecs::System* _collisionSys;
 	ecs::System* _foodSys;
 	ecs::System* _immunitySys;
+	ecs::System* _shieldSys;
 
 	//States
 	GameState* _state;

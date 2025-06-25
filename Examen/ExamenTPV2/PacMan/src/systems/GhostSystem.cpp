@@ -68,7 +68,7 @@ void GhostSystem::addGhosts(unsigned int n) {
 		Transform* tr = _mngr->addComponent<Transform>(e);
 
 		// clonable 10% prob
-		int prob = _rand.nextInt(1, 2); // [1, 11).
+		int prob = _rand.nextInt(1, 11); // [1, 11).
 
 		if (prob == 1) _ghostType = true; // clonable 
 		else _ghostType = false; // no clonable.
