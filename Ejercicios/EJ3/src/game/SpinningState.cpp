@@ -25,6 +25,5 @@ void SpinningState::handleInput(PacmanWS& o)
 
 void SpinningState::update(PacmanWS& o)
 {
-	_rot += _deg;
-	o.setRot(_rot);
+	o.setRot(o.getRot() + _deg);
 }

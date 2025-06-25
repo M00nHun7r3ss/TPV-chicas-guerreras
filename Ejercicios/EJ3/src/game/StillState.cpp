@@ -15,7 +15,7 @@ void StillState::handleInput(PacmanWS& o)
 	if (ihdlr.isKeyDown(SDL_SCANCODE_UP))
 	{
 		o.setState(PacmanWS::WALKING);
-		_vel = Vector2D(0, -2.0f).rotate(_rot);
+		o.getVel().set(Vector2D(0, -2.0f).rotate(o.getRot()));
 	}
 	else if (ihdlr.isKeyDown(SDL_SCANCODE_LEFT)
 		|| ihdlr.isKeyDown(SDL_SCANCODE_RIGHT))

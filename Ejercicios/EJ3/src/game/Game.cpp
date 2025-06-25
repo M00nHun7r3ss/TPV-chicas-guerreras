@@ -6,7 +6,6 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
 #include "GameObject.h"
-#include "PacMan.h"
 #include "PacmanWS.h"
 
 Game::Game() {
@@ -46,7 +45,7 @@ bool Game::init() {
 	}
 
 	_objs.push_back(new PacmanWS());
-	//_objs.push_back(new PacMan());
+
 
 	return true;
 }

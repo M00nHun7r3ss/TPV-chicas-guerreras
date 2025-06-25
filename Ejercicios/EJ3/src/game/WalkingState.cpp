@@ -19,18 +19,16 @@ void WalkingState::handleInput(PacmanWS& o)
 
 void WalkingState::update(PacmanWS& o)
 {
-	Vector2D p = _pos;
-	_pos = _pos + _vel;
+	Vector2D p = o.getPos();
+	o.getPos().set(o.getPos() + o.getVel());
 
-	if (_pos.getY() < 0 || _pos.getY() + _height > sdlutils().height()
-		|| _pos.getX() < 0
-		|| _pos.getX() + _width > sdlutils().width()) {
+	if (o.getPos().getY() < 0 || o.getPos().getY() + o.getHeight() > sdlutils().height()
+		|| o.getPos().getX() < 0
+		|| o.getPos().getX() + o.getWidth() > sdlutils().width()) {
 		std::cout << "ff" << std::endl;
-		_pos.set(p);
-		_vel.set(0.0f, 0.0f);
-		//o.getPos().set(_pos);
-		//o.getVel().set(_vel);
+		o.getPos().set(p);
+		o.getVel().set(0.0f, 0.0f);
 		o.setImageRect(&sdlutils().images().at("sprites"), 8, 8, 0, 1);
 	}
-	o.getPos().set(_pos);
+	o.getPos().set(o.getPos());
 }
