@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\components\ClonableGhostComponent.cpp" />
     <ClCompile Include="..\src\components\ImageWithFrames.cpp" />
     <ClCompile Include="..\src\components\MiraculousComponent.cpp" />
     <ClCompile Include="..\src\ecs\Manager.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\components\ClonableGhostComponent.h" />
     <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\ImageWithFrames.h" />
     <ClInclude Include="..\src\components\MiraculousComponent.h" />

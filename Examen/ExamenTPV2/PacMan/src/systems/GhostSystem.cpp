@@ -6,6 +6,7 @@
 
 #include "PacManSystem.h"
 #include "ImmunitySystem.h"
+#include "../components/ClonableGhostComponent.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
@@ -57,6 +58,24 @@ void GhostSystem::addGhost(unsigned int n) {
 
 		// add a Transform component
 		Transform* tr = _mngr->addComponent<Transform>(e);
+
+		// clonable
+		  // add an Image Component segun milagroso o no
+		int prob = rand.nextInt(1, 11); // [1, 11).
+
+		if (prob == 1) _ghostType = true; // clonable.
+		else _ghostType = false; // no clonable.
+
+		if (_ghostType)
+		{
+			//Anadimos el componente de fruta milagrosa
+			_mngr->addComponent<ClonableGhostComponent>(e, 0, 0);
+			// lo cogemos
+			ClonableGhostComponent* cc = _mngr->getComponent<ClonableGhostComponent>(e);
+			//Inicialmente sera normal
+			cc->_isClonable = false;
+		}
+
 
 		int size = 30;
 

@@ -9,13 +9,15 @@ struct Image;
 struct Health;
 struct ImageWithFrames;
 struct MiraculousComponent;
+struct ClonableGhostComponent;
 
 #define _CMPS_LIST_ \
 	Transform, \
 	Image, \
 	Health, \
 	ImageWithFrames, \
-	MiraculousComponent
+	MiraculousComponent, \
+	ClonableGhostComponent
 
 // Groups list - must have at least one element
 //

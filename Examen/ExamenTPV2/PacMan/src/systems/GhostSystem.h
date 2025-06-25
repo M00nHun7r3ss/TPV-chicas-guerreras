@@ -3,6 +3,9 @@
 #pragma once
 #include "../ecs/System.h"
 #include "../game/Game.h"
+#include "../sdlutils/SDLUtils.h"
+
+class RandomNumberGenerator;
 
 class GhostSystem: public ecs::System {
 public:
@@ -25,6 +28,9 @@ private:
 	unsigned int _lastGhostAdded;
 	bool _canMove;
 	bool _pmImmune;
+
+
+	bool _ghostType; // F -> normal; T -> clonable (al crear el fantasma)
 
 };
 
